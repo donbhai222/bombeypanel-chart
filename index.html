@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOMBAY SPECIAL VIP</title>
+    <style>
+        :root { --gold: #ffcc00; --cyan: #00ffff; --bg: #000; }
+        body { background: var(--bg); color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; }
+        .header { background: #111; padding: 15px; border-bottom: 2px solid var(--gold); margin-bottom: 10px; }
+        .week-row { display: flex; width: 98%; margin: 8px auto; border: 1px solid #444; background: #111; min-height: 80px; }
+        .date-box { width: 45px; background: var(--cyan); color: #000; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; writing-mode: vertical-lr; transform: rotate(180deg); }
+        .grid { display: flex; flex: 1; background: #000; gap: 2px; padding: 2px; }
+        .cell { flex: 1; border: 1px solid #333; background: #1a1a1a; display: flex; align-items: center; justify-content: space-between; padding: 2px; }
+        .panna { display: flex; flex-direction: column; font-size: 9px; color: #aaa; font-weight: bold; line-height: 1.1; }
+        .jodi { flex: 1; font-size: 20px; font-weight: bold; text-align: center; }
+        .lock { background: #0a0a0a; color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 22px; flex: 1; border: 1px dashed #444; }
+        .red { color: #ff3333; }
+        .card { background: #111; border: 1px solid var(--gold); margin: 20px; padding: 20px; border-radius: 12px; }
+        .btn { padding: 12px 25px; background: var(--gold); border: none; font-weight: bold; cursor: pointer; border-radius: 5px; color: #000; text-transform: uppercase; }
+        .qr-img { width: 250px; border: 3px solid #fff; margin: 15px 0; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="header"><h1>BOMBAY SPECIAL CHART</h1></div>
+
+<div id="chartArea">चार्ट लोड हो रहा है...</div>
+
+<div class="card" id="unlockCard">
+    <h2 style="color:var(--gold)">🔒 VIP FULL CHART</h2>
+    <p>VIP जोड़ी और पन्ना देखने के लिए अनलॉक करें</p>
+    <button class="btn" onclick="document.getElementById('formBox').style.display='block'; document.getElementById('unlockCard').style.display='none';">UNLOCK NOW</button>
+</div>
+
+<div class="card" id="formBox" style="display:none;">
+    <input type="text" id="userName" placeholder="अपना नाम" style="padding:10px; width:80%; margin:5px;"><br>
+    <input type="number" id="userMob" placeholder="मोबाइल नंबर" style="padding:10px; width:80%; margin:5px;"><br>
+    <button class="btn" onclick="document.getElementById('payBox').style.display='block'; document.getElementById('formBox').style.display='none';">PROCEED</button>
+</div>
+
+<div id="payBox" style="display:none;" class="card">
+    <img src="phonpe-qr.jpeg.jpeg" class="qr-img">
+    <h3>Omkar Yadav</h3>
+    <button class="btn" style="background:#25D366; color:#fff;" onclick="window.open('https://wa.me/918103982813')">WhatsApp Support</button>
+</div>
+
+<p onclick="if(prompt('Admin Pin')=='123') window.open('https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/edit')" style="color:#111; cursor:pointer; padding:20px;">Admin Login</p>
+
+<script>
+    const SHEET_ID = '1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w';
+    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+    async function loadChart() {
+        try {
+            const res = await fetch(SHEET_URL);
+            const text = await res.text();
+            const json = JSON.parse(text.substr(47).slice(0, -2));
+            const rows = json.table.rows;
+            let html = '';
+
+            rows.forEach((row, idx) => {
+                if(idx === 0) return; // हेडर छोड़ें
+                if(!row.c[0] || !row.c[0].v) return;
+
+                html += `<div class="week-row"><div class="date-box">${row.c[0].v}</div><div class="grid">`;
+                let lockShowed = false;
+
+                for(let i=1; i<19; i+=3) {
+                    let l = (row.c[i] && row.c[i].v) ? row.c[i].v : '';
+                    let j = (row.c[i+1] && row.c[i+1].v) ? row.c[i+1].v : '';
+                    let r = (row.c[i+2] && row.c[i+2].v) ? row.c[i+2].v : '';
+
+                    if(l !== '' && j !== '' && r !== '') {
+                        let isRed = (i==4 || i==16); 
+                        html += `<div class="cell">
+                            <div class="panna"><span>${String(l)[0]}</span><span>${String(l)[1]}</span><span>${String(l)[2]}</span></div>
+                            <div class="jodi ${isRed ? 'red' : ''}">${j}</div>
+                            <div class="panna"><span>${String(r)[0]}</span><span>${String(r)[1]}</span><span>${String(r)[2]}</span></div>
+                        </div>`;
+                    } else if(!lockShowed) {
+                        html += `<div class="lock">🔒</div>`;
+                        lockShowed = true;
+                    } else {
+                        html += `<div class="cell" style="background:#050505"></div>`;
+                    }
+                }
+                html += `</div></div>`;
+            });
+            document.getElementById('chartArea').innerHTML = html;
+        } catch(e) {
+            document.getElementById('chartArea').innerHTML = "चार्ट लोड हो रहा है... (अगर न दिखे तो शीट चेक करें)";
+        }
+    }
+    loadChart();
+</script>
+</body>
+</html>
