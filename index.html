@@ -9,28 +9,26 @@
         body { background: var(--bg); color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; }
         .header { background: #111; padding: 15px; border-bottom: 2px solid var(--gold); margin-bottom: 10px; }
         
-        /* CHART STYLE */
+        /* CHART STYLE - इसे बड़ा और साफ़ किया गया है */
         .week-row { display: flex; width: 98%; margin: 8px auto; border: 1px solid #444; background: #111; min-height: 90px; }
         .date-box { 
-            width: 60px; background: var(--cyan); color: #000; font-size: 12px; font-weight: bold; 
+            width: 65px; background: var(--cyan); color: #000; font-size: 13px; font-weight: bold; 
             display: flex; align-items: center; justify-content: center; flex-direction: column; line-height: 1.4; border-right: 1px solid #000;
         }
         .grid { display: flex; flex: 1; background: #000; gap: 2px; padding: 2px; }
         .cell { flex: 1; border: 1px solid #333; background: #1a1a1a; display: flex; align-items: center; justify-content: space-between; padding: 2px; }
-        .panna { display: flex; flex-direction: column; font-size: 9px; color: #aaa; font-weight: bold; line-height: 1.1; }
-        .jodi { flex: 1; font-size: 20px; font-weight: bold; text-align: center; }
-        .lock { background: #0a0a0a; color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 22px; flex: 1; border: 1px dashed #444; }
+        .panna { display: flex; flex-direction: column; font-size: 10px; color: #aaa; font-weight: bold; line-height: 1.1; }
+        .jodi { flex: 1; font-size: 22px; font-weight: bold; text-align: center; }
+        .lock { background: #0a0a0a; color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 24px; flex: 1; border: 1px dashed #444; }
         .red { color: #ff3333; }
 
         /* SUBSCRIPTION CARD STYLE */
         .card { background: #111; border: 2px solid var(--gold); margin: 20px auto; padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 0 15px rgba(255, 204, 0, 0.2); }
         
-        /* PLAN BUTTONS */
         .plan-box { display: flex; justify-content: space-between; gap: 10px; margin-top: 15px; }
         .plan-btn { 
-            flex: 1; background: #222; border: 1px solid var(--gold); padding: 15px 5px; border-radius: 10px; cursor: pointer; transition: 0.3s;
+            flex: 1; background: #222; border: 1px solid var(--gold); padding: 15px 5px; border-radius: 10px; cursor: pointer;
         }
-        .plan-btn:hover { background: #333; transform: scale(1.05); }
         .plan-btn span { display: block; color: #fff; font-size: 14px; margin-bottom: 5px; }
         .plan-btn b { display: block; color: var(--gold); font-size: 18px; }
 
@@ -44,7 +42,7 @@
 
 <div class="header"><h1>BOMBAY SPECIAL VIP</h1></div>
 
-<div id="chartArea">चार्ट लोड हो रहा है...</div>
+<div id="chartArea" style="min-height: 200px;">चार्ट लोड हो रहा है, थोड़ा इंतज़ार करें...</div>
 
 <hr style="border: 1px solid #333; margin: 20px 0;">
 
@@ -73,7 +71,7 @@
         <h3 style="color:var(--cyan)" id="selectedPlanText">विवरण भरें</h3>
         <input type="text" id="custName" placeholder="अपना नाम लिखें">
         <input type="number" id="custMob" placeholder="मोबाइल नंबर">
-        <button class="btn" onclick="openStep('payStep')">पेमेंट के लिए आगे बढ़ें</button>
+        <button class="btn" onclick="openStep('payStep')">आगे बढ़ें</button>
     </div>
 
     <div class="card" id="payStep" style="display:none;">
@@ -94,7 +92,7 @@
     const SHEET_ID = '1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
-    // चार्ट लोड करने का फंक्शन
+    // चार्ट फेच करने का फंक्शन
     async function fetchChart() {
         try {
             const response = await fetch(CSV_URL);
@@ -105,18 +103,28 @@
             for (let i = 1; i < rows.length; i++) {
                 let row = rows[i];
                 if (!row[0] || row[0].trim() === "") continue;
+
                 let dateRange = row[0].replace(/"/g, "").trim();
                 let formattedDate = dateRange.replace(" to ", "<br>to<br>");
+
                 finalHtml += `<div class="week-row"><div class="date-box">${formattedDate}</div><div class="grid">`;
+                
                 let isLocked = false;
                 for (let j = 1; j <= 16; j += 3) {
                     let l = row[j] ? row[j].replace(/"/g, "").trim() : "";
                     let jo = row[j+1] ? row[j+1].replace(/"/g, "").trim() : "";
                     let r = row[j+2] ? row[j+2].replace(/"/g, "").trim() : "";
+
                     if (l && jo && r) {
                         let colorClass = (j == 4 || j == 16) ? 'red' : '';
-                        let p1 = l.padStart(3, '0'); let p2 = r.padStart(3, '0');
-                        finalHtml += `<div class="cell"><div class="panna"><span>${p1[0]}</span><span>${p1[1]}</span><span>${p1[2]}</span></div><div class="jodi ${colorClass}">${jo}</div><div class="panna"><span>${p2[0]}</span><span>${p2[1]}</span><span>${p2[2]}</span></div></div>`;
+                        let p1 = l.padStart(3, '0');
+                        let p2 = r.padStart(3, '0');
+                        finalHtml += `
+                            <div class="cell">
+                                <div class="panna"><span>${p1[0]}</span><span>${p1[1]}</span><span>${p1[2]}</span></div>
+                                <div class="jodi ${colorClass}">${jo}</div>
+                                <div class="panna"><span>${p2[0]}</span><span>${p2[1]}</span><span>${p2[2]}</span></div>
+                            </div>`;
                     } else if (!isLocked) {
                         finalHtml += `<div class="lock">🔒</div>`;
                         isLocked = true;
@@ -127,19 +135,20 @@
                 finalHtml += `</div></div>`;
             }
             document.getElementById('chartArea').innerHTML = finalHtml;
-        } catch (e) { console.log(e); }
+        } catch (error) {
+            document.getElementById('chartArea').innerHTML = "<p style='color:red;'>Sheet Connection Error!</p>";
+        }
     }
 
-    // स्टेप्स बदलने का फंक्शन
+    // स्टेप्स स्विच करने का फंक्शन (सारे IDs यहाँ होने चाहिए)
     function openStep(id) {
-        document.getElementById('mainAction').style.display = 'none';
-        document.getElementById('planStep').style.display = 'none';
-        document.getElementById('formStep').style.display = 'none';
-        document.getElementById('payStep').style.display = 'none';
+        const steps = ['mainAction', 'planStep', 'formStep', 'payStep'];
+        steps.forEach(s => {
+            document.getElementById(s).style.display = 'none';
+        });
         document.getElementById(id).style.display = 'block';
     }
 
-    // प्लान चुनने का फंक्शन
     function selectPlan(plan, amount) {
         selectedPlan = plan;
         selectedAmount = amount;
@@ -148,21 +157,25 @@
         openStep('formStep');
     }
 
-    // व्हाट्सएप पर भेजने का फंक्शन
     function whatsappMe() {
         let n = document.getElementById('custName').value;
         let m = document.getElementById('custMob').value;
-        if(!n || !m) { alert("विवरण भरें!"); return; }
-        window.open(`https://wa.me/918103982813?text=नमस्ते, मैंने पेमेंट कर दिया है।%0Aनाम: ${n}%0Aमोबाइल: ${m}%0Aप्लान: ${selectedPlan}%0Aराशि: ₹${selectedAmount}`);
+        if(!n || !m) { alert("कृपया नाम और नंबर भरें!"); return; }
+        let text = `नमस्ते, मैंने पेमेंट कर दिया है।%0Aप्लान: ${selectedPlan}%0Aराशि: ₹${selectedAmount}%0Aनाम: ${n}%0Aमोबाइल: ${m}`;
+        window.open(`https://wa.me/918103982813?text=${text}`);
     }
 
     function adminGo() {
-        let pin = prompt("Admin Pin:");
-        if(pin === "123") window.open(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit`);
+        let pin = prompt("Admin Pin डालें:");
+        if(pin === "123") {
+            window.open(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit`);
+        } else {
+            alert("गलत पिन!");
+        }
     }
 
+    // चार्ट लोड शुरू करें
     fetchChart();
 </script>
-
 </body>
 </html>
