@@ -7,14 +7,14 @@
 
     <div class="card" id="planStep" style="display:none;">
         <h3 style="color:var(--gold)">प्लान चुनें</h3>
-        <div class="plan-box">
-            <div class="plan-btn" onclick="selectPlan('7 दिन के लिए', '1299')">
-                <span>7 दिन के लिए</span>
-                <b>₹1299</b>
+        <div class="plan-box" style="display: flex; justify-content: space-between; gap: 10px; margin-top: 15px;">
+            <div class="plan-btn" onclick="selectPlan('7 दिन के लिए', '1299')" style="flex: 1; background: #222; border: 1px solid var(--gold); padding: 15px 5px; border-radius: 10px; cursor: pointer;">
+                <span style="display: block; color: #fff; font-size: 14px; margin-bottom: 5px;">7 दिन के लिए</span>
+                <b style="display: block; color: var(--gold); font-size: 18px;">₹1299</b>
             </div>
-            <div class="plan-btn" onclick="selectPlan('30 दिन के लिए', '1799')">
-                <span>30 दिन के लिए</span>
-                <b>₹1799</b>
+            <div class="plan-btn" onclick="selectPlan('30 दिन के लिए', '1799')" style="flex: 1; background: #222; border: 1px solid var(--gold); padding: 15px 5px; border-radius: 10px; cursor: pointer;">
+                <span style="display: block; color: #fff; font-size: 14px; margin-bottom: 5px;">30 दिन के लिए</span>
+                <b style="display: block; color: var(--gold); font-size: 18px;">₹1799</b>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <h3 style="color:var(--cyan)" id="selectedPlanText">विवरण भरें</h3>
         <input type="text" id="custName" placeholder="अपना नाम लिखें">
         <input type="number" id="custMob" placeholder="मोबाइल नंबर">
-        <button class="btn" onclick="openStep('payStep')">पेमेंट के लिए आगे बढ़ें</button>
+        <button class="btn" onclick="openStep('payStep')">आगे बढ़ें</button>
     </div>
 
     <div class="card" id="payStep" style="display:none;">
@@ -34,3 +34,38 @@
         <button class="btn" style="background:#25D366; color:#fff;" onclick="whatsappMe()">✅ पेमेंट हो गया (WhatsApp)</button>
     </div>
 </div>
+
+<script>
+    // इन Variables को संभालना ज़रूरी है
+    let selectedPlan = "";
+    let selectedAmount = "";
+
+    // सभी कार्ड्स को छुपाकर सिर्फ सही वाले को दिखाने का फंक्शन
+    function openStep(id) {
+        document.getElementById('mainAction').style.display = 'none';
+        document.getElementById('planStep').style.display = 'none';
+        document.getElementById('formStep').style.display = 'none';
+        document.getElementById('payStep').style.display = 'none';
+        
+        document.getElementById(id).style.display = 'block';
+    }
+
+    // प्लान चुनने वाला फंक्शन
+    function selectPlan(plan, amount) {
+        selectedPlan = plan;
+        selectedAmount = amount;
+        document.getElementById('selectedPlanText').innerText = "प्लान: " + plan + " (₹" + amount + ")";
+        document.getElementById('finalAmountText').innerText = "कुल राशि: ₹" + amount;
+        openStep('formStep'); // प्लान चुनते ही फॉर्म पर ले जाएगा
+    }
+
+    // WhatsApp मैसेज भेजने का फंक्शन
+    function whatsappMe() {
+        let n = document.getElementById('custName').value;
+        let m = document.getElementById('custMob').value;
+        if(!n || !m) { alert("कृपया नाम और नंबर भरें!"); return; }
+        
+        let text = `नमस्ते, मैंने पेमेंट कर दिया है।%0Aप्लान: ${selectedPlan}%0Aराशि: ₹${selectedAmount}%0Aनाम: ${n}%0Aमोबाइल: ${m}`;
+        window.open(`https://wa.me/918103982813?text=${text}`);
+    }
+</script>
