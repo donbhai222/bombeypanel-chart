@@ -5,47 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BOMBAY SPECIAL VIP</title>
     <style>
-        :root { --gold: #ffcc00; --bg: #000; --grid-border: #444; }
-        body { background: var(--bg); color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; }
+        :root { --gold: #ffcc00; --bg: #000; --grid-border: #999; }
+        body { background: var(--bg); color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; }
         
         .header { background: #111; color: var(--gold); padding: 15px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
         
         .intro-text { background: #1a1a1a; padding: 10px; margin: 10px auto; width: 92%; border: 1px solid var(--gold); font-size: 13px; color: #ccc; text-align: justify; }
         
-        #chartArea { background: #000; width: 98%; margin: 10px auto; border: 1px solid var(--grid-border); }
+        /* नेविगेशन बटन स्टाइल */
+        .scroll-btn { background: #333; color: #fff; padding: 10px 20px; border: 1px solid var(--gold); border-radius: 5px; cursor: pointer; margin: 10px; font-weight: bold; font-size: 14px; }
+
+        /* चार्ट एरिया - सफ़ेद बैकग्राउंड */
+        #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow: hidden; }
         .chart-grid { display: grid; grid-template-columns: 50px repeat(6, 1fr); width: 100%; }
-        .day-label, .date-label { background: #222; color: var(--gold); font-weight: bold; font-size: 10px; padding: 10px 0; border: 0.5px solid var(--grid-border); }
-        .date-box { background: #111; color: #fff; font-size: 9px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; }
-        .cell { position: relative; aspect-ratio: 1 / 1.1; background: #000; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; }
-        .panna { display: flex; flex-direction: column; font-size: 8px; color: var(--gold); position: absolute; line-height: 1; }
+        
+        .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 10px; padding: 10px 0; border: 0.5px solid var(--grid-border); }
+        .date-box { background: #f0f0f0; color: #000; font-size: 9px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        
+        .cell { position: relative; aspect-ratio: 1 / 1.1; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; }
+        
+        .panna { display: flex; flex-direction: column; font-size: 8px; color: #666; position: absolute; line-height: 1; font-weight: bold; }
         .panna.left { left: 2px; }
         .panna.right { right: 2px; }
-        .jodi { font-size: 18px; font-weight: bold; color: #fff; }
-        .red { color: #ff0000 !important; }
-        .lock { color: #555; font-size: 14px; }
+        .jodi { font-size: 19px; font-weight: bold; color: #000; z-index: 1; }
 
-        /* VIP Button & Sections */
-        .vip-container { margin: 20px auto; width: 90%; max-width: 400px; }
-        .unlock-btn { background: var(--gold); color: #000; padding: 15px; border: none; width: 100%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 18px; box-shadow: 0 0 15px var(--gold); }
-        
+        /* लाल घर के लिए */
+        .red-house .jodi, .red-house .panna { color: #e31e24 !important; }
+
+        .lock { color: #ccc; font-size: 14px; }
+
+        /* VIP सिस्टम स्टाइल */
+        .vip-container { margin: 20px auto; width: 90%; max-width: 400px; padding-bottom: 20px; }
+        .unlock-btn { background: var(--gold); color: #000; padding: 15px; border: none; width: 100%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 18px; }
         .hidden-section { display: none; background: #111; border: 2px solid var(--gold); padding: 15px; border-radius: 10px; margin-top: 15px; }
-        
-        .plan-box { border: 1px solid var(--gold); margin: 10px 0; padding: 10px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
-        .plan-box:hover { background: #222; }
+        .plan-box { border: 1px solid var(--gold); margin: 10px 0; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .plan-box.selected { background: var(--gold); color: #000; }
-
         input { width: 90%; padding: 12px; margin: 8px 0; background: #222; border: 1px solid var(--gold); color: #fff; border-radius: 5px; }
-        .qr-box { margin: 15px 0; border: 1px dashed var(--gold); padding: 10px; display: none; }
-        .btn-final { background: #25D366; color: #fff; border: none; padding: 12px; width: 100%; font-weight: bold; border-radius: 5px; cursor: pointer; display: none; }
+        .qr-box { margin: 15px 0; border: 1px dashed var(--gold); padding: 10px; display: none; background: #000; }
+        .btn-final { background: #25D366; color: #fff; border: none; padding: 12px; width: 100%; font-weight: bold; border-radius: 5px; cursor: pointer; display: none; margin-top: 10px; }
     </style>
 </head>
-<body>
+<body id="top">
 
 <div class="header"><h1>BOMBAY SPECIAL VIP</h1></div>
 
 <div class="intro-text">
     <p>BOMBAY SPECIAL VIP CHART provides fastest results. Unlock VIP for exclusive access.</p>
 </div>
+
+<button class="scroll-btn" onclick="document.getElementById('vip-section').scrollIntoView();">Go to Bottom ↓</button>
 
 <div id="chartArea">
     <div class="chart-grid">
@@ -56,7 +64,7 @@
     </div>
 </div>
 
-<div class="vip-container">
+<div class="vip-container" id="vip-section">
     <button class="unlock-btn" id="mainUnlockBtn" onclick="showPlans()">🔒 UNLOCK VIP CHART</button>
 
     <div id="stepPlans" class="hidden-section">
@@ -72,12 +80,13 @@
         
         <div id="qrBox" class="qr-box">
             <p style="color:var(--gold); font-size:12px;">पेमेंट के लिए QR स्कैन करें</p>
-            <img src="YOUR_QR_IMAGE_LINK" alt="QR Code" style="width:180px; height:180px;">
-            <p style="font-size:11px;">पेमेंट करने के बाद नीचे बटन दबाएं</p>
+            <img src="YOUR_QR_IMAGE_LINK" alt="QR Code" style="width:180px; height:180px; background:#fff; padding:5px;">
             <button class="btn-final" id="waBtn" onclick="sendToWhatsApp()">पेमेंट कर दिया (WhatsApp)</button>
         </div>
     </div>
 </div>
+
+<button class="scroll-btn" onclick="window.scrollTo(0,0);" style="margin-bottom: 40px;">Go to Top ↑</button>
 
 <script>
     let selectedPlanText = "";
@@ -106,13 +115,26 @@
     function sendToWhatsApp() {
         let name = document.getElementById('userName').value;
         let num = document.getElementById('userNum').value;
-        let msg = `नमस्ते! मेरा नाम ${name} है। मेरा नंबर ${num} है। मैंने ${selectedPlanText} का प्लान चुना है और पेमेंट कर दिया है। कृपया मुझे VIP ग्रुप में जोड़ें।`;
+        let msg = `नमस्ते! मेरा नाम ${name} है। मेरा नंबर ${num} है। मैंने ${selectedPlanText} वाला प्लान लिया है।`;
         window.location.href = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(msg)}`;
     }
 
-    // चार्ट लोड करने का फंक्शन (वही पुराना)
     const SHEET_ID = '1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+
+    function isRedHouse(j) {
+        if(!j || j.includes('X')) return false;
+        let cleanJ = j.replace(/"/g,"").trim();
+        if(cleanJ.includes('*')) return true;
+        if(cleanJ.length >= 2) {
+            let d1 = parseInt(cleanJ[0]);
+            let d2 = parseInt(cleanJ[1]);
+            if(!isNaN(d1) && !isNaN(d2)) {
+                return (d1 === d2 || Math.abs(d1 - d2) === 5);
+            }
+        }
+        return false;
+    }
 
     async function loadChart() {
         try {
@@ -124,9 +146,13 @@
                 if(!rows[i][0]) continue;
                 h += `<div class="date-box">${rows[i][0].replace(/"/g,"")}</div>`;
                 for(let j=1; j<=16; j+=3) {
-                    let jo = (rows[i][j+1]||"").replace(/"/g,"").trim();
+                    let l=(rows[i][j]||'').trim(), jo=(rows[i][j+1]||'').trim(), r=(rows[i][j+2]||'').trim();
+                    jo = jo.replace(/"/g,"");
                     if(jo && jo!=="" && jo!=="XX" && !jo.includes('?')) {
-                        h += `<div class="cell"><div class="jodi">${jo}</div></div>`;
+                        let redClass = isRedHouse(jo) ? 'red-house' : '';
+                        let lh = l.split('').map(s=>`<span>${s}</span>`).join('');
+                        let rh = r.split('').map(s=>`<span>${s}</span>`).join('');
+                        h += `<div class="cell ${redClass}"><div class="panna left">${lh}</div><div class="jodi">${jo}</div><div class="panna right">${rh}</div></div>`;
                     } else {
                         h += `<div class="cell"><div class="lock">🔒</div></div>`;
                     }
