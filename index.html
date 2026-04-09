@@ -9,27 +9,28 @@
         body { background: var(--bg); color: #000; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; }
         .header { background: #111; color: #fff; padding: 15px; border-bottom: 2px solid var(--gold); }
         
-        /* Highlighted Intro Text Section */
+        /* Updated Small Font & No Space Intro Text */
         .intro-text { 
-            background: #fff9c4; /* हल्का पीला बैकग्राउंड */
-            padding: 20px; 
-            margin: 15px auto; 
+            background: #fff9c4; 
+            padding: 15px; 
+            margin: 10px auto; 
             width: 90%; 
             max-width: 800px; 
             border-radius: 8px; 
-            border: 1px solid #fbc02d; /* गोल्ड बॉर्डर */
+            border: 1px solid #fbc02d; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            font-size: 15px;
-            line-height: 1.6;
+            font-size: 13px; /* फॉन्ट छोटा किया गया */
+            line-height: 1.4; /* लाइनों के बीच की दूरी कम की गई */
             color: #222;
             text-align: justify;
         }
+        /* पैराग्राफ के बीच का मार्जिन हटाया गया */
+        .intro-text p { margin: 0; padding: 0; }
 
-        .nav-btn { background: #333; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px; font-weight: bold; font-size: 14px; }
+        .nav-btn { background: #333; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px; font-weight: bold; font-size: 13px; }
 
         /* CHART STYLE */
         #chartArea { background: #fff; width: 98%; margin: 10px auto; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1); border: 1px solid #ccc; }
-        
         .days-header { display: flex; background: #222; color: #fff; font-weight: bold; width: 100%; }
         .day-label { flex: 1; padding: 12px 2px; font-size: 12px; border-right: 1px solid #444; }
         .date-label { width: 65px; border-right: 1px solid #444; display: flex; align-items: center; justify-content: center; font-size: 11px; }
@@ -59,9 +60,7 @@
 </div>
 
 <div class="intro-text">
-    People get more from Game with a <b>BOMBAY SPECIAL VIP CHART</b>. Most of the numbering games today offer a variety of platform that exceptionally well known, but without a doubt one of the most successful game is <b>BOMBAY SPECIAL VIP CHART</b>. 
-    <br><br>
-    Even so, using a satta matka system can help you to win more money and gain improved odds. This is why it is essential to make sure you are using a system that is tried and true.
+    <p>People get more from Game with a <b>BOMBAY SPECIAL VIP CHART</b>. Most of the numbering games today offer a variety of platform that exceptionally well known, but without a doubt one of the most successful game is <b>BOMBAY SPECIAL VIP CHART</b>. Even so, using a satta matka system can help you to win more money and gain improved odds. This is why it is essential to make sure you are using a system that is tried and true.</p>
 </div>
 
 <button class="nav-btn" onclick="document.getElementById('bottom').scrollIntoView({behavior: 'smooth'})">Go to Bottom ↓</button>
@@ -159,7 +158,7 @@
             }
             document.getElementById('chartData').innerHTML = finalHtml;
         } catch (error) {
-            document.getElementById('chartData').innerHTML = "<p style='color:red;'>चार्ट लोड नहीं हो सका!</p>";
+            document.getElementById('chartData').innerHTML = "चार्ट लोड नहीं हो सका!";
         }
     }
 
@@ -180,7 +179,7 @@
     function whatsappMe() {
         let n = document.getElementById('custName').value;
         let m = document.getElementById('custMob').value;
-        if(!n || !m) { alert("कृपया विवरण भरें!"); return; }
+        if(!n || !m) { alert("कृपया नाम और मोबाइल नंबर भरें!"); return; }
         let text = `नमस्ते, मैंने पेमेंट कर दिया है।%0Aप्लान: ${selectedPlan}%0Aराशि: ₹${selectedAmount}%0Aनाम: ${n}`;
         window.open(`https://wa.me/918103982813?text=${text}`);
     }
