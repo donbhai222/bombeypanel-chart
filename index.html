@@ -44,7 +44,7 @@
         .jodi { flex: 1; font-size: 22px; font-weight: bold; text-align: center; }
         .lock { background: #fafafa; color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 22px; flex: 1; }
         
-        /* Red Jodi Class */
+        /* Red Jodi & Star Class */
         .red { color: #e31e24 !important; }
 
         .card { background: #fff; border: 1px solid #ddd; margin: 20px auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 400px; }
@@ -117,14 +117,22 @@
     let selectedPlan = "";
     let selectedAmount = "";
 
-    // Lal Ghar Check karne ka function
+    // Lal Ghar Check karne ka updated function (Star logic added)
     function isRedJodi(jodi) {
-        if (!jodi || jodi.trim() === "" || jodi.length < 2) return false;
-        let d1 = parseInt(jodi[0]);
-        let d2 = parseInt(jodi[1]);
+        if (!jodi || jodi.trim() === "") return false;
         
-        // Rule: Same digits (00, 11..) ya Cut digits (diff 5)
-        return (d1 === d2 || Math.abs(d1 - d2) === 5);
+        let cleanJodi = jodi.trim();
+
+        // अगर स्टार (*) है तो लाल करें
+        if (cleanJodi.includes('*')) return true;
+
+        if (cleanJodi.length < 2) return false;
+
+        let d1 = parseInt(cleanJodi[0]);
+        let d2 = parseInt(cleanJodi[1]);
+        
+        // Same digits (00, 11..) या Cut digits (diff 5)
+        return (!isNaN(d1) && !isNaN(d2) && (d1 === d2 || Math.abs(d1 - d2) === 5));
     }
 
     async function fetchChart() {
@@ -148,7 +156,6 @@
                     let r = row[j+2] ? row[j+2].replace(/"/g, "").trim() : "";
 
                     if (l && jo && r) {
-                        // AUTOMATIC RED LOGIC
                         let colorClass = isRedJodi(jo) ? 'red' : '';
                         
                         let p1 = l.padStart(3, '0');
@@ -160,8 +167,13 @@
                                 <div class="panna"><span>${p2[0]}</span><span>${p2[1]}</span><span>${p2[2]}</span></div>
                             </div>`;
                     } else if (!isLocked) {
-                        finalHtml += `<div class="lock">🔒</div>`;
-                        isLocked = true;
+                        // यहाँ भी स्टार चेक कर रहे हैं ताकि लॉक की जगह अगर स्टार हो तो वो लाल दिखे
+                        if (jo.includes('*')) {
+                             finalHtml += `<div class="cell"><div class="jodi red">${jo}</div></div>`;
+                        } else {
+                            finalHtml += `<div class="lock">🔒</div>`;
+                            isLocked = true;
+                        }
                     } else {
                         finalHtml += `<div class="cell" style="background:#fff"></div>`;
                     }
