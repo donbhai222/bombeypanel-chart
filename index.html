@@ -10,39 +10,39 @@
         
         .header { background: #111; color: var(--gold); padding: 15px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
         
-        .intro-text { background: #1a1a1a; padding: 10px; margin: 10px auto; width: 92%; border: 1px solid var(--gold); font-size: 13px; color: #ccc; text-align: justify; }
+        .intro-text { background: #1a1a1a; padding: 10px; margin: 10px auto; width: 88%; border: 1px solid var(--gold); font-size: 13px; color: #ccc; text-align: justify; }
         
-        /* नेविगेशन बटन स्टाइल */
-        .scroll-btn { background: #333; color: #fff; padding: 10px 20px; border: 1px solid var(--gold); border-radius: 5px; cursor: pointer; margin: 10px; font-weight: bold; font-size: 14px; }
-
-        /* चार्ट एरिया - सफ़ेद बैकग्राउंड */
-        #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow: hidden; }
-        .chart-grid { display: grid; grid-template-columns: 50px repeat(6, 1fr); width: 100%; }
+        /* चार्ट को साइड से छोटा किया गया (Mobile Friendly) */
+        #chartArea { background: #fff; width: 94%; margin: 10px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow: hidden; }
+        .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; }
         
-        .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 10px; padding: 10px 0; border: 0.5px solid var(--grid-border); }
-        .date-box { background: #f0f0f0; color: #000; font-size: 9px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 9px; padding: 8px 0; border: 0.5px solid var(--grid-border); }
+        .date-box { background: #f0f0f0; color: #000; font-size: 8.5px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; }
         
         .cell { position: relative; aspect-ratio: 1 / 1.1; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; }
-        
-        .panna { display: flex; flex-direction: column; font-size: 8px; color: #666; position: absolute; line-height: 1; font-weight: bold; }
-        .panna.left { left: 2px; }
-        .panna.right { right: 2px; }
-        .jodi { font-size: 19px; font-weight: bold; color: #000; z-index: 1; }
+        .panna { display: flex; flex-direction: column; font-size: 7.5px; color: #666; position: absolute; line-height: 1; font-weight: bold; }
+        .panna.left { left: 1.5px; }
+        .panna.right { right: 1.5px; }
+        .jodi { font-size: 17px; font-weight: bold; color: #000; z-index: 1; }
 
-        /* लाल घर के लिए */
         .red-house .jodi, .red-house .panna { color: #e31e24 !important; }
+        .lock { color: #ccc; font-size: 13px; }
 
-        .lock { color: #ccc; font-size: 14px; }
+        /* बटन स्टाइल */
+        .scroll-btn { background: #1a1a1a; color: #fff; padding: 8px 15px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 10px; font-size: 12px; }
+        .unlock-btn { background: var(--gold); color: #000; padding: 15px; border: none; width: 90%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 18px; margin: 20px 0; }
 
-        /* VIP सिस्टम स्टाइल */
-        .vip-container { margin: 20px auto; width: 90%; max-width: 400px; padding-bottom: 20px; }
-        .unlock-btn { background: var(--gold); color: #000; padding: 15px; border: none; width: 100%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 18px; }
-        .hidden-section { display: none; background: #111; border: 2px solid var(--gold); padding: 15px; border-radius: 10px; margin-top: 15px; }
-        .plan-box { border: 1px solid var(--gold); margin: 10px 0; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        /* Full Screen Overlay (नया पेज जैसा एहसास) */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; align-items: center; justify-content: center; }
+        .modal-content { background: #111; border: 2px solid var(--gold); width: 90%; max-width: 400px; padding: 20px; border-radius: 12px; margin: 50px auto; position: relative; }
+        .close-modal { position: absolute; top: 10px; right: 15px; color: var(--gold); font-size: 25px; cursor: pointer; }
+
+        .plan-box { border: 1px solid var(--gold); margin: 12px 0; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; color: #fff; }
         .plan-box.selected { background: var(--gold); color: #000; }
-        input { width: 90%; padding: 12px; margin: 8px 0; background: #222; border: 1px solid var(--gold); color: #fff; border-radius: 5px; }
-        .qr-box { margin: 15px 0; border: 1px dashed var(--gold); padding: 10px; display: none; background: #000; }
-        .btn-final { background: #25D366; color: #fff; border: none; padding: 12px; width: 100%; font-weight: bold; border-radius: 5px; cursor: pointer; display: none; margin-top: 10px; }
+        
+        input { width: 90%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid var(--gold); color: #fff; border-radius: 6px; font-size: 16px; }
+        .qr-box { margin-top: 20px; border: 1px dashed var(--gold); padding: 15px; display: none; }
+        .btn-wa { background: #25D366; color: #fff; border: none; padding: 15px; width: 100%; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; display: none; }
     </style>
 </head>
 <body id="top">
@@ -53,7 +53,7 @@
     <p>BOMBAY SPECIAL VIP CHART provides fastest results. Unlock VIP for exclusive access.</p>
 </div>
 
-<button class="scroll-btn" onclick="document.getElementById('vip-section').scrollIntoView();">Go to Bottom ↓</button>
+<button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView();">Go to Bottom ↓</button>
 
 <div id="chartArea">
     <div class="chart-grid">
@@ -64,61 +64,66 @@
     </div>
 </div>
 
-<div class="vip-container" id="vip-section">
-    <button class="unlock-btn" id="mainUnlockBtn" onclick="showPlans()">🔒 UNLOCK VIP CHART</button>
-
-    <div id="stepPlans" class="hidden-section">
-        <h3 style="color:var(--gold); margin-top:0;">प्लान चुनें</h3>
-        <div class="plan-box" onclick="selectPlan(this, '7 दिन के लिए 1299')">7 दिन के लिए - ₹1299</div>
-        <div class="plan-box" onclick="selectPlan(this, '30 दिन के लिए 1799')">30 दिन के लिए - ₹1799</div>
-    </div>
-
-    <div id="stepForm" class="hidden-section">
-        <input type="text" id="userName" placeholder="अपना नाम डालें">
-        <input type="number" id="userNum" placeholder="WhatsApp नंबर डालें">
-        <button class="unlock-btn" style="font-size:14px;" onclick="showQR()">आगे बढ़ें (Get QR)</button>
-        
-        <div id="qrBox" class="qr-box">
-            <p style="color:var(--gold); font-size:12px;">पेमेंट के लिए QR स्कैन करें</p>
-            <img src="YOUR_QR_IMAGE_LINK" alt="QR Code" style="width:180px; height:180px; background:#fff; padding:5px;">
-            <button class="btn-final" id="waBtn" onclick="sendToWhatsApp()">पेमेंट कर दिया (WhatsApp)</button>
-        </div>
-    </div>
+<div id="unlockArea">
+    <button class="unlock-btn" onclick="openVipModal()">🔒 UNLOCK VIP CHART</button>
 </div>
 
 <button class="scroll-btn" onclick="window.scrollTo(0,0);" style="margin-bottom: 40px;">Go to Top ↑</button>
 
+<div id="vipModal" class="overlay">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeVipModal()">&times;</span>
+        
+        <div id="modalStep1">
+            <h2 style="color:var(--gold);">VIP प्लान चुनें</h2>
+            <div class="plan-box" onclick="goToStep2(this, '7 दिन के लिए 1299')">7 दिन के लिए - ₹1299</div>
+            <div class="plan-box" onclick="goToStep2(this, '30 दिन के लिए 1799')">30 दिन के लिए - ₹1799</div>
+        </div>
+
+        <div id="modalStep2" style="display:none;">
+            <h3 style="color:var(--gold);">अपनी जानकारी भरें</h3>
+            <input type="text" id="userName" placeholder="अपना नाम लिखें">
+            <input type="number" id="userNum" placeholder="WhatsApp नंबर">
+            <button class="unlock-btn" onclick="showQR()">पेमेंट के लिए QR निकालें</button>
+            
+            <div id="qrBox" class="qr-box">
+                <img src="YOUR_QR_IMAGE_LINK" alt="QR Code" style="width:200px; height:200px; background:#fff; padding:5px; border-radius:5px;">
+                <p style="font-size:12px; color:var(--gold); margin-top:10px;">स्कैन करके पेमेंट करें</p>
+                <button class="btn-wa" id="finalWaBtn" onclick="sendToWhatsApp()">पेमेंट कर दिया (WhatsApp)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     let selectedPlanText = "";
 
-    function showPlans() {
-        document.getElementById('mainUnlockBtn').style.display = 'none';
-        document.getElementById('stepPlans').style.display = 'block';
-    }
+    function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; }
+    function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; }
 
-    function selectPlan(el, plan) {
+    function goToStep2(el, plan) {
         selectedPlanText = plan;
-        document.querySelectorAll('.plan-box').forEach(b => b.classList.remove('selected'));
-        el.classList.add('selected');
-        document.getElementById('stepForm').style.display = 'block';
+        document.getElementById('modalStep1').style.display = 'none';
+        document.getElementById('modalStep2').style.display = 'block';
     }
 
     function showQR() {
         if(document.getElementById('userName').value == "" || document.getElementById('userNum').value == "") {
-            alert("कृपया नाम और नंबर डालें");
+            alert("नाम और नंबर डालना जरूरी है!");
             return;
         }
         document.getElementById('qrBox').style.display = 'block';
-        document.getElementById('waBtn').style.display = 'block';
+        document.getElementById('finalWaBtn').style.display = 'block';
     }
 
     function sendToWhatsApp() {
         let name = document.getElementById('userName').value;
         let num = document.getElementById('userNum').value;
-        let msg = `नमस्ते! मेरा नाम ${name} है। मेरा नंबर ${num} है। मैंने ${selectedPlanText} वाला प्लान लिया है।`;
+        let msg = `नमस्ते! मेरा नाम ${name} है। मैंने ${selectedPlanText} वाला प्लान चुना है और पेमेंट कर दिया है।`;
         window.location.href = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(msg)}`;
     }
 
+    // चार्ट डेटा लोडिंग (वही पुराना सही लॉजिक)
     const SHEET_ID = '1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
@@ -127,11 +132,8 @@
         let cleanJ = j.replace(/"/g,"").trim();
         if(cleanJ.includes('*')) return true;
         if(cleanJ.length >= 2) {
-            let d1 = parseInt(cleanJ[0]);
-            let d2 = parseInt(cleanJ[1]);
-            if(!isNaN(d1) && !isNaN(d2)) {
-                return (d1 === d2 || Math.abs(d1 - d2) === 5);
-            }
+            let d1 = parseInt(cleanJ[0]); let d2 = parseInt(cleanJ[1]);
+            if(!isNaN(d1) && !isNaN(d2)) return (d1 === d2 || Math.abs(d1 - d2) === 5);
         }
         return false;
     }
@@ -153,9 +155,7 @@
                         let lh = l.split('').map(s=>`<span>${s}</span>`).join('');
                         let rh = r.split('').map(s=>`<span>${s}</span>`).join('');
                         h += `<div class="cell ${redClass}"><div class="panna left">${lh}</div><div class="jodi">${jo}</div><div class="panna right">${rh}</div></div>`;
-                    } else {
-                        h += `<div class="cell"><div class="lock">🔒</div></div>`;
-                    }
+                    } else { h += `<div class="cell"><div class="lock">🔒</div></div>`; }
                 }
             }
             document.getElementById('gridData').innerHTML = h;
