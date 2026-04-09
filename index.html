@@ -19,17 +19,23 @@
         .date-box { background: #f0f0f0; color: #000; font-size: 8.5px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; }
         
         .cell { position: relative; aspect-ratio: 1 / 1.1; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; }
+        
+        /* पन्ना और जोड़ी स्टाइल */
         .panna { display: flex; flex-direction: column; font-size: 7.5px; color: #666; position: absolute; line-height: 1; font-weight: bold; }
         .panna.left { left: 1.5px; }
         .panna.right { right: 1.5px; }
         .jodi { font-size: 17px; font-weight: bold; color: #000; z-index: 1; }
 
+        /* लाल घर */
         .red-house .jodi, .red-house .panna { color: #e31e24 !important; }
-        .lock { color: #ccc; font-size: 13px; }
+
+        /* सिंगल VIP लॉक स्टाइल */
+        .vip-lock { color: #ffcc00; font-size: 18px; filter: drop-shadow(0 0 2px rgba(0,0,0,0.2)); }
 
         .scroll-btn { background: #1a1a1a; color: #fff; padding: 8px 15px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 10px; font-size: 12px; }
         .unlock-btn { background: var(--gold); color: #000; padding: 15px; border: none; width: 90%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 18px; margin: 20px 0; }
 
+        /* Modal स्टाइल */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; align-items: center; justify-content: center; }
         .modal-content { background: #111; border: 2px solid var(--gold); width: 90%; max-width: 400px; padding: 20px; border-radius: 12px; margin: 20px auto; position: relative; }
         .close-modal { position: absolute; top: 10px; right: 15px; color: var(--gold); font-size: 25px; cursor: pointer; }
@@ -47,7 +53,7 @@
 <div class="header"><h1>BOMBAY SPECIAL VIP</h1></div>
 
 <div class="intro-text">
-    <p>BOMBAY SPECIAL VIP CHART provides fastest results. Unlock VIP for exclusive access.</p>
+    <p>BOMBAY SPECIAL VIP CHART provides fastest results. Unlock VIP for exclusive access to Jodi and Panna.</p>
 </div>
 
 <button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView();">Go to Bottom ↓</button>
@@ -70,22 +76,20 @@
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <span class="close-modal" onclick="closeVipModal()">&times;</span>
-        
         <div id="modalStep1">
             <h2 style="color:var(--gold);">VIP प्लान चुनें</h2>
             <div class="plan-box" onclick="goToStep2(this, '7 दिन के लिए 1299')">7 दिन के लिए - ₹1299</div>
             <div class="plan-box" onclick="goToStep2(this, '30 दिन के लिए 1799')">30 दिन के लिए - ₹1799</div>
         </div>
-
         <div id="modalStep2" style="display:none;">
             <h3 style="color:var(--gold);">अपनी जानकारी भरें</h3>
             <input type="text" id="userName" placeholder="अपना नाम लिखें">
             <input type="number" id="userNum" placeholder="WhatsApp नंबर">
             <button class="unlock-btn" style="font-size:14px;" onclick="showQR()">पेमेंट के लिए QR निकालें</button>
-            
             <div id="qrBox" class="qr-box">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PAYMENT_INFO" alt="QR Code" style="width:180px; height:180px;">
-                <p style="font-size:12px; color:#000; margin-top:10px; font-weight:bold;">स्कैन करके पेमेंट करें</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=omkaryadavsonu8888-1@oksbi%26pn=Omkar%20Yadav%26cu=INR" alt="QR Code" style="width:200px; height:200px;">
+                <p style="font-size:16px; color:#000; margin-top:10px; font-weight:bold;">Omkar Yadav</p>
+                <p style="font-size:11px; color:#333;">UPI ID: omkaryadavsonu8888-1@oksbi</p>
             </div>
             <button class="btn-wa" id="finalWaBtn" onclick="sendToWhatsApp()">पेमेंट कर दिया (WhatsApp)</button>
         </div>
@@ -110,8 +114,7 @@
 
     function showQR() {
         if(document.getElementById('userName').value == "" || document.getElementById('userNum').value == "") {
-            alert("नाम और नंबर डालना जरूरी है!");
-            return;
+            alert("नाम और नंबर डालना जरूरी है!"); return;
         }
         document.getElementById('qrBox').style.display = 'block';
         document.getElementById('finalWaBtn').style.display = 'block';
@@ -120,15 +123,12 @@
     function sendToWhatsApp() {
         let name = document.getElementById('userName').value;
         let num = document.getElementById('userNum').value;
-        let myNumber = "919999999999"; // अपना असली नंबर यहाँ डालें (91 के साथ)
-        let msg = `नमस्ते! मेरा नाम ${name} है। मेरा नंबर ${num} है। मैंने ${selectedPlanText} वाला प्लान चुना है और पेमेंट कर दिया है।`;
-        
-        // सुरक्षित लिंक फॉर्मैट
+        let myNumber = "918103982813"; 
+        let msg = `नमस्ते! मेरा नाम ${name} है। मेरा नंबर ${num} है। मैंने ${selectedPlanText} वाला प्लान चुना है और Omkar Yadav के QR पर पेमेंट कर दिया है। कृपया VIP एक्सेस दें।`;
         let url = "https://api.whatsapp.com/send?phone=" + myNumber + "&text=" + encodeURIComponent(msg);
         window.open(url, '_blank');
     }
 
-    // चार्ट डेटा फंक्शन
     const SHEET_ID = '1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
@@ -155,12 +155,17 @@
                 for(let j=1; j<=16; j+=3) {
                     let l=(rows[i][j]||'').trim(), jo=(rows[i][j+1]||'').trim(), r=(rows[i][j+2]||'').trim();
                     jo = jo.replace(/"/g,"");
-                    if(jo && jo!=="" && jo!=="XX" && !jo.includes('?')) {
+                    
+                    // अगर जोड़ी खाली है (नंबर नहीं डला है) तो सिंगल लॉक दिखेगा
+                    if(!jo || jo==="" || jo==="XX" || jo.includes('?')) {
+                        h += `<div class="cell"><div class="vip-lock">🔒</div></div>`;
+                    } else {
+                        // अगर नंबर डला है तो लॉक हट जाएगा और नंबर दिखेगा
                         let redClass = isRedHouse(jo) ? 'red-house' : '';
                         let lh = l.split('').map(s=>`<span>${s}</span>`).join('');
                         let rh = r.split('').map(s=>`<span>${s}</span>`).join('');
                         h += `<div class="cell ${redClass}"><div class="panna left">${lh}</div><div class="jodi">${jo}</div><div class="panna right">${rh}</div></div>`;
-                    } else { h += `<div class="cell"><div class="lock">🔒</div></div>`; }
+                    }
                 }
             }
             document.getElementById('gridData').innerHTML = h;
