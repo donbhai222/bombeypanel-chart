@@ -12,7 +12,6 @@
         
         .intro-text { background: #1a1a1a; padding: 12px; margin: 15px auto; width: 88%; border: 1px solid var(--gold); font-size: 14px; color: #fff; text-align: center; font-weight: bold; line-height: 1.4; border-radius: 4px; }
         
-        /* ऊपर और नीचे जाने वाले बटन का स्टाइल */
         .scroll-btn { background: #1a1a1a; color: #fff; padding: 8px 15px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 10px; font-size: 12px; }
 
         #chartArea { background: #fff; width: 94%; margin: 10px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow: hidden; }
@@ -21,7 +20,7 @@
         .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 9px; padding: 8px 0; border: 0.5px solid var(--grid-border); }
         .date-box { background: #f0f0f0; color: #000; font-size: 8.5px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; }
         
-        .cell { position: relative; aspect-ratio: 1 / 1.1; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; }
+        .cell { position: relative; aspect-ratio: 1 / 1.1; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; min-height: 45px; }
         
         .panna { display: flex; flex-direction: column; font-size: 7.5px; color: #666; position: absolute; line-height: 1; font-weight: bold; }
         .panna.left { left: 1.5px; }
@@ -53,14 +52,18 @@
     UNLOCK VIP FOR EXCLUSIVE ACCESS TO JODI AND PANNA.
 </div>
 
-<button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView();">Go to Bottom ↓</button>
+<button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom ↓</button>
 
 <div id="chartArea">
     <div class="chart-grid">
         <div class="date-label">DATE</div>
-        <div class="day-label">MON</div><div class="day-label">TUE</div><div class="day-label">WED</div>
-        <div class="day-label">THU</div><div class="day-label">FRI</div><div class="day-label">SAT</div>
-        <div id="gridData" style="display:contents;">लोड हो रहा है...</div>
+        <div class="day-label">MON</div>
+        <div class="day-label">TUE</div>
+        <div class="day-label">WED</div>
+        <div class="day-label">THU</div>
+        <div class="day-label">FRI</div>
+        <div class="day-label">SAT</div>
+        <div id="gridData" style="display:contents;">चार्ट लोड हो रहा है...</div>
     </div>
 </div>
 
@@ -68,7 +71,7 @@
     <button class="unlock-btn" onclick="openVipModal()">🔒 UNLOCK VIP CHART</button>
 </div>
 
-<button class="scroll-btn" onclick="window.scrollTo(0,0);" style="margin-bottom: 40px;">Go to Top ↑</button>
+<button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="margin-bottom: 40px;">Go to Top ↑</button>
 
 <div id="vipModal" class="overlay">
     <div class="modal-content">
@@ -95,4 +98,83 @@
     let selectedPlanText = "";
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; }
     function closeVipModal() { 
-        document.getElementById('vipModal').style
+        document.getElementById('vipModal').style.display = 'none';
+        document.getElementById('modalStep1').style.display = 'block';
+        document.getElementById('modalStep2').style.display = 'none';
+    }
+    
+    function goToStep2(p) { 
+        selectedPlanText = p; 
+        document.getElementById('modalStep1').style.display = 'none'; 
+        document.getElementById('modalStep2').style.display = 'block'; 
+    }
+    
+    function showQR() { 
+        if(document.getElementById('userName').value === "" || document.getElementById('userNum').value === "") {
+            alert("कृपया नाम और नंबर दोनों भरें!");
+            return;
+        }
+        document.getElementById('qrBox').style.display = 'block'; 
+        document.getElementById('finalWaBtn').style.display = 'block'; 
+    }
+    
+    function sendToWhatsApp() {
+        let name = document.getElementById('userName').value;
+        let num = document.getElementById('userNum').value;
+        let message = `नमस्ते!%0Aमेरा नाम: ${name}%0Aमेरा व्हाट्सएप नंबर: ${num}%0Aमैंने ${selectedPlanText} वाला प्लान चुना है और पेमेंट कर दिया है। कृपया VIP एक्सेस दें।`;
+        let url = `https://api.whatsapp.com/send?phone=918103982813&text=${message}`;
+        window.open(url, '_blank');
+    }
+
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv&v=${new Date().getTime()}`;
+
+    async function loadChart() {
+        try {
+            const res = await fetch(CSV_URL);
+            if(!res.ok) throw new Error("Network issue");
+            const data = await res.text();
+            const rows = data.split('\n').filter(row => row.trim() !== "").map(r => r.split(','));
+            let h = '';
+            let lockPlaced = false;
+
+            for(let i=1; i<rows.length; i++) {
+                let dateCell = (rows[i][0] || "").replace(/"/g,"").trim();
+                if(!dateCell) continue;
+                
+                h += `<div class="date-box">${dateCell}</div>`;
+                
+                for(let j=1; j<=16; j+=3) {
+                    let l = (rows[i][j] || "").trim().replace(/"/g,"");
+                    let jo = (rows[i][j+1] || "").trim().replace(/"/g,"");
+                    let r = (rows[i][j+2] || "").trim().replace(/"/g,"");
+
+                    if (l === "" && jo === "" && r === "") {
+                        if (!lockPlaced) {
+                            h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`;
+                            lockPlaced = true;
+                        } else {
+                            h += `<div class="cell"></div>`;
+                        }
+                    } else {
+                        let isRed = false;
+                        if(jo.length >= 2) {
+                            let d1 = parseInt(jo[0]), d2 = parseInt(jo[1]);
+                            if(!isNaN(d1) && !isNaN(d2) && (d1===d2 || Math.abs(d1-d2)===5)) isRed = true;
+                        }
+                        let redClass = isRed ? 'red-house' : '';
+                        let lh = l.split('').map(s=>`<span>${s}</span>`).join('');
+                        let rh = r.split('').map(s=>`<span>${s}</span>`).join('');
+                        h += `<div class="cell ${redClass}"><div class="panna left">${lh}</div><div class="jodi">${jo}</div><div class="panna right">${rh}</div></div>`;
+                    }
+                }
+            }
+            document.getElementById('gridData').innerHTML = h;
+        } catch(e) { 
+            console.error(e); 
+            document.getElementById('gridData').innerHTML = "चार्ट लोड करने में दिक्कत आ रही है।";
+        }
+    }
+    loadChart();
+</script>
+</body>
+</html>
