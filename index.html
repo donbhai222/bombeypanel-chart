@@ -7,115 +7,57 @@
     <style>
         :root { --gold: #ffcc00; --bg: #f4f4f4; --grid-border: #999; }
         body { background: var(--bg); color: #000; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; }
+        
         .header { background: #111; color: #fff; padding: 15px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
         
         .intro-text { 
-            background: #fff9c4; 
-            padding: 15px; 
-            margin: 10px auto; 
-            width: 90%; 
-            max-width: 800px; 
-            border-radius: 8px; 
-            border: 1px solid #fbc02d; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            font-size: 13px;
-            line-height: 1.4;
-            color: #222;
-            text-align: justify;
+            background: #fff9c4; padding: 12px; margin: 10px auto; width: 90%; max-width: 800px; 
+            border-radius: 4px; border: 1px solid #fbc02d; font-size: 13px; line-height: 1.3; color: #222; text-align: justify;
         }
         .intro-text p { margin: 0; padding: 0; }
 
         .nav-btn { background: #333; color: #fff; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; margin: 10px; font-weight: bold; font-size: 12px; }
 
-        /* =========================================
-           मोबाइल फिट चार्ट स्टाइल
-           ========================================= */
-        #chartArea { 
-            background: #fff; 
-            width: 95%; /* दोनों साइड स्पेस के लिए */
-            margin: 10px auto; 
-            border-radius: 4px; 
-            overflow: hidden; /* स्क्रॉल हटाकर फिट करने की कोशिश */
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
-            border: 1px solid var(--grid-border);
-        }
-
-        .chart-grid {
-            display: grid;
-            grid-template-columns: 50px repeat(6, 1fr); /* डेट कॉलम थोड़ा छोटा किया */
-            width: 100%;
-        }
-
-        .day-label, .date-label, .date-box, .cell, .lock {
-            border-right: 1px solid var(--grid-border);
-            border-bottom: 1px solid var(--grid-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* हेडर को ब्लैक किया गया है */
-        .day-label, .date-label {
-            background: #000 !important; /* शुद्ध काला रंग */
-            color: var(--gold) !important; /* लिखावट गोल्ड ताकि साफ़ दिखे */
-            font-weight: bold;
-            font-size: 10px;
-            padding: 10px 0;
-        }
-
-        .date-box { 
-            background: #f9f9f9; 
-            color: #000; 
-            font-size: 9px; 
-            font-weight: bold; 
-            padding: 2px;
-        }
-
-        .cell { 
-            padding: 0;
-            position: relative;
-            aspect-ratio: 1 / 1.1; /* मोबाइल पर फिट आने के लिए थोड़ा एडजस्ट किया */
-            background: #fff;
-        }
-
-        .panna { 
-            display: flex; 
-            flex-direction: column; 
-            font-size: 8px; /* पन्ना थोड़ा छोटा किया */
-            color: #555; 
-            font-weight: bold; 
-            line-height: 1; 
-            position: absolute;
-        }
-        .panna.left { left: 1px; }
-        .panna.right { right: 1px; }
-
-        .jodi { 
-            font-size: 18px; /* जोड़ी का साइज मोबाइल के हिसाब से सेट किया */
-            font-weight: bold; 
-            color: #000;
-            z-index: 1;
-        }
-
-        .lock { background: #fdfdfd; color: #ccc; font-size: 14px; }
+        /* चार्ट स्टाइल */
+        #chartArea { background: #fff; width: 98%; margin: 10px auto; border-radius: 4px; overflow: hidden; border: 1px solid var(--grid-border); }
+        .chart-grid { display: grid; grid-template-columns: 55px repeat(6, 1fr); width: 100%; }
+        .day-label, .date-label, .date-box, .cell, .lock { border-right: 1px solid var(--grid-border); border-bottom: 1px solid var(--grid-border); display: flex; align-items: center; justify-content: center; }
+        .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 10px; padding: 10px 0; }
+        .date-box { background: #f1f1f1; font-size: 10px; font-weight: bold; padding: 5px 2px; }
+        .cell { position: relative; aspect-ratio: 1 / 1.1; background: #fff; min-height: 45px; }
+        .panna { display: flex; flex-direction: column; font-size: 9px; color: #666; font-weight: bold; line-height: 1.1; position: absolute; }
+        .panna.left { left: 2px; }
+        .panna.right { right: 2px; }
+        .jodi { font-size: 19px; font-weight: bold; color: #000; z-index: 1; }
+        .lock { background: #f9f9f9; color: #bbb; font-size: 16px; }
         .red { color: #e31e24 !important; }
 
-        .card { background: #fff; border: 1px solid #ddd; margin: 20px auto; padding: 20px; border-radius: 12px; width: 85%; max-width: 400px; }
-        .btn { padding: 15px; background: #111; color: #fff; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; width: 100%; margin-top: 10px; }
-        .footer-spacer { padding-bottom: 60px; }
+        /* VIP & SUBSCRIPTION SECTION */
+        .vip-card { background: #fff; border: 2px solid var(--gold); margin: 20px auto; padding: 15px; border-radius: 12px; width: 90%; max-width: 450px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .plan-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        .plan-table th, .plan-table td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        .plan-table th { background: #111; color: var(--gold); }
+        
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; }
+        .form-group input { width: 95%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+
+        .qr-box { background: #f9f9f9; padding: 10px; border: 1px dashed #999; margin: 15px 0; border-radius: 8px; }
+        .qr-img { width: 150px; height: 150px; background: #ddd; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666; }
+
+        .btn-pay { background: #111; color: #fff; padding: 15px; border: none; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .btn-whatsapp { background: #25D366; color: white; padding: 12px; text-decoration: none; display: block; border-radius: 8px; font-weight: bold; margin-top: 10px; font-size: 15px; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>BOMBAY SPECIAL VIP</h1>
+    <h1 style="margin:0; font-size: 22px;">BOMBAY SPECIAL VIP</h1>
 </div>
 
 <div class="intro-text">
-    <p>People get more from Game with a <b>BOMBAY SPECIAL VIP CHART</b>...</p>
+    <p>Get the most accurate <b>BOMBAY SPECIAL VIP CHART</b> and fast results. Our VIP members get access to exclusive jodi and panna every single day.</p>
 </div>
-
-<button class="nav-btn" onclick="document.getElementById('bottom').scrollIntoView({behavior: 'smooth'})">Go to Bottom ↓</button>
 
 <div id="chartArea">
     <div class="chart-grid"> 
@@ -126,29 +68,51 @@
         <div class="day-label">THU</div>
         <div class="day-label">FRI</div>
         <div class="day-label">SAT</div>
-        
         <div id="gridData" style="display:contents;">लोड हो रहा है...</div>
     </div>
 </div>
 
-<button class="nav-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Go to Top ↑</button>
+<div class="vip-card">
+    <h2 style="margin:0; color: #d32f2f;">🔒 UNLOCK VIP ACCESS</h2>
+    <p style="font-size: 13px; color: #555;">VIP जोड़ी और पन्ना देखने के लिए प्लान चुनें</p>
 
-<div id="unlockContainer">
-    <div class="card">
-        <h2 style="margin-top:0;">🔒 VIP FULL CHART</h2>
-        <p>VIP जोड़ी और पन्ना देखने के लिए अनलॉक करें</p>
-        <button class="btn">UNLOCK NOW</button>
+    <table class="plan-table">
+        <tr><th>प्लान</th><th>कीमत</th><th>वैधता</th></tr>
+        <tr><td>Basic</td><td>₹499</td><td>1 हफ्ता</td></tr>
+        <tr><td>Premium</td><td>₹1499</td><td>1 महीना</td></tr>
+    </table>
+
+    <div class="form-group">
+        <label>आपका नाम (Full Name)</label>
+        <input type="text" placeholder="अपना नाम लिखें...">
     </div>
+    <div class="form-group">
+        <label>मोबाइल नंबर (WhatsApp Number)</label>
+        <input type="number" placeholder="91XXXXXXXX">
+    </div>
+
+    <div class="qr-box">
+        <p style="margin-top:0; font-weight:bold; font-size:12px;">Scan QR for Payment</p>
+        <div class="qr-img">
+            <img src="YOUR_QR_IMAGE_URL" alt="QR Code" style="width:100%; height:100%; object-fit: contain;">
+        </div>
+    </div>
+
+    <button class="btn-pay">सबमिट करें / Pay Now</button>
+    
+    <a href="https://wa.me/91XXXXXXXXXX" class="btn-whatsapp">
+        Direct WhatsApp पर जुड़ें 📱
+    </a>
 </div>
 
-<div id="bottom" class="footer-spacer"></div>
+<div id="bottom" style="padding-bottom: 50px;"></div>
 
 <script>
     const SHEET_ID = '1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
     function isRedJodi(jodi) {
-        if (!jodi || jodi.trim() === "") return false;
+        if (!jodi || jodi.trim() === "" || jodi.includes('X')) return false;
         let cleanJodi = jodi.trim();
         if (cleanJodi.includes('*')) return true;
         let d1 = parseInt(cleanJodi[0]);
@@ -170,38 +134,34 @@
                 let dateRange = row[0].replace(/"/g, "").trim();
                 finalHtml += `<div class="date-box">${dateRange}</div>`;
                 
-                let isLocked = false;
                 for (let j = 1; j <= 16; j += 3) {
                     let l = row[j] ? row[j].replace(/"/g, "").trim() : "";
                     let jo = row[j+1] ? row[j+1].replace(/"/g, "").trim() : "";
                     let r = row[j+2] ? row[j+2].replace(/"/g, "").trim() : "";
 
-                    if (l && jo && r) {
+                    if (jo && jo.trim() !== "" && jo.trim() !== "XX" && !jo.includes('?')) {
                         let colorClass = isRedJodi(jo) ? 'red' : '';
+                        let lHtml = l.split('').map(c => `<span>${c}</span>`).join('');
+                        let rHtml = r.split('').map(c => `<span>${c}</span>`).join('');
+
                         finalHtml += `
                             <div class="cell">
-                                <div class="panna left"><span>${l[0]||''}</span><span>${l[1]||''}</span><span>${l[2]||''}</span></div>
+                                <div class="panna left">${lHtml}</div>
                                 <div class="jodi ${colorClass}">${jo}</div>
-                                <div class="panna right"><span>${r[0]||''}</span><span>${r[1]||''}</span><span>${r[2]||''}</span></div>
+                                <div class="panna right">${rHtml}</div>
                             </div>`;
-                    } else if (!isLocked) {
-                        if (jo && jo.includes('*')) {
-                             finalHtml += `<div class="cell"><div class="jodi red">${jo}</div></div>`;
-                        } else {
-                            finalHtml += `<div class="lock">🔒</div>`;
-                            isLocked = true;
-                        }
                     } else {
-                        finalHtml += `<div class="cell"></div>`;
+                        finalHtml += `<div class="lock">🔒</div>`;
                     }
                 }
             }
             document.getElementById('gridData').innerHTML = finalHtml;
         } catch (error) {
-            document.getElementById('gridData').innerHTML = "<div style='grid-column: 1/-1; padding:20px;'>Error!</div>";
+            document.getElementById('gridData').innerHTML = "<div style='grid-column: 1/-1; padding:20px;'>Data Load Error!</div>";
         }
     }
     fetchChart();
 </script>
+
 </body>
 </html>
