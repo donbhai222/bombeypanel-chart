@@ -1,62 +1,182 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOMBAY SPECIAL VIP</title>
+    <title>BOMBAY SPECIAL VIP - Golden Panel Chart</title>
     <style>
-        :root { --gold: #ffcc00; --bg: #000; --grid-border: #999; }
-        body { background: var(--bg); color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; overflow-x: hidden; }
-        
-        .header { background: #111; color: var(--gold); padding: 12px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .header h1 { margin: 0; font-size: 20px; }
-        
-        .intro-text { background: #1a1a1a; padding: 10px; margin: 10px auto; width: 90%; border: 1px solid var(--gold); font-size: 13px; color: #fff; text-align: center; font-weight: bold; line-height: 1.3; border-radius: 4px; }
-        
-        .scroll-btn { background: #1a1a1a; color: #fff; padding: 7px 12px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 5px; font-size: 11px; display: inline-block; }
+        /* Golden Panel Website Colors */
+        :root { 
+            --gold-bg: rgb(255, 191, 130); 
+            --yellow-accent: rgb(249, 231, 159);
+            --dark-blue: rgb(38, 4, 112);
+            --grid-border: #999; 
+            --red: #e31e24;
+        }
 
-        /* Chart Styling - Pehle Jaisa */
-        #chartArea { background: #fff; width: 92%; margin: 5px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        .chart-grid { display: grid; grid-template-columns: 42px repeat(6, 1fr); width: 100%; }
+        body { 
+            background: var(--gold-bg); 
+            color: var(--dark-blue); 
+            font-family: 'Roboto', Arial, sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+            scroll-behavior: smooth; 
+        }
+
+        /* Header Style Like Golden Panel */
+        .header { 
+            background: var(--gold-bg); 
+            padding: 20px; 
+            border-bottom: 5px solid #fff; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .header h1 { 
+            margin: 0; 
+            font-size: 24px; 
+            color: var(--red); 
+            font-style: italic;
+            font-weight: 900;
+        }
+
+        .intro-text { 
+            background: var(--yellow-accent); 
+            padding: 15px; 
+            margin: 15px auto; 
+            width: 90%; 
+            border: 3px solid #fff; 
+            font-size: 13px; 
+            color: var(--dark-blue); 
+            font-weight: bold; 
+            border-radius: 15px; 
+        }
+
+        .scroll-btn { 
+            background: #65bbf5; 
+            color: var(--dark-blue); 
+            padding: 10px 20px; 
+            border: 4px solid #fff; 
+            border-radius: 15px; 
+            cursor: pointer; 
+            margin: 10px; 
+            font-size: 14px; 
+            font-weight: 700; 
+        }
+
+        /* Chart Area - Professional Table */
+        #chartArea { 
+            background: #fff; 
+            width: 95%; 
+            margin: 10px auto; 
+            border: 2px solid var(--grid-border); 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; }
         
-        .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 8px; padding: 6px 0; border: 0.5px solid var(--grid-border); }
-        .date-box { background: #f0f0f0; color: #000; font-size: 8px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; min-height: 50px; }
+        .day-label, .date-label { 
+            background: #000; 
+            color: var(--yellow-accent); 
+            font-weight: bold; 
+            font-size: 9px; 
+            padding: 10px 0; 
+            border: 0.5px solid var(--grid-border); 
+        }
         
-        .cell { position: relative; aspect-ratio: 1 / 1.2; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; min-height: 50px; }
+        .date-box { 
+            background: #f2f2f2; 
+            color: #000; 
+            font-size: 8px; 
+            border: 0.5px solid var(--grid-border); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            min-height: 55px; 
+        }
+        
+        .cell { 
+            position: relative; 
+            background: #fff; 
+            border: 0.5px solid var(--grid-border); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 55px; 
+        }
         
         /* Panna Vertical Layout */
-        .panna { display: flex; flex-direction: column; font-size: 8px; color: #555; position: absolute; line-height: 1; font-weight: bold; width: 9px; text-align: center; }
-        .panna.left { left: 1.5px; }
-        .panna.right { right: 1.5px; }
+        .panna { 
+            display: flex; 
+            flex-direction: column; 
+            font-size: 8px; 
+            color: #555; 
+            position: absolute; 
+            line-height: 1; 
+            font-weight: bold; 
+            width: 10px; 
+            text-align: center; 
+        }
+        .panna.left { left: 2px; }
+        .panna.right { right: 2px; }
         .panna span { display: block; }
         
-        .jodi { font-size: 16px; font-weight: bold; color: #000; z-index: 1; }
-        .red-house .jodi, .red-house .panna { color: #e31e24 !important; }
+        .jodi { font-size: 18px; font-weight: bold; color: #000; z-index: 1; }
+        .red-house .jodi, .red-house .panna { color: var(--red) !important; }
 
-        .single-vip-lock { color: var(--gold); font-size: 18px; animation: blink 1.5s infinite; }
+        .single-vip-lock { color: #f70031; font-size: 20px; animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.4; } }
 
-        .unlock-btn { background: var(--gold); color: #000; padding: 12px; border: none; width: 90%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 15px 0; display: inline-block; }
+        /* Payment/Unlock Section Style */
+        .unlock-btn { 
+            background: #4fb5f5; 
+            color: var(--dark-blue); 
+            padding: 15px; 
+            border: 8px solid var(--yellow-accent); 
+            width: 85%; 
+            font-weight: 900; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            font-size: 18px; 
+            margin: 20px 0; 
+        }
 
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-content { background: #111; border: 2px solid var(--gold); width: 85%; max-width: 350px; padding: 15px; border-radius: 12px; color: white; }
-        .plan-box { border: 1px solid var(--gold); margin: 10px 0; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; background: #222; font-size: 14px; }
-        .qr-box { margin-top: 15px; border: 1px dashed var(--gold); padding: 10px; display: none; background: #fff; color: #000; border-radius: 8px; }
-        
-        input { width: 88%; padding: 10px; margin: 5px; border-radius: 5px; border: 1px solid var(--gold); background: #222; color: #fff; font-size: 14px; }
-        .btn-submit { background: #ffcc00; color: #000; border: none; padding: 12px; width: 100%; font-weight: bold; border-radius: 8px; margin-top: 10px; cursor: pointer; }
+        .overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); 
+            z-index: 2000; 
+            align-items: center; justify-content: center; 
+        }
+        .modal-content { 
+            background: var(--gold-bg); 
+            border: 4px solid #fff; 
+            width: 85%; max-width: 350px; 
+            padding: 20px; border-radius: 20px; 
+        }
+        .plan-box { 
+            border: 2px solid var(--dark-blue); 
+            margin: 10px 0; padding: 12px; 
+            border-radius: 10px; cursor: pointer; 
+            font-weight: bold; background: var(--yellow-accent); 
+            color: var(--dark-blue);
+        }
     </style>
 </head>
 <body>
 
-<div class="header"><h1>BOMBAY SPECIAL VIP</h1></div>
+<div class="header"><h1>GOLDEN PANEL VIP CHART</h1></div>
 
 <div class="intro-text">
-    BOMBAY SPECIAL VIP CHART PROVIDES FASTEST RESULTS.<br>
-    UNLOCK VIP FOR EXCLUSIVE ACCESS TO JODI AND PANNA.
+    <strong>People get more from Game with a GOLDEN PANEL CHART.</strong><br>
+    Unlock VIP for Exclusive access to Jodi and Panna.
 </div>
 
-<button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom ↓</button>
+<button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom</button>
 
 <div id="chartArea">
     <div class="chart-grid">
@@ -67,36 +187,25 @@
         <div class="day-label">THU</div>
         <div class="day-label">FRI</div>
         <div class="day-label">SAT</div>
-        <div id="gridData" style="display:contents; color: black;">लोड हो रहा है...</div>
+        <div id="gridData" style="display:contents;">
+            <div style="grid-column: span 7; padding: 20px;">Loading Chart...</div>
+        </div>
     </div>
 </div>
 
 <div id="unlockArea">
-    <button class="unlock-btn" onclick="openVipModal()">🔒 UNLOCK VIP CHART</button>
+    <button class="unlock-btn" onclick="openVipModal()">Remove Lock 🔑</button>
 </div>
+
+<button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="margin-bottom: 30px;">Go to Top</button>
 
 <div id="vipModal" class="overlay">
     <div class="modal-content">
-        <div id="modalStep1">
-            <h2 style="color:var(--gold); font-size: 18px;">VIP प्लान चुनें</h2>
-            <div class="plan-box" onclick="goToStep2('1 दिन के लिए 599')">1 दिन के लिए - ₹599</div>
-            <div class="plan-box" onclick="goToStep2('7 दिन के लिए 1299')">7 दिन के लिए - ₹1299</div>
-            <div class="plan-box" onclick="goToStep2('30 दिन के लिए 1799')">30 दिन के लिए - ₹1799</div>
-            <button onclick="closeVipModal()" style="color:#ccc; background:none; border:none; margin-top:10px; cursor:pointer;">बंद करें</button>
-        </div>
-
-        <div id="modalStep2" style="display:none;">
-            <input type="text" id="userName" placeholder="अपना नाम लिखें">
-            <input type="number" id="userNum" placeholder="WhatsApp नंबर">
-            <button class="unlock-btn" style="width:95%;" onclick="showQR()">पेमेंट QR दिखाएं</button>
-            <div id="qrBox" class="qr-box">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=omkaryadavsonu8888-1@oksbi%26pn=Omkar%20Yadav%26cu=INR" style="width:150px;">
-                <p style="margin:5px 0; color:#000; font-size: 14px;"><b>Omkar Yadav</b></p>
-                <input type="number" id="paymentAmount" placeholder="Amount">
-                <input type="text" id="utrNumber" placeholder="UTR Number">
-                <button class="btn-submit" onclick="startVerification()">सबमिट करें</button>
-            </div>
-        </div>
+        <h2 style="color:var(--dark-blue);">VIP Plans</h2>
+        <div class="plan-box" onclick="alert('WhatsApp 8103982813')">1 Day - ₹599</div>
+        <div class="plan-box" onclick="alert('WhatsApp 8103982813')">7 Days - ₹1299</div>
+        <div class="plan-box" onclick="alert('WhatsApp 8103982813')">30 Days - ₹1799</div>
+        <button onclick="closeVipModal()" style="margin-top:10px; background:none; border:none; color:red; cursor:pointer; font-weight:bold;">CLOSE</button>
     </div>
 </div>
 
@@ -105,13 +214,6 @@
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; }
     function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; }
-    function goToStep2(p) { document.getElementById('modalStep1').style.display = 'none'; document.getElementById('modalStep2').style.display = 'block'; }
-    function showQR() { document.getElementById('qrBox').style.display = 'block'; }
-    
-    function startVerification() {
-        alert("Verification started. Details sent to admin.");
-        location.reload();
-    }
 
     async function loadChart() {
         try {
@@ -122,13 +224,13 @@
             let lockPlaced = false;
 
             for(let i=1; i<rows.length; i++) {
-                if(!rows[i][0]) continue;
+                if(!rows[i][0] || rows[i][0].trim() === "") continue;
                 h += `<div class="date-box">${rows[i][0].replace(/"/g,"")}</div>`;
                 
                 for(let j=1; j<=16; j+=3) {
-                    let l = (rows[i][j]||"").trim();
-                    let jo = (rows[i][j+1]||"").trim();
-                    let r = (rows[i][j+2]||"").trim();
+                    let l = (rows[i][j]||"").trim().replace(/"/g,"");
+                    let jo = (rows[i][j+1]||"").trim().replace(/"/g,"");
+                    let r = (rows[i][j+2]||"").trim().replace(/"/g,"");
 
                     if(!l && !jo && !r) {
                         if(!lockPlaced) { h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`; lockPlaced=true; }
@@ -146,7 +248,7 @@
                 }
             }
             document.getElementById('gridData').innerHTML = h;
-        } catch(e) { document.getElementById('gridData').innerHTML = "Error loading chart"; }
+        } catch(e) { document.getElementById('gridData').innerHTML = "Error loading data"; }
     }
     loadChart();
 </script>
