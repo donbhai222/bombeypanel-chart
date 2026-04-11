@@ -6,45 +6,46 @@
     <title>BOMBAY SPECIAL VIP</title>
     <style>
         :root { --gold: #ffcc00; --bg: #000; --grid-border: #999; }
-        body { background: var(--bg); color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; }
+        body { background: var(--bg); color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; overflow-x: hidden; }
         
-        .header { background: #111; color: var(--gold); padding: 15px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .header h1 { margin: 0; font-size: 24px; }
+        .header { background: #111; color: var(--gold); padding: 12px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
+        .header h1 { margin: 0; font-size: 20px; }
         
-        .intro-text { background: #1a1a1a; padding: 12px; margin: 15px auto; width: 88%; border: 1px solid var(--gold); font-size: 14px; color: #fff; text-align: center; font-weight: bold; line-height: 1.4; border-radius: 4px; }
+        .intro-text { background: #1a1a1a; padding: 10px; margin: 10px auto; width: 90%; border: 1px solid var(--gold); font-size: 13px; color: #fff; text-align: center; font-weight: bold; line-height: 1.3; border-radius: 4px; }
         
-        .scroll-btn { background: #1a1a1a; color: #fff; padding: 8px 15px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 10px; font-size: 12px; display: inline-block; }
+        .scroll-btn { background: #1a1a1a; color: #fff; padding: 7px 12px; border: 1px solid var(--gold); border-radius: 4px; cursor: pointer; margin: 5px; font-size: 11px; display: inline-block; }
 
-        #chartArea { background: #fff; width: 94%; margin: 10px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow-x: auto; min-height: 100px; }
-        .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; min-width: 320px; }
+        /* Mobile Optimization: Chart thoda chota aur centered */
+        #chartArea { background: #fff; width: 92%; margin: 5px auto; border: 1px solid var(--grid-border); border-radius: 4px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .chart-grid { display: grid; grid-template-columns: 42px repeat(6, 1fr); width: 100%; }
         
-        .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 9px; padding: 8px 0; border: 0.5px solid var(--grid-border); }
-        .date-box { background: #f0f0f0; color: #000; font-size: 8.5px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; min-height: 45px; }
+        .day-label, .date-label { background: #000; color: var(--gold); font-weight: bold; font-size: 8px; padding: 6px 0; border: 0.5px solid var(--grid-border); }
+        .date-box { background: #f0f0f0; color: #000; font-size: 8px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; min-height: 50px; }
         
-        .cell { position: relative; aspect-ratio: 1 / 1.1; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; min-height: 55px; }
+        .cell { position: relative; aspect-ratio: 1 / 1.2; background: #fff; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; min-height: 50px; }
         
-        /* Panna Vertical Layout */
-        .panna { display: flex; flex-direction: column; font-size: 8.5px; color: #666; position: absolute; line-height: 1.1; font-weight: bold; width: 10px; text-align: center; }
-        .panna.left { left: 2px; }
-        .panna.right { right: 2px; }
+        /* Panna Vertical Layout - Mobile friendly */
+        .panna { display: flex; flex-direction: column; font-size: 8px; color: #555; position: absolute; line-height: 1; font-weight: bold; width: 9px; text-align: center; }
+        .panna.left { left: 1.5px; }
+        .panna.right { right: 1.5px; }
         .panna span { display: block; }
         
-        .jodi { font-size: 18px; font-weight: bold; color: #000; z-index: 1; }
+        .jodi { font-size: 16px; font-weight: bold; color: #000; z-index: 1; }
         .red-house .jodi, .red-house .panna { color: #e31e24 !important; }
 
-        .single-vip-lock { color: var(--gold); font-size: 22px; animation: blink 1.5s infinite; }
+        .single-vip-lock { color: var(--gold); font-size: 18px; animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.4; } }
 
-        .unlock-btn { background: var(--gold); color: #000; padding: 15px; border: none; width: 90%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 18px; margin: 20px 0; display: inline-block; }
+        .unlock-btn { background: var(--gold); color: #000; padding: 12px; border: none; width: 90%; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 15px 0; display: inline-block; }
 
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-content { background: #111; border: 2px solid var(--gold); width: 90%; max-width: 400px; padding: 20px; border-radius: 12px; color: white; }
-        .plan-box { border: 1px solid var(--gold); margin: 12px 0; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; background: #222; }
-        .qr-box { margin-top: 20px; border: 1px dashed var(--gold); padding: 15px; display: none; background: #fff; color: #000; border-radius: 8px; }
+        .modal-content { background: #111; border: 2px solid var(--gold); width: 85%; max-width: 350px; padding: 15px; border-radius: 12px; color: white; }
+        .plan-box { border: 1px solid var(--gold); margin: 10px 0; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; background: #222; font-size: 14px; }
+        .qr-box { margin-top: 15px; border: 1px dashed var(--gold); padding: 10px; display: none; background: #fff; color: #000; border-radius: 8px; }
         
-        input { width: 85%; padding: 12px; margin: 5px; border-radius: 5px; border: 1px solid var(--gold); background: #222; color: #fff; font-size: 16px; }
-        .btn-submit { background: #ffcc00; color: #000; border: none; padding: 15px; width: 100%; font-weight: bold; border-radius: 8px; margin-top: 15px; cursor: pointer; }
-        .btn-check { background: #e31e24; color: #fff; border: none; padding: 10px; width: 85%; font-weight: bold; border-radius: 5px; margin-top: 10px; cursor: pointer; font-size: 13px; }
+        input { width: 88%; padding: 10px; margin: 5px; border-radius: 5px; border: 1px solid var(--gold); background: #222; color: #fff; font-size: 14px; }
+        .btn-submit { background: #ffcc00; color: #000; border: none; padding: 12px; width: 100%; font-weight: bold; border-radius: 8px; margin-top: 10px; cursor: pointer; }
+        .btn-check { background: #e31e24; color: #fff; border: none; padding: 8px; width: 85%; font-weight: bold; border-radius: 5px; margin-top: 10px; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -67,7 +68,7 @@
         <div class="day-label">THU</div>
         <div class="day-label">FRI</div>
         <div class="day-label">SAT</div>
-        <div id="gridData" style="display:contents; color: black;">चार्ट लोड हो रहा है...</div>
+        <div id="gridData" style="display:contents; color: black;">लोड हो रहा है...</div>
     </div>
 </div>
 
@@ -75,12 +76,12 @@
     <button class="unlock-btn" onclick="openVipModal()">🔒 UNLOCK VIP CHART</button>
 </div>
 
-<button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="margin-bottom: 40px;">Go to Top ↑</button>
+<button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="margin-bottom: 30px;">Go to Top ↑</button>
 
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="modalStep1">
-            <h2 style="color:var(--gold);">VIP प्लान चुनें</h2>
+            <h2 style="color:var(--gold); font-size: 18px;">VIP प्लान चुनें</h2>
             <div class="plan-box" onclick="goToStep2('1 दिन के लिए 599')">1 दिन के लिए - ₹599</div>
             <div class="plan-box" onclick="goToStep2('7 दिन के लिए 1299')">7 दिन के लिए - ₹1299</div>
             <div class="plan-box" onclick="goToStep2('30 दिन के लिए 1799')">30 दिन के लिए - ₹1799</div>
@@ -90,20 +91,20 @@
         <div id="modalStep2" style="display:none;">
             <input type="text" id="userName" placeholder="अपना नाम लिखें">
             <input type="number" id="userNum" placeholder="WhatsApp नंबर">
-            <button class="unlock-btn" style="width:92%; font-size:14px;" onclick="showQR()">पेमेंट QR दिखाएं</button>
+            <button class="unlock-btn" style="width:95%; font-size:14px; padding: 10px;" onclick="showQR()">पेमेंट QR दिखाएं</button>
             
             <div id="qrBox" class="qr-box">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=omkaryadavsonu8888-1@oksbi%26pn=Omkar%20Yadav%26cu=INR" style="width:180px;">
-                <p style="margin:5px 0; color:#000;"><b>Omkar Yadav</b></p>
-                <hr style="border: 0.5px solid #ccc; margin: 10px 0;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=omkaryadavsonu8888-1@oksbi%26pn=Omkar%20Yadav%26cu=INR" style="width:150px;">
+                <p style="margin:5px 0; color:#000; font-size: 14px;"><b>Omkar Yadav</b></p>
+                <hr style="border: 0.5px solid #ccc; margin: 8px 0;">
                 <input type="number" id="paymentAmount" placeholder="Amount" style="background:#fff; color:#000; border:1px solid #999; width: 90%;">
                 <input type="text" id="utrNumber" placeholder="UTR Number" style="background:#fff; color:#000; border:1px solid #999; width: 90%;">
                 
                 <button class="btn-submit" id="finalSubmitBtn" onclick="startVerification()">सबमिट करें (Submit)</button>
                 
-                <div id="timerSection" style="display:none; margin-top:15px; font-weight:bold;">
-                    <p id="timerMsg" style="color: blue;">पेमेंट की जांच हो रही है...</p>
-                    <div id="countdown" style="font-size: 24px; color: red;">02:00</div>
+                <div id="timerSection" style="display:none; margin-top:10px; font-weight:bold;">
+                    <p id="timerMsg" style="color: blue; font-size: 12px;">चेकिंग पेमेंट...</p>
+                    <div id="countdown" style="font-size: 20px; color: red;">02:00</div>
                     <button class="btn-check" onclick="showFailedNow()">Check Status Now</button>
                 </div>
             </div>
@@ -130,7 +131,7 @@
     
     function showQR() { 
         if(document.getElementById('userName').value === "" || document.getElementById('userNum').value === "") {
-            alert("कृपया नाम और नंबर दोनों भरें!");
+            alert("नाम और नंबर भरें!");
             return;
         }
         document.getElementById('qrBox').style.display = 'block'; 
@@ -156,7 +157,7 @@
 
     function showFailedNow() {
         clearInterval(verificationTimer);
-        document.getElementById('timerSection').innerHTML = "<h3 style='color:red; margin-bottom:5px;'>FAILED!</h3><p style='color:black; font-size:12px;'>पेमेंट वेरिफिकेशन फेल हो गया। कृपया सही UTR नंबर के साथ फिर से कोशिश करें।</p><button class='btn-submit' onclick='location.reload()'>Back to Plan</button>";
+        document.getElementById('timerSection').innerHTML = "<h3 style='color:red; margin-bottom:5px; font-size:16px;'>FAILED!</h3><p style='color:black; font-size:11px;'>पेमेंट वेरिफिकेशन फेल। फिर से कोशिश करें।</p><button class='btn-submit' onclick='location.reload()'>Back</button>";
     }
 
     async function loadChart() {
@@ -190,7 +191,7 @@
                 }
             }
             document.getElementById('gridData').innerHTML = h;
-        } catch(e) { document.getElementById('gridData').innerHTML = "Connection Error"; }
+        } catch(e) { document.getElementById('gridData').innerHTML = "Error"; }
     }
     loadChart();
 </script>
