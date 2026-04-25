@@ -12,11 +12,14 @@
             --grid-border: #999; 
             --red: #e31e24;
         }
-        body { background: var(--gold-bg); color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding: 0; }
+        body { background: var(--gold-bg); color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; }
         .header { background: var(--gold-bg); padding: 15px; border-bottom: 4px solid #fff; position: sticky; top: 0; z-index: 1000; }
         .header h1 { margin: 0; font-size: 20px; color: var(--red); font-style: italic; font-weight: 900; }
         .intro-text { background: var(--yellow-accent); padding: 10px; margin: 10px auto; width: 90%; border: 2px solid #fff; font-size: 13px; font-weight: bold; border-radius: 12px; }
-        .scroll-btn { background: #65bbf5; color: #fff; padding: 10px 15px; border: 3px solid #fff; border-radius: 12px; cursor: pointer; margin: 5px; font-weight: 700; display: inline-block; text-decoration: none; }
+        
+        /* Navigation Buttons Styling */
+        .scroll-btn { background: #65bbf5; color: #fff; padding: 10px 15px; border: 3px solid #fff; border-radius: 12px; cursor: pointer; margin: 5px; font-weight: 700; display: inline-block; font-size: 13px; }
+        
         #chartArea { background: #fff; width: 95%; margin: 10px auto; border: 1px solid var(--grid-border); overflow-x: auto; }
         .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; min-width: 320px; }
         .day-label, .date-label { background: #000; color: #fff; font-size: 9px; padding: 8px 0; border: 0.5px solid var(--grid-border); }
@@ -28,16 +31,22 @@
         .red-house .jodi, .red-house .panna { color: var(--red) !important; }
         .single-vip-lock { color: #f70031; font-size: 22px; animation: blink 1.5s infinite; cursor: pointer; }
         @keyframes blink { 50% { opacity: 0.3; } }
+        
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: #fff; width: 85%; max-width: 350px; padding: 20px; border-radius: 15px; color: #333; }
         input { width: 90%; padding: 10px; margin: 8px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
         .verify-btn { background: #28a745; color: #fff; padding: 12px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 10px; }
+        
+        .disclaimer { width: 85%; margin: 15px auto; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px; font-size: 10px; color: #444; border: 1px dashed var(--dark-blue); }
     </style>
 </head>
 <body>
 
 <div class="header"><h1>BOMBAY SPECIAL VIP CHART</h1></div>
+
 <div class="intro-text">BOMBAY SPECIAL VIP CHART<br>Unlock VIP for Today's Special Number</div>
+
+<button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom ↓</button>
 
 <div id="chartArea">
     <div class="chart-grid" id="mainGrid">
@@ -53,6 +62,10 @@
 <div id="unlockArea">
     <button class="scroll-btn" style="width:90%; font-size:18px; background:#f70031;" onclick="openVipModal()">Remove Lock 🔑</button>
 </div>
+
+<button class="scroll-btn" style="margin-top: 10px;" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Go to Top ↑</button>
+
+<div class="disclaimer"><strong>DISCLAIMER:</strong> This website is for informational purposes only. Use at your own risk.</div>
 
 <div id="vipModal" class="overlay">
     <div class="modal-content">
@@ -85,7 +98,6 @@
 </div>
 
 <script>
-    // URL ko verify karein ki sheet public hai
     const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
 
     function openVipModal() { 
@@ -101,9 +113,6 @@
         document.getElementById('stepInfo').style.display = 'block';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
-        document.getElementById('userName').value = "";
-        document.getElementById('userPhone').value = "";
-        document.getElementById('utrInput').value = "";
     }
 
     function goToPayment() {
@@ -131,61 +140,10 @@
         const gridData = document.getElementById('gridData');
         try {
             const res = await fetch(CSV_URL + "&cb=" + new Date().getTime());
-            if(!res.ok) throw new Error("Sheet not found");
             const data = await res.text();
             const rows = data.split('\n').filter(r => r.trim() !== '').map(r => r.split(','));
             
             let html = '';
             let lockPlaced = false;
 
-            for(let i = 1; i < rows.length; i++) {
-                let dateCell = (rows[i][0] || "").replace(/"/g, "").trim();
-                if(!dateCell) continue;
-
-                html += `<div class="date-box">${dateCell}</div>`;
-                
-                // 6 Days columns (MON to SAT)
-                for(let j = 1; j <= 16; j += 3) {
-                    let lp = (rows[i][j] || "").trim().replace(/"/g, "");
-                    let jd = (rows[i][j+1] || "").trim().replace(/"/g, "");
-                    let rp = (rows[i][j+2] || "").trim().replace(/"/g, "");
-
-                    if(!lp && !jd && !rp) {
-                        if(!lockPlaced) {
-                            html += `<div class="cell" onclick="openVipModal()"><span class="single-vip-lock">🔒</span></div>`;
-                            lockPlaced = true;
-                        } else { 
-                            html += `<div class="cell"></div>`; 
-                        }
-                    } else {
-                        // Red logic: double digits or diff of 5
-                        let isRed = false;
-                        if(jd.length === 2) {
-                            let d1 = parseInt(jd[0]);
-                            let d2 = parseInt(jd[1]);
-                            if(d1 === d2 || Math.abs(d1 - d2) === 5) isRed = true;
-                        }
-                        if(jd.includes('*')) isRed = true;
-
-                        let lpS = lp.split('').map(s => `<span>${s}</span>`).join('');
-                        let rpS = rp.split('').map(s => `<span>${s}</span>`).join('');
-                        
-                        html += `<div class="cell ${isRed ? 'red-house' : ''}">
-                            <div class="panna left">${lpS}</div>
-                            <div class="jodi">${jd}</div>
-                            <div class="panna right">${rpS}</div>
-                        </div>`;
-                    }
-                }
-            }
-            gridData.innerHTML = html;
-        } catch(e) { 
-            console.error(e);
-            gridData.innerHTML = `<div style="grid-column: span 7; padding: 20px; color:red;">Data load nahi ho raha. Sheet settings check karein.</div>`; 
-        }
-    }
-    
-    window.onload = loadChart;
-</script>
-</body>
-</html>
+            for(let i = 1; i < rows
