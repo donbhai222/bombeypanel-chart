@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOMBAY SPECIAL VIP CHART | Official</title>
+    <title>BOMBAY SPECIAL VIP CHART | Official Live Results</title>
+    <meta name="description" content="BOMBAY SPECIAL VIP CHART offers fastest live results and special VIP numbers. Get the best chart experience here.">
+    
     <style>
         :root { 
             --gold-bg: rgb(255, 191, 130); 
@@ -16,18 +18,23 @@
         .header { background: var(--gold-bg); padding: 15px; border-bottom: 4px solid #fff; position: sticky; top: 0; z-index: 1000; }
         .header h1 { margin: 0; font-size: 20px; color: var(--red); font-style: italic; font-weight: 900; }
         .intro-text { background: var(--yellow-accent); padding: 10px; margin: 10px auto; width: 90%; border: 2px solid #fff; font-size: 13px; font-weight: bold; border-radius: 12px; }
-        .scroll-btn { background: #65bbf5; color: #fff; padding: 10px 15px; border: 3px solid #fff; border-radius: 12px; cursor: pointer; margin: 5px; font-weight: 700; display: inline-block; font-size: 13px; }
-        #chartArea { background: #fff; width: 95%; margin: 10px auto; border: 1px solid var(--grid-border); overflow-x: auto; min-height: 100px; }
+        
+        .scroll-btn { background: #65bbf5; color: #fff; padding: 10px 15px; border: 3px solid #fff; border-radius: 12px; cursor: pointer; margin: 5px; font-weight: 700; display: inline-block; font-size: 13px; text-decoration: none; }
+        
+        #chartArea { background: #fff; width: 95%; margin: 10px auto; border: 1px solid var(--grid-border); overflow-x: auto; min-height: 200px; }
         .chart-grid { display: grid; grid-template-columns: 45px repeat(6, 1fr); width: 100%; min-width: 320px; }
         .day-label, .date-label { background: #000; color: #fff; font-size: 9px; padding: 8px 0; border: 0.5px solid var(--grid-border); }
-        .date-box { background: #f2f2f2; font-size: 9px; border: 0.5px solid var(--grid-border); height: 60px; display: flex; align-items: center; justify-content: center; font-weight: bold; color:#000; }
+        .date-box { background: #f2f2f2; font-size: 9px; border: 0.5px solid var(--grid-border); height: 60px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; }
         .cell { position: relative; background: #fff; border: 0.5px solid var(--grid-border); height: 60px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
         .panna { display: flex; flex-direction: column; font-size: 8px; position: absolute; font-weight: bold; width: 10px; line-height: 1; color: #555; }
         .panna.left { left: 2px; } .panna.right { right: 2px; }
         .jodi { font-size: 18px; font-weight: bold; color: #000; }
+        
         .red-house .jodi, .red-house .panna { color: var(--red) !important; }
         .single-vip-lock { color: #f70031; font-size: 22px; animation: blink 1.5s infinite; cursor: pointer; }
         @keyframes blink { 50% { opacity: 0.3; } }
+        
+        /* Modal Styling */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: #fff; width: 85%; max-width: 350px; padding: 20px; border-radius: 15px; color: #333; }
         input { width: 90%; padding: 10px; margin: 8px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
@@ -37,7 +44,11 @@
 <body>
 
 <div class="header"><h1>BOMBAY SPECIAL VIP CHART</h1></div>
-<div class="intro-text">BOMBAY SPECIAL VIP CHART<br>Unlock VIP for Today's Special Number</div>
+
+<div class="intro-text">
+    <strong>BOMBAY SPECIAL VIP CHART</strong><br>
+    Unlock VIP for Exclusive access to Today's Result.
+</div>
 
 <button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom ↓</button>
 
@@ -47,40 +58,47 @@
         <div class="day-label">MON</div><div class="day-label">TUE</div><div class="day-label">WED</div>
         <div class="day-label">THU</div><div class="day-label">FRI</div><div class="day-label">SAT</div>
         <div id="gridData" style="display: contents;">
-            <div style="grid-column: span 7; padding: 40px; background: white;">Loading Chart...</div>
+            <div style="grid-column: span 7; padding: 40px; background: white; font-weight: bold;">Loading Chart Data...</div>
         </div>
     </div>
 </div>
 
-<div id="unlockArea" style="padding: 20px 0;">
-    <button class="scroll-btn" style="width:90%; font-size:18px; background:#f70031;" onclick="openVipModal()">Remove Lock 🔑</button>
+<div id="unlockArea" style="padding: 15px 0;">
+    <button class="scroll-btn" style="width:90%; font-size:18px; background:var(--red);" onclick="openVipModal()">Remove Lock 🔑</button>
 </div>
 
 <button class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Go to Top ↑</button>
+
+<div style="font-size: 10px; margin: 20px; color: #444; border: 1px dashed #000; padding: 10px;">
+    <strong>DISCLAIMER:</strong> Informational purpose only.
+</div>
 
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="stepInfo">
             <h3>User Detail</h3>
+            <p>Aage badhne ke liye naam aur number dalein</p>
             <input type="text" id="userName" placeholder="Full Name">
             <input type="number" id="userPhone" placeholder="Mobile No.">
             <button class="verify-btn" onclick="goToPayment()">NEXT / आगे बढ़ें</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:15px;">Cancel</p>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:15px; font-size: 14px;">Cancel</p>
         </div>
+
         <div id="stepPay" style="display:none;">
             <h3 style="color:var(--red); margin:0;">VIP Access - ₹999</h3>
             <p style="font-weight:bold; color:green; margin:5px 0;">Validity: 3 Days</p>
             <p style="font-size:14px;">Pay to: <b>Omkar Yadav</b></p>
-            <img src="paytm-png.jpeg" style="width:160px; height:160px; display:block; margin:10px auto; border:1px solid #ddd;">
+            <img src="paytm-png.jpeg" style="width:160px; height:160px; display:block; margin:10px auto; border:1px solid #ddd;" alt="QR Code">
             <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
             <button class="verify-btn" onclick="handleVerify()">VERIFY PAYMENT</button>
             <p onclick="resetSteps()" style="cursor:pointer; color:gray; margin-top:10px;">Back</p>
         </div>
+
         <div id="stepFailed" style="display:none;">
             <h2 style="color:red;">❌ Failed</h2>
-            <p>Incorrect UTR. Try Again.</p>
+            <p>UTR number galat hai. Dobara koshish karein.</p>
             <button class="verify-btn" onclick="resetSteps()" style="background:#4fb5f5;">TRY AGAIN</button>
-            <button class="verify-btn" style="margin-top:10px; background:#25D366;" onclick="window.location.href='https://wa.me/918103982813?text=999%20Plan%20Issue'">WHATSAPP HELP</button>
+            <button class="verify-btn" style="margin-top:10px; background:#25D366;" onclick="window.location.href='https://wa.me/918103982813?text=Payment%20Done%20999%20Plan'">WHATSAPP HELP</button>
         </div>
     </div>
 </div>
@@ -90,20 +108,26 @@
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
     function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; }
+    
     function resetSteps() {
         document.getElementById('stepInfo').style.display = 'block';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
+        document.getElementById('userName').value = "";
+        document.getElementById('userPhone').value = "";
+        document.getElementById('utrInput').value = "";
     }
+
     function goToPayment() {
         if(document.getElementById('userName').value.trim() === "" || document.getElementById('userPhone').value.length < 10) {
-            alert("Kripya sahi naam aur mobile number dalein."); return;
+            alert("Sahi detail bhariye."); return;
         }
         document.getElementById('stepInfo').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
     }
+
     function handleVerify() {
-        if(document.getElementById('utrInput').value.length < 10) { alert("Enter 12 digit UTR."); return; }
+        if(document.getElementById('utrInput').value.length < 10) { alert("Sahi UTR number dalein."); return; }
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'block';
     }
@@ -114,13 +138,45 @@
             const res = await fetch(CSV_URL + "&cb=" + Date.now());
             const data = await res.text();
             const rows = data.split('\n').filter(r => r.trim() !== '').map(r => r.split(','));
+            
             let html = '';
             let lockPlaced = false;
 
             for(let i = 1; i < rows.length; i++) {
-                let date = (rows[i][0] || "").replace(/"/g, "").trim();
-                if(!date) continue;
-                html += `<div class="date-box">${date}</div>`;
+                let dt = (rows[i][0] || "").replace(/"/g, "").trim();
+                if(!dt) continue;
+                html += `<div class="date-box">${dt}</div>`;
+                
                 for(let j = 1; j <= 16; j += 3) {
                     let lp = (rows[i][j] || "").trim().replace(/"/g, "");
-                    let jd
+                    let jd = (rows[i][j+1] || "").trim().replace(/"/g, "");
+                    let rp = (rows[i][j+2] || "").trim().replace(/"/g, "");
+
+                    if(!lp && !jd && !rp) {
+                        if(!lockPlaced) {
+                            html += `<div class="cell" onclick="openVipModal()"><span class="single-vip-lock">🔒</span></div>`;
+                            lockPlaced = true;
+                        } else { html += `<div class="cell"></div>`; }
+                    } else {
+                        let isRed = false;
+                        if(jd.length === 2) {
+                            let d1 = parseInt(jd[0]), d2 = parseInt(jd[1]);
+                            if(d1 === d2 || Math.abs(d1 - d2) === 5) isRed = true;
+                        }
+                        if(jd.includes('*')) isRed = true;
+                        
+                        let lpS = lp.split('').map(s => `<span>${s}</span>`).join('');
+                        let rpS = rp.split('').map(s => `<span>${s}</span>`).join('');
+                        html += `<div class="cell ${isRed ? 'red-house' : ''}">
+                            <div class="panna left">${lpS}</div><div class="jodi">${jd}</div><div class="panna right">${rpS}</div>
+                        </div>`;
+                    }
+                }
+            }
+            gridData.innerHTML = html;
+        } catch(e) { gridData.innerHTML = "Error loading chart. Please refresh."; }
+    }
+    window.onload = loadChart;
+</script>
+</body>
+</html>
