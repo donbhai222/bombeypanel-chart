@@ -54,27 +54,26 @@
         .verify-btn { background: var(--green); color: #fff; padding: 14px; border: none; border-radius: 10px; font-weight: bold; width: 90%; cursor: pointer; margin-top: 10px; font-size: 17px; box-shadow: 0 4px 0 #1e7e34; }
         .verify-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #1e7e34; }
 
-        /* Plan Wrapper Styling */
         .plan-wrapper { margin: 15px 0; }
-        .plan-card-label { cursor: pointer; width: 100%; display: block; margin-bottom: 8px; }
+        .plan-card-label { cursor: pointer; width: 100%; display: block; margin-bottom: 10px; }
         .plan-card-label input[type="radio"] { display: none; }
         
         .plan-content-box {
             border: 2px solid #ddd;
             border-radius: 10px;
-            padding: 12px;
+            padding: 10px;
             text-align: left;
             background: #fdfdfd;
             transition: 0.2s;
-            font-size: 14px;
-            font-weight: bold;
-            color: #222;
         }
         
+        .plan-main-text { display: block; font-size: 13px; font-weight: bold; color: #111; margin-bottom: 4px; }
+        .plan-sub-text { display: block; font-size: 11px; color: #e31e24; font-weight: bold; }
+
         input[type="radio"]:checked + .plan-content-box {
             border-color: var(--red);
             background: #fff8f8;
-            box-shadow: 0 0 8px rgba(227, 30, 36, 0.1);
+            box-shadow: 0 0 8px rgba(227, 30, 36, 0.15);
         }
 
         #timerDisplay { font-size: 28px; font-weight: bold; color: var(--red); margin: 15px 0; }
@@ -115,7 +114,6 @@
 
 <div id="vipModal" class="overlay">
     <div class="modal-content">
-        <!-- Step 1: User Details -->
         <div id="stepInfo">
             <h3>User Detail</h3>
             <p style="font-size:14px;">आगे बढ़ने के लिए नाम और नंबर डालें</p>
@@ -125,61 +123,57 @@
             <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:15px; font-size: 14px; font-weight:bold;">Cancel</p>
         </div>
 
-        <!-- Step 2: Payment with Specific Format -->
         <div id="stepPay" style="display:none;">
             <h2 id="displayAmt" style="color:var(--red); margin:0;">₹599</h2>
             <p style="font-size:13px; font-weight:bold; color:#555; margin-bottom:10px;">अपना प्लान चुनें:</p>
             
             <div class="plan-wrapper">
-                <!-- Option 1 -->
                 <label class="plan-card-label">
                     <input type="radio" name="subPlan" value="599" checked onclick="updateAmt(599)">
                     <div class="plan-content-box">
-                        1. kalyan singal otc , open do ank ke liye charge -599
+                        <span class="plan-main-text">1. kalyan singal otc open do ank ke liye charge -599</span>
+                        <span class="plan-sub-text">कल्याण सिंगल ओटीसी ओपन दो अंक के लिए चार्ज - ₹599</span>
                     </div>
                 </label>
 
-                <!-- Option 2 -->
                 <label class="plan-card-label">
                     <input type="radio" name="subPlan" value="599" onclick="updateAmt(599)">
                     <div class="plan-content-box">
-                        2. close do ank niche me payment -599
+                        <span class="plan-main-text">2. close do ank ke liye charge -599</span>
+                        <span class="plan-sub-text">क्लोज़ दो अंक के लिए चार्ज - ₹599</span>
                     </div>
                 </label>
 
-                <!-- Option 3 -->
                 <label class="plan-card-label">
                     <input type="radio" name="subPlan" value="399" onclick="updateAmt(399)">
                     <div class="plan-content-box">
-                        3. pana singal niche me payment -399
+                        <span class="plan-main-text">3. pana singal ke liye charge -399</span>
+                        <span class="plan-sub-text">पन्ना सिंगल के लिए चार्ज - ₹399</span>
                     </div>
                 </label>
 
-                <!-- Option 4 -->
                 <label class="plan-card-label">
                     <input type="radio" name="subPlan" value="999" onclick="updateAmt(999)">
                     <div class="plan-content-box">
-                        4. do jodi singal ka charge -999
+                        <span class="plan-main-text">4. do jodi singal ke liye charge -999</span>
+                        <span class="plan-sub-text">दो जोड़ी सिंगल के लिए चार्ज - ₹999</span>
                     </div>
                 </label>
             </div>
 
             <p style="font-size:14px; margin: 5px 0;">Pay to: <b>Omkar Yadav</b></p>
-            <img src="paytm-png.jpeg" style="width:160px; height:160px; display:block; margin:10px auto; border:1px solid #ddd;" alt="QR Code">
+            <img src="paytm-png.jpeg" style="width:160px; height:160px; display:block; margin:5px auto; border:1px solid #ddd;" alt="QR Code">
             <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
             <button class="verify-btn" onclick="startTimerProcess()">VERIFY PAYMENT</button>
             <p onclick="resetSteps()" style="cursor:pointer; color:gray; margin-top:10px; font-weight:bold;">Back</p>
         </div>
 
-        <!-- Step 3: Timer Screen -->
         <div id="stepTimer" style="display:none;">
-            <h3 style="margin-bottom:5px;">Verifying...</h3>
+            <h3>Verifying...</h3>
             <p>कृपया प्रतीक्षा करें, पेमेंट चेक हो रहा है।</p>
             <div id="timerDisplay">02:00</div>
-            <p style="font-size:12px; color:gray;">पेज को रिफ्रेश न करें।</p>
         </div>
 
-        <!-- Step 4: Final Success Screen -->
         <div id="stepFailed" style="display:none;">
             <h2 style="color:var(--green); margin:0;">SUCCESS</h2>
             <p style="font-weight:bold; font-size:14px; padding:10px;">UTR Verified! रिजल्ट अनलॉक होने में 30 मिनट तक लग सकते हैं।</p>
@@ -193,18 +187,13 @@
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
     function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; }
-    
     function resetSteps() {
         document.getElementById('stepInfo').style.display = 'block';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepTimer').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
     }
-
-    function updateAmt(val) {
-        document.getElementById('displayAmt').innerText = "₹" + val;
-    }
-
+    function updateAmt(val) { document.getElementById('displayAmt').innerText = "₹" + val; }
     function goToPayment() {
         if(document.getElementById('userName').value.trim() === "" || document.getElementById('userPhone').value.length < 10) {
             alert("कृपया नाम और सही मोबाइल नंबर भरें।"); return;
@@ -212,36 +201,26 @@
         document.getElementById('stepInfo').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
     }
-
     function startTimerProcess() {
         const utr = document.getElementById('utrInput').value;
         if(utr.length < 10) { alert("कृपया सही 12-अंकों का UTR नंबर डालें।"); return; }
-        
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepTimer').style.display = 'block';
-        
         let timeLeft = 120;
         const display = document.getElementById('timerDisplay');
-        
         const countdown = setInterval(() => {
             let minutes = Math.floor(timeLeft / 60);
             let seconds = timeLeft % 60;
             seconds = seconds < 10 ? '0' + seconds : seconds;
             display.innerHTML = `0${minutes}:${seconds}`;
-            
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                showSuccess();
-            }
+            if (timeLeft <= 0) { clearInterval(countdown); showSuccess(); }
             timeLeft--;
         }, 1000);
     }
-
     function showSuccess() {
         document.getElementById('stepTimer').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'block';
     }
-
     async function loadChart() {
         const gridBody = document.getElementById('gridData');
         try {
@@ -250,7 +229,6 @@
             const rows = data.split(/\r?\n/).filter(r => r.trim() !== '').map(r => r.split(','));
             let html = '';
             let lockPlaced = false;
-
             for(let i = 1; i < rows.length; i++) {
                 let dt = (rows[i][0] || "").replace(/"/g, "").trim();
                 if(!dt) continue;
