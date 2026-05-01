@@ -14,7 +14,7 @@
             --red: #e31e24;
             --green: #28a745;
         }
-        body { background: var(--gold-bg); color: var(--dark-blue); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; }
+        body { background: var(--gold-bg); color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; }
         .header { background: var(--gold-bg); padding: 15px; border-bottom: 4px solid #fff; position: sticky; top: 0; z-index: 1000; }
         .header h1 { margin: 0; font-size: 19px; color: var(--red); font-style: italic; font-weight: 900; }
         
@@ -54,48 +54,28 @@
         .verify-btn { background: var(--green); color: #fff; padding: 14px; border: none; border-radius: 10px; font-weight: bold; width: 90%; cursor: pointer; margin-top: 10px; font-size: 17px; box-shadow: 0 4px 0 #1e7e34; }
         .verify-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #1e7e34; }
 
-        /* --- NEW STYLISH PLAN CARDS --- */
+        /* Plan Wrapper Styling */
         .plan-wrapper { margin: 15px 0; }
-        .plan-card {
-            background: #fff;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-        .plan-card:hover { border-color: var(--red); background: #fffcfc; }
-        .plan-card input[type="radio"] { display: none; } /* Radio button hide kar diya */
+        .plan-card-label { cursor: pointer; width: 100%; display: block; margin-bottom: 8px; }
+        .plan-card-label input[type="radio"] { display: none; }
         
-        /* Selected Card Style */
-        input[type="radio"]:checked + .plan-content-box { border-color: var(--red); background: #fff5f5; }
-
         .plan-content-box {
-            width: 100%;
             border: 2px solid #ddd;
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: left;
             background: #fdfdfd;
+            transition: 0.2s;
+            font-size: 14px;
+            font-weight: bold;
+            color: #222;
         }
         
         input[type="radio"]:checked + .plan-content-box {
             border-color: var(--red);
             background: #fff8f8;
-            box-shadow: 0 0 10px rgba(227, 30, 36, 0.1);
+            box-shadow: 0 0 8px rgba(227, 30, 36, 0.1);
         }
-
-        .plan-info { text-align: left; }
-        .plan-title { display: block; font-size: 14px; font-weight: 800; color: #222; }
-        .plan-desc { display: block; font-size: 11px; color: #666; margin-top: 2px; }
-        .plan-price { font-size: 18px; font-weight: 900; color: var(--red); }
 
         #timerDisplay { font-size: 28px; font-weight: bold; color: var(--red); margin: 15px 0; }
     </style>
@@ -145,51 +125,47 @@
             <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:15px; font-size: 14px; font-weight:bold;">Cancel</p>
         </div>
 
-        <!-- Step 2: Payment with NEW Plan Cards -->
+        <!-- Step 2: Payment with Specific Format -->
         <div id="stepPay" style="display:none;">
             <h2 id="displayAmt" style="color:var(--red); margin:0;">₹599</h2>
-            <p style="font-size:13px; font-weight:bold; color:#555;">अपना पसंदीदा प्लान चुनें:</p>
+            <p style="font-size:13px; font-weight:bold; color:#555; margin-bottom:10px;">अपना प्लान चुनें:</p>
             
             <div class="plan-wrapper">
                 <!-- Option 1 -->
                 <label class="plan-card-label">
                     <input type="radio" name="subPlan" value="599" checked onclick="updateAmt(599)">
                     <div class="plan-content-box">
-                        <div class="plan-info">
-                            <span class="plan-title">कल्याण सिंगल OTC</span>
-                            <span class="plan-desc">ओपन दो अंक के लिए चार्ज</span>
-                        </div>
-                        <div class="plan-price">₹599</div>
+                        1. kalyan singal otc , open do ank ke liye charge -599
                     </div>
                 </label>
 
                 <!-- Option 2 -->
                 <label class="plan-card-label">
-                    <input type="radio" name="subPlan" value="399" onclick="updateAmt(399)">
-                    <div class="plan-content-box" style="margin-top:10px;">
-                        <div class="plan-info">
-                            <span class="plan-title">क्लोज़ दो अंक</span>
-                            <span class="plan-desc">क्लोज़ दो अंक के लिए चार्ज</span>
-                        </div>
-                        <div class="plan-price">₹399</div>
+                    <input type="radio" name="subPlan" value="599" onclick="updateAmt(599)">
+                    <div class="plan-content-box">
+                        2. close do ank niche me payment -599
                     </div>
                 </label>
 
                 <!-- Option 3 -->
                 <label class="plan-card-label">
+                    <input type="radio" name="subPlan" value="399" onclick="updateAmt(399)">
+                    <div class="plan-content-box">
+                        3. pana singal niche me payment -399
+                    </div>
+                </label>
+
+                <!-- Option 4 -->
+                <label class="plan-card-label">
                     <input type="radio" name="subPlan" value="999" onclick="updateAmt(999)">
-                    <div class="plan-content-box" style="margin-top:10px;">
-                        <div class="plan-info">
-                            <span class="plan-title">पन्ना सिंगल</span>
-                            <span class="plan-desc">सिंगल पन्ना के लिए चार्ज</span>
-                        </div>
-                        <div class="plan-price">₹999</div>
+                    <div class="plan-content-box">
+                        4. do jodi singal ka charge -999
                     </div>
                 </label>
             </div>
 
             <p style="font-size:14px; margin: 5px 0;">Pay to: <b>Omkar Yadav</b></p>
-            <img src="paytm-png.jpeg" style="width:160px; height:160px; display:block; margin:5px auto; border:1px solid #ddd;" alt="QR Code">
+            <img src="paytm-png.jpeg" style="width:160px; height:160px; display:block; margin:10px auto; border:1px solid #ddd;" alt="QR Code">
             <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
             <button class="verify-btn" onclick="startTimerProcess()">VERIFY PAYMENT</button>
             <p onclick="resetSteps()" style="cursor:pointer; color:gray; margin-top:10px; font-weight:bold;">Back</p>
