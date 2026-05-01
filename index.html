@@ -13,52 +13,44 @@
             --grid-border: #999; 
             --red: #e31e24;
         }
-        body { background: var(--gold-bg); color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding: 0; }
+        body { background: var(--gold-bg); color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding: 0; scroll-behavior: smooth; }
         .header { background: var(--gold-bg); padding: 15px; border-bottom: 4px solid #fff; position: sticky; top: 0; z-index: 1000; }
         .header h1 { margin: 0; font-size: 19px; color: var(--red); font-style: italic; font-weight: 900; }
         
         .intro-text { background: var(--yellow-accent); padding: 10px; margin: 10px auto; width: 88%; border: 2px solid #fff; font-size: 12px; font-weight: bold; border-radius: 10px; box-sizing: border-box; }
         
-        .scroll-btn { background: #65bbf5; color: #fff; padding: 8px 12px; border: 3px solid #fff; border-radius: 10px; cursor: pointer; margin: 5px; font-weight: 700; display: inline-block; font-size: 13px; text-decoration: none; }
+        .scroll-btn { background: #65bbf5; color: #fff; padding: 10px 15px; border: 3px solid #fff; border-radius: 12px; cursor: pointer; margin: 5px; font-weight: 700; display: inline-block; font-size: 14px; text-decoration: none; }
         
-        /* Ultra Compact Chart for better side gaps */
         #chartArea { 
             background: #fff; 
-            width: 90%; /* Width aur kam ki gayi hai side gap ke liye */
+            width: 90%; 
             margin: 10px auto; 
             border: 1px solid var(--grid-border); 
             overflow-x: auto; 
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            min-width: 300px; /* Minimum width compact rakhi hai */
-            table-layout: fixed;
-        }
-        
+        table { width: 100%; border-collapse: collapse; min-width: 300px; table-layout: fixed; }
         th { background: #000; color: #fff; font-size: 8px; padding: 6px 1px; border: 1px solid var(--grid-border); }
-        td { border: 1px solid var(--grid-border); height: 55px; vertical-align: middle; position: relative; padding: 1px; }
+        td { border: 1px solid var(--grid-border); height: 55px; vertical-align: middle; position: relative; }
         
         .date-box { background: #f2f2f2; font-size: 8px; font-weight: bold; color: #000; text-align: center; width: 40px; }
         .cell-content { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative; }
         
-        .panna { display: flex; flex-direction: column; font-size: 7px; position: absolute; font-weight: bold; line-height: 1; color: #555; width: 8px; text-align: center; }
-        .panna.left { left: 1px; } 
-        .panna.right { right: 1px; }
+        .panna { display: flex; flex-direction: column; font-size: 7px; position: absolute; font-weight: bold; line-height: 1.1; color: #555; width: 9px; text-align: center; }
+        .panna.left { left: 2px; } 
+        .panna.right { right: 2px; }
         .jodi { font-size: 16px; font-weight: bold; color: #000; z-index: 2; }
         
         .red-house .jodi, .red-house .panna { color: var(--red) !important; }
-        .single-vip-lock { color: #f70031; font-size: 18px; animation: blink 1.5s infinite; cursor: pointer; }
+        .single-vip-lock { color: #f70031; font-size: 20px; animation: blink 1.5s infinite; cursor: pointer; }
         @keyframes blink { 50% { opacity: 0.3; } }
         
-        /* Modal Styles */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 85%; max-width: 320px; padding: 15px; border-radius: 15px; color: #333; text-align: center; }
-        input { width: 90%; padding: 10px; margin: 6px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 15px; outline: none; }
-        .verify-btn { background: #28a745; color: #fff; padding: 12px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 10px; font-size: 15px; }
+        .modal-content { background: #fff; width: 85%; max-width: 340px; padding: 20px; border-radius: 15px; color: #333; text-align: center; }
+        input { width: 90%; padding: 12px; margin: 8px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; outline: none; }
+        .verify-btn { background: #28a745; color: #fff; padding: 14px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 10px; font-size: 16px; }
     </style>
 </head>
 <body>
@@ -67,49 +59,54 @@
 
 <div class="intro-text">
     <strong>BOMBAY SPECIAL VIP CHART</strong><br>
-    Unlock VIP for Exclusive access.
+    Unlock VIP for Exclusive access to Today's Result.
 </div>
 
 <div id="chartArea">
     <table>
         <thead>
             <tr>
-                <th style="width: 42px;">DATE</th>
+                <th style="width: 45px;">DATE</th>
                 <th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
             </tr>
         </thead>
         <tbody id="gridData">
             <tr>
-                <td colspan="7" style="padding: 40px; text-align: center; font-size: 12px;">Loading...</td>
+                <td colspan="7" style="padding: 40px; text-align: center; font-weight: bold;">Loading Data...</td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<div id="unlockArea" style="padding: 10px 0;">
-    <button class="scroll-btn" style="width:85%; font-size:16px; background:var(--red); padding: 12px;" onclick="openVipModal()">Remove Lock 🔑</button>
+<div id="unlockArea" style="padding: 15px 0;">
+    <button class="scroll-btn" style="width:85%; font-size:18px; background:var(--red); padding: 15px;" onclick="openVipModal()">Remove Lock 🔑</button>
 </div>
 
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="stepInfo">
             <h3>User Detail</h3>
+            <p>Aage badhne ke liye naam aur number dalein</p>
             <input type="text" id="userName" placeholder="Full Name">
             <input type="number" id="userPhone" placeholder="Mobile No.">
-            <button class="verify-btn" onclick="goToPayment()">NEXT</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:10px; font-size: 13px;">Cancel</p>
+            <button class="verify-btn" onclick="goToPayment()">NEXT / आगे बढ़ें</button>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:15px; font-size: 14px; font-weight:bold;">Cancel</p>
         </div>
+
         <div id="stepPay" style="display:none;">
-            <h3 style="color:var(--red);">₹999 </h3>
-            <p>Pay to: <b>Omkar Yadav</b></p>
-            <img src="paytm-png.jpeg" style="width:160px; height:160px; display:block; margin:10px auto;" alt="QR">
-            <input type="number" id="utrInput" placeholder="12 Digit UTR">
-            <button class="verify-btn" onclick="handleVerify()">VERIFY</button>
+            <h3 style="color:var(--red); margin:0;"> 2 DIN KE LIYE ₹999</h3>
+            <p style="font-size:15px; margin: 10px 0;">Pay to: <b>Omkar Yadav</b></p>
+            <img src="paytm-png.jpeg" style="width:180px; height:180px; display:block; margin:10px auto; border:1px solid #ddd;" alt="QR Code">
+            <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
+            <button class="verify-btn" onclick="handleVerify()">VERIFY PAYMENT</button>
+            <p onclick="resetSteps()" style="cursor:pointer; color:gray; margin-top:10px; font-weight:bold;">Back</p>
         </div>
+
         <div id="stepFailed" style="display:none;">
-            <h2 style="color:red;">PENDING</h2>
-            <p style="font-size:13px;">Verification in progress.</p>
-            <button class="verify-btn" style="background:#25D366;" onclick="window.location.href='https://</button>
+            <h2 style="color:red; margin:0;">PENDING</h2>
+            <p style="font-weight:bold;">UTR verification in progress. Please wait for 30 minutes.</p>
+            <button class="verify-btn" onclick="resetSteps()" style="background:#4fb5f5;">TRY AGAIN</button>
+            <button class="verify-btn" style="margin-top:10px; background:#6c757d;" onclick="closeVipModal()">CLOSE</button>
         </div>
     </div>
 </div>
@@ -119,20 +116,23 @@
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
     function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; }
+    
     function resetSteps() {
         document.getElementById('stepInfo').style.display = 'block';
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'none';
     }
+
     function goToPayment() {
         if(document.getElementById('userName').value.trim() === "" || document.getElementById('userPhone').value.length < 10) {
-            alert("Sahi details bhariye."); return;
+            alert("Kripya sahi detail bhariye."); return;
         }
         document.getElementById('stepInfo').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
     }
+
     function handleVerify() {
-        if(document.getElementById('utrInput').value.length < 10) { alert("Sahi UTR dalein."); return; }
+        if(document.getElementById('utrInput').value.length < 10) { alert("Sahi UTR number dalein."); return; }
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'block';
     }
