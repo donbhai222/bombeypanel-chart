@@ -26,17 +26,17 @@
         .site-desc { font-size: 13px; font-weight: bold; margin: 15px 5px; color: #1a024d; display: block; }
         .btn-pay-main { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 6px; width: 90%; font-weight: bold; font-size: 16px; margin: 10px 0; cursor: pointer; }
 
-        /* Floating Buttons Position */
+        /* Floating Buttons Position (Swapped as requested) */
         .float-btn { position: fixed; right: 10px; background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 11px; z-index: 999; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        .go-bottom { bottom: 90px; } 
-        .go-top { bottom: 30px; }
+        .go-bottom { bottom: 90px; } /* Down button on Top */
+        .go-top { bottom: 30px; }    /* Top button on Bottom */
 
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
         .modal-content { background: #fff; width: 88%; max-width: 320px; padding: 20px; border-radius: 10px; box-sizing: border-box; }
         input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         
-        /* Professional Subscription Design */
-        .sub-option { border: 2px solid #ddd; border-radius: 8px; padding: 12px; margin: 10px 0; cursor: pointer; background: #fafafa; position: relative; }
+        /* Subscriptions Section */
+        .sub-option { border: 2px solid #ddd; border-radius: 8px; padding: 12px; margin: 10px 0; cursor: pointer; background: #fafafa; }
         .sub-option.active { border-color: var(--vip-red); background: #fff0f0; }
         .sub-title-en { font-weight: bold; font-size: 14px; display: block; color: #333; }
         .sub-title-hi { font-size: 12px; color: #666; display: block; margin-bottom: 5px; }
@@ -70,40 +70,39 @@
     <div class="modal-content">
         <!-- Step 1 -->
         <div id="step1">
-            <h3 style="margin-top:0; color:var(--dark-blue);">VIP Registration</h3>
-            <input type="text" id="vName" placeholder="अपना नाम (Your Name)">
-            <input type="number" id="vPhone" placeholder="मोबाइल नंबर (Mobile No)">
+            <h3 style="margin-top:0;">VIP Registration</h3>
+            <input type="text" id="vName" placeholder="अपना नाम (Name)">
+            <input type="number" id="vPhone" placeholder="मोबाइल नंबर (Mobile)">
             <button class="btn-pay-main" style="width:100%;" onclick="goSub()">NEXT / आगे बढ़ें</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px; margin-top:10px; font-weight:bold;">CLOSE / बंद करें</p>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px; margin-top:10px;">बंद करें</p>
         </div>
 
-        <!-- Step 2: Professional Subscription -->
+        <!-- Step 2: Subscription Plans (Updated Rates) -->
         <div id="step-sub" style="display:none;">
-            <h3 style="margin-top:0; font-size:18px;">Choose Plan / प्लान चुनें</h3>
+            <h3 style="margin-top:0;">Choose Plan / प्लान चुनें</h3>
             
             <div class="sub-option" onclick="selectPlan(this, '1 Day VIP - ₹799')">
-                <span class="sub-title-en">VIP Chart (1 Day Access)</span>
+                <span class="sub-title-en">VIP Chart Access (1 Day)</span>
                 <span class="sub-title-hi">1 दिन के लिए चार्ट खोलें</span>
                 <span class="sub-price">₹799</span>
             </div>
 
             <div class="sub-option" onclick="selectPlan(this, '7 Days VIP - ₹1999')">
-                <span class="sub-title-en">Full VIP (7 Days Access)</span>
+                <span class="sub-title-en">Full VIP Access (7 Days)</span>
                 <span class="sub-title-hi">7 दिनों के लिए चार्ट खोलें</span>
                 <span class="sub-price">₹1999</span>
             </div>
 
-            <button class="btn-pay-main" style="width:100%;" onclick="goPay()">PAY NOW / अभी पे करें</button>
+            <button class="btn-pay-main" style="width:100%;" onclick="goPay()">SELECT / चुनें</button>
         </div>
 
-        <!-- Step 3: Payment with QR -->
+        <!-- Step 3: Payment with QR (OMKAR YADAV) -->
         <div id="step2" style="display:none;">
             <h3 style="margin-top:0;">Payment / भुगतान</h3>
-            <p id="planDisp" style="color:red; font-weight:bold; margin:5px 0; font-size:14px;"></p>
+            <p id="planDisp" style="color:red; font-weight:bold; margin:5px 0;"></p>
             <p style="font-size:12px; margin:0;">Payee: <b>OMKAR YADAV</b></p>
             
             <div style="margin: 10px 0;">
-                <!-- QR CODE IS HERE -->
                 <img src="paytm-png.jpeg" alt="QR Code" style="width:160px; border:2px solid #000; border-radius:5px;">
             </div>
 
@@ -112,14 +111,13 @@
         </div>
 
         <div id="step3" style="display:none;">
-            <h3 style="font-size:16px;">Verifying Payment...</h3>
+            <h3>Verifying...</h3>
             <div id="timerBox" style="font-size:40px; color:red; font-weight:bold;">02:00</div>
-            <p style="font-size:11px; color:#666;">Please wait, do not close this window.</p>
         </div>
 
         <div id="step4" style="display:none;">
             <h2 style="color:green;">DONE / सफल ✅</h2>
-            <p style="font-size:14px;">Your request is submitted.<br>आपका अनुरोध भेज दिया गया है।</p>
+            <p>Admin checking payment status...</p>
             <button class="btn-pay-main" onclick="closeVipModal()">OK</button>
         </div>
     </div>
@@ -138,7 +136,7 @@
     }
 
     function goSub() {
-        if(!document.getElementById('vName').value || document.getElementById('vPhone').value.length < 10) return alert("Please enter details / विवरण भरें");
+        if(!document.getElementById('vName').value || document.getElementById('vPhone').value.length < 10) return alert("Enter valid details");
         document.getElementById('step1').style.display='none';
         document.getElementById('step-sub').style.display='block';
     }
@@ -150,14 +148,14 @@
     }
 
     function goPay() {
-        if(!selectedP) return alert("Please select a plan / प्लान चुनें");
-        document.getElementById('planDisp').innerText = "Selected: " + selectedP;
+        if(!selectedP) return alert("Select a plan");
+        document.getElementById('planDisp').innerText = selectedP;
         document.getElementById('step-sub').style.display='none';
         document.getElementById('step2').style.display='block';
     }
 
     function verify() {
-        if(document.getElementById('utrVal').value.length < 10) return alert("Invalid UTR Number / गलत UTR नंबर");
+        if(document.getElementById('utrVal').value.length < 10) return alert("Invalid UTR");
         document.getElementById('step2').style.display='none';
         document.getElementById('step3').style.display='block';
         startTimer();
