@@ -6,63 +6,73 @@
     <title>BOMBAY SPECIAL VIP CHART</title>
     <style>
         :root { --dark-blue: #1a024d; --gold: #FFD700; --vip-red: #e31e24; --grid-border: #999; }
-        body { background: #FFBF82; color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding-bottom: 80px; }
+        body { background: #FFBF82; color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding-bottom: 100px; }
         
         .header { background: var(--dark-blue); padding: 15px; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
         .header h1 { margin: 0; font-size: 20px; color: var(--gold); text-transform: uppercase; }
 
         /* Chart Area - 90% Width */
         #chartArea { background: #fff; width: 90%; margin: 15px auto; border: 2px solid #333; border-radius: 5px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 350px; }
-        th { background: #222; color: var(--gold); font-size: 10px; padding: 8px 2px; border: 1px solid var(--grid-border); }
-        td { border: 1px solid var(--grid-border); height: 65px; vertical-align: middle; position: relative; background: #fff; }
+        table { width: 100%; border-collapse: collapse; min-width: 380px; } /* Min-width increased for date */
+        th { background: #222; color: var(--gold); font-size: 10px; padding: 10px 2px; border: 1px solid var(--grid-border); }
+        td { border: 1px solid var(--grid-border); height: 70px; vertical-align: middle; position: relative; background: #fff; }
         
-        /* Date Box Fix - Now wider to fit in 2 lines */
-        .date-box { background: #efefef; font-size: 10px; font-weight: bold; color: #000; width: 60px !important; line-height: 1.2; }
+        /* DATE CELL - Wider to ensure 2 lines only */
+        .date-box { background: #f2f2f2; font-size: 11px; font-weight: bold; color: #000; width: 75px !important; line-height: 1.3; padding: 2px; }
         
-        /* Vertical Panna Fix */
-        .cell-content { display: flex; align-items: center; justify-content: center; gap: 3px; padding: 0 1px; }
+        /* Vertical Panna */
+        .cell-content { display: flex; align-items: center; justify-content: center; gap: 4px; }
         .panna-vertical { display: flex; flex-direction: column; font-size: 10px; font-weight: bold; line-height: 1.1; color: #000; width: 12px; }
-        .jodi { font-size: 22px; font-weight: bold; color: #000; min-width: 28px; line-height: 1; }
+        .jodi { font-size: 22px; font-weight: bold; color: #000; min-width: 30px; }
         
         /* Red House */
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
-        .lock-btn { color: var(--vip-red); font-size: 22px; cursor: pointer; }
+        .lock-btn { color: var(--vip-red); font-size: 24px; cursor: pointer; }
 
-        /* Floating Navigation Buttons */
-        .nav-btn { position: fixed; right: 15px; background: var(--vip-red); color: white; border: 2px solid white; border-radius: 50px; font-weight: bold; z-index: 2000; cursor: pointer; font-size: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); width: 65px; padding: 8px 0; }
-        .go-top { bottom: 70px; } /* Top button above bottom button */
+        /* Floating Navigation Buttons - VISIBLE FIXED */
+        .float-btn { position: fixed; right: 15px; background: var(--vip-red); color: white; border: 2px solid #fff; border-radius: 50px; font-weight: bold; z-index: 9999; cursor: pointer; font-size: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .go-top { bottom: 75px; } 
         .go-bottom { bottom: 20px; }
 
         /* Modal Styles */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 88%; max-width: 380px; padding: 20px; border-radius: 15px; border: 4px solid var(--gold); }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; }
+        .modal-content { background: #fff; width: 88%; max-width: 380px; padding: 20px; border-radius: 15px; border: 4px solid var(--gold); color: #000; }
         .btn-pay { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; font-weight: bold; font-size: 16px; margin-top: 10px; cursor: pointer; }
-        .option-box { border: 1px solid #ddd; padding: 10px; margin: 8px 0; border-radius: 10px; text-align: left; cursor: pointer; }
+        .option-box { border: 1px solid #ddd; padding: 10px; margin: 8px 0; border-radius: 10px; text-align: left; }
         .option-box.active { border: 2px solid var(--vip-red); background: #fff5f5; }
-        input { width: 90%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; }
+        input { width: 90%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <div class="header"><h1>BOMBAY SPECIAL VIP CHART</h1></div>
 
-<!-- Top Button -->
-<div class="nav-btn go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Top ↑</div>
+<!-- TOP BUTTON -->
+<div class="float-btn go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">TOP ↑</div>
 
 <div id="chartArea">
     <table>
-        <thead><tr><th style="width:60px;">DATE</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr></thead>
+        <thead>
+            <tr>
+                <th style="width:75px;">DATE</th>
+                <th>MON</th>
+                <th>TUE</th>
+                <th>WED</th>
+                <th>THU</th>
+                <th>FRI</th>
+                <th>SAT</th>
+            </tr>
+        </thead>
         <tbody id="gridData"></tbody>
     </table>
 </div>
 
 <div style="padding: 20px 0;">
-    <button class="btn-pay" style="width:85%;" onclick="openVipModal()">REMOVE LOCK / गेम लें 🔑</button>
+    <button class="btn-pay" style="width:85%; font-size: 20px;" onclick="openVipModal()">REMOVE LOCK / गेम लें 🔑</button>
 </div>
 
-<!-- Bottom Button -->
-<div class="nav-btn go-bottom" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">Bottom ↓</div>
+<!-- BOTTOM BUTTON -->
+<div class="float-btn go-bottom" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">Down ↓</div>
 
 <!-- Modal -->
 <div id="vipModal" class="overlay">
@@ -80,18 +90,18 @@
             <div class="option-box" onclick="setPlan(this, 999)"><b>2. 2 JODI SINGLE</b><br><small>Charge: ₹999</small></div>
             <div class="option-box" onclick="setPlan(this, 599)"><b>3. SINGLE CLOSE</b><br><small>Charge: ₹599</small></div>
             <p>Pay: <b id="amtVal" style="color:red;">₹399</b> to <b>OMKAR YADAV</b></p>
-            <img src="paytm-png.jpeg" style="width:150px; border:1px solid #333;">
+            <img src="paytm-png.jpeg" style="width:160px; border:1px solid #333; margin-bottom:10px;">
             <input type="number" id="utrVal" placeholder="12 Digit UTR Number">
             <button class="btn-pay" onclick="verify()">Verify Payment</button>
         </div>
         <div id="step3" style="display:none;">
             <h3>Verifying...</h3>
-            <div id="timerBox" style="font-size:40px; color:red; font-weight:bold;">02:00</div>
+            <div id="timerBox" style="font-size:45px; color:red; font-weight:bold;">02:00</div>
         </div>
         <div id="step4" style="display:none;">
             <h2 style="color:green;">SUBMITTED ✅</h2>
-            <p>30 मिनट इंतज़ार करें।</p>
-            <button class="btn-pay" onclick="closeVipModal()">ठीक है</button>
+            <p>30 मिनट इंतज़ार करें, गेम अपडेट हो जायेगा।</p>
+            <button class="btn-pay" onclick="closeVipModal()">DONE</button>
         </div>
     </div>
 </div>
@@ -119,7 +129,7 @@
     }
 
     function verify() {
-        if(document.getElementById('utrVal').value.length < 10) { alert("UTR नंबर डालें"); return; }
+        if(document.getElementById('utrVal').value.length < 10) { alert("सही UTR नंबर डालें"); return; }
         document.getElementById('step2').style.display='none';
         document.getElementById('step3').style.display='block';
         let t = 120;
