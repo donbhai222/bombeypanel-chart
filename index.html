@@ -6,40 +6,39 @@
     <title>BOMBAY SPECIAL VIP CHART</title>
     <style>
         :root { --dark-blue: #1a024d; --gold: #FFD700; --vip-red: #e31e24; --grid-border: #000; }
-        body { background: #FFBF82; color: var(--dark-blue); font-family: 'Arial Narrow', sans-serif; text-align: center; margin: 0; padding-bottom: 80px; overflow-x: hidden; }
+        body { background: #FFBF82; color: var(--dark-blue); font-family: 'Arial Narrow', sans-serif; text-align: center; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
         
-        .header { background: var(--dark-blue); padding: 8px; border-bottom: 3px solid var(--gold); }
-        .header h1 { margin: 0; font-size: 15px; color: var(--gold); text-transform: uppercase; }
+        .header { background: var(--dark-blue); padding: 10px; border-bottom: 3px solid var(--gold); }
+        .header h1 { margin: 0; font-size: 16px; color: var(--gold); text-transform: uppercase; }
 
         #chartWrapper { width: 100%; margin: 5px 0; background: #fff; overflow-x: hidden; }
         table { border-collapse: collapse; width: 100%; table-layout: fixed; }
-        th { background: #ffff00; color: #000; font-size: 8px; padding: 5px 0; border: 1px solid var(--grid-border); font-weight: bold; }
-        
-        td { border: 1px solid var(--grid-border); height: 48px !important; background: #fff; vertical-align: middle; text-align: center; padding: 0; }
+        th { background: #ffff00; color: #000; font-size: 8px; padding: 6px 0; border: 1px solid var(--grid-border); }
+        td { border: 1px solid var(--grid-border); height: 48px; background: #fff; vertical-align: middle; text-align: center; padding: 0; }
         .date-box { background: #f0f0f0 !important; font-size: 7px; font-weight: bold; width: 38px !important; }
         
-        .cell-content { display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%; height: 100%; }
-        .panna-vertical { display: flex; flex-direction: column; font-size: 7px; line-height: 0.85; width: 8px; font-weight: bold; }
-        .jodi { font-size: 16px; font-weight: 900; color: #000; margin: 0 1px; letter-spacing: -1px; }
-        
+        .cell-content { display: flex; align-items: center; justify-content: center; width: 100%; }
+        .panna-vertical { display: flex; flex-direction: column; font-size: 7px; line-height: 0.8; width: 8px; font-weight: bold; }
+        .jodi { font-size: 16px; font-weight: 900; color: #000; margin: 0 2px; }
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
         .lock-btn { color: var(--vip-red); font-size: 16px; cursor: pointer; }
 
-        .site-desc { font-size: 13px; font-weight: bold; margin: 15px 5px; color: #1a024d; }
+        .site-desc { font-size: 13px; font-weight: bold; margin: 15px 5px; color: #1a024d; display: block; }
         .btn-pay-main { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 6px; width: 90%; font-weight: bold; font-size: 16px; margin: 10px 0; cursor: pointer; }
 
-        .float-btn { position: fixed; right: 10px; background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; font-size: 11px; z-index: 999; box-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: bold; }
-        .go-bottom { bottom: 80px; } 
-        .go-top { bottom: 25px; }
+        /* Floating Buttons Position Swapped */
+        .float-btn { position: fixed; right: 10px; background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 11px; z-index: 999; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .go-bottom { bottom: 90px; } 
+        .go-top { bottom: 30px; }
 
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 85%; max-width: 300px; padding: 15px; border-radius: 8px; box-sizing: border-box; overflow-y: auto; max-height: 90vh; }
-        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .modal-content { background: #fff; width: 88%; max-width: 320px; padding: 20px; border-radius: 10px; box-sizing: border-box; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         
-        .sub-option { border: 2px solid #ddd; border-radius: 6px; padding: 12px; margin: 8px 0; cursor: pointer; text-align: center; background: #f9f9f9; }
-        .sub-option.active { border-color: var(--vip-red); background: #fff5f5; }
+        .sub-option { border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin: 10px 0; cursor: pointer; background: #fafafa; }
+        .sub-option.active { border-color: var(--vip-red); background: #fff0f0; }
         .sub-title { font-weight: bold; font-size: 16px; display: block; }
-        .sub-price { color: var(--vip-red); font-weight: 900; font-size: 18px; }
+        .sub-price { color: var(--vip-red); font-weight: 900; font-size: 20px; }
     </style>
 </head>
 <body>
@@ -68,81 +67,82 @@
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="step1">
-            <h4 style="margin:0;">VIP Registration</h4>
-            <input type="text" id="vName" placeholder="अपना नाम लिखें">
+            <h3 style="margin-top:0;">Registration</h3>
+            <input type="text" id="vName" placeholder="अपना नाम">
             <input type="number" id="vPhone" placeholder="मोबाइल नंबर">
             <button class="btn-pay-main" style="width:100%;" onclick="goSub()">NEXT</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px; font-weight:bold; margin-top:10px;">बंद करें</p>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px; margin-top:10px;">बंद करें</p>
         </div>
 
-        <!-- Updated Subscriptions: 1 Day and 7 Days -->
+        <!-- NEW UPDATED CHARGES -->
         <div id="step-sub" style="display:none;">
-            <h4 style="margin:0;">Subscription Plan</h4>
-            <div class="sub-option" onclick="selectPlan(this, '1 Day - ₹399')">
-                <span class="sub-title">Full Game (1 Day)</span>
-                <span class="sub-price">₹399</span>
+            <h3 style="margin-top:0;">Select Plan</h3>
+            <div class="sub-option" onclick="selectPlan(this, '1 Day - ₹799')">
+                <span class="sub-title">Full VIP Game (1 Day)</span>
+                <span class="sub-price">₹799</span>
             </div>
-            <div class="sub-option" onclick="selectPlan(this, '7 Days - ₹999')">
-                <span class="sub-title">Full Game (7 Days)</span>
-                <span class="sub-price">₹999</span>
+            <div class="sub-option" onclick="selectPlan(this, '7 Days - ₹1999')">
+                <span class="sub-title">Full VIP Game (7 Days)</span>
+                <span class="sub-price">₹1999</span>
             </div>
-            <button class="btn-pay-main" style="width:100%;" onclick="goPay()">आगे बढ़ें (PAY)</button>
+            <button class="btn-pay-main" style="width:100%;" onclick="goPay()">PAY NOW</button>
         </div>
 
         <div id="step2" style="display:none;">
-            <h4 style="margin:0;">Payment</h4>
-            <p id="selectedPlanDisplay" style="font-size:12px; color:red; font-weight:bold; margin-bottom:5px;"></p>
-            <p style="font-size:11px; margin:0;">Payee: <b>OMKAR YADAV</b></p>
-            <img src="paytm-png.jpeg" style="width:150px; border:2px solid #000; margin:10px 0;">
-            <input type="number" id="utrVal" placeholder="12 Digit UTR Number">
+            <h3 style="margin-top:0;">Payment</h3>
+            <p id="planDisp" style="color:red; font-weight:bold; margin:5px 0;"></p>
+            <p style="font-size:12px; margin:0;">Pay To: <b>OMKAR YADAV</b></p>
+            <img src="paytm-png.jpeg" style="width:160px; border:2px solid #000; margin:10px 0;">
+            <input type="number" id="utrVal" placeholder="12 Digit UTR नंबर डालें">
             <button class="btn-pay-main" style="width:100%;" onclick="verify()">Verify Payment</button>
         </div>
 
         <div id="step3" style="display:none;">
-            <h5>Verifying...</h5>
-            <div id="timerBox" style="font-size:35px; color:red; font-weight:bold;">02:00</div>
+            <h3>Verifying...</h3>
+            <div id="timerBox" style="font-size:40px; color:red; font-weight:bold;">02:00</div>
         </div>
 
         <div id="step4" style="display:none;">
-            <h3 style="color:green;">SUBMITTED ✅</h3>
-            <button class="btn-pay-main" style="width:100%;" onclick="closeVipModal()">DONE</button>
+            <h2 style="color:green;">DONE ✅</h2>
+            <p>Admin is verifying your payment.</p>
+            <button class="btn-pay-main" onclick="closeVipModal()">OK</button>
         </div>
     </div>
 </div>
 
 <script>
     const CSV = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv&gid=0";
-    let chosenPlan = "";
+    let selectedP = "";
 
     function openVipModal() { document.getElementById('vipModal').style.display='flex'; resetModal(); }
     function closeVipModal() { document.getElementById('vipModal').style.display='none'; }
     function resetModal() { 
         document.getElementById('step1').style.display='block'; 
         ['step-sub','step2','step3','step4'].forEach(id => document.getElementById(id).style.display='none'); 
-        chosenPlan = "";
+        selectedP = "";
     }
 
     function goSub() {
-        if(document.getElementById('vName').value=="" || document.getElementById('vPhone').value.length < 10) return alert("विवरण भरें");
+        if(!document.getElementById('vName').value || document.getElementById('vPhone').value.length < 10) return alert("विवरण सही भरें");
         document.getElementById('step1').style.display='none';
         document.getElementById('step-sub').style.display='block';
     }
 
-    function selectPlan(el, plan) {
-        document.querySelectorAll('.sub-option').forEach(opt => opt.classList.remove('active'));
+    function selectPlan(el, p) {
+        document.querySelectorAll('.sub-option').forEach(x => x.classList.remove('active'));
         el.classList.add('active');
-        chosenPlan = plan;
+        selectedP = p;
     }
 
     function goPay() {
-        if(!chosenPlan) return alert("प्लान चुनें");
-        document.getElementById('selectedPlanDisplay').innerText = "Plan: " + chosenPlan;
+        if(!selectedP) return alert("कृपया एक प्लान चुनें");
+        document.getElementById('planDisp').innerText = "Plan: " + selectedP;
         document.getElementById('step-sub').style.display='none';
         document.getElementById('step2').style.display='block';
     }
 
     function verify() {
-        if(document.getElementById('utrVal').value.length < 10) return alert("UTR सही डालें");
+        if(document.getElementById('utrVal').value.length < 10) return alert("UTR नंबर सही डालें");
         document.getElementById('step2').style.display='none';
         document.getElementById('step3').style.display='block';
         startTimer();
