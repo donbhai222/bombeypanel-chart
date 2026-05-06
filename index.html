@@ -6,7 +6,7 @@
     <title>BOMBAY SPECIAL VIP CHART</title>
     <style>
         :root { --dark-blue: #1a024d; --gold: #FFD700; --vip-red: #e31e24; --grid-border: #000; }
-        body { background: #FFBF82; color: var(--dark-blue); font-family: 'Arial Narrow', sans-serif; text-align: center; margin: 0; padding-bottom: 60px; overflow-x: hidden; }
+        body { background: #FFBF82; color: var(--dark-blue); font-family: 'Arial Narrow', sans-serif; text-align: center; margin: 0; padding-bottom: 80px; overflow-x: hidden; }
         
         .header { background: var(--dark-blue); padding: 8px; border-bottom: 3px solid var(--gold); }
         .header h1 { margin: 0; font-size: 15px; color: var(--gold); text-transform: uppercase; }
@@ -25,18 +25,21 @@
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
         .lock-btn { color: var(--vip-red); font-size: 16px; cursor: pointer; }
 
-        /* DESCRIPTION STYLE */
-        .site-desc { font-size: 13px; font-weight: bold; margin: 10px 5px; color: #1a024d; line-height: 1.4; }
-
+        .site-desc { font-size: 13px; font-weight: bold; margin: 15px 5px; color: #1a024d; }
         .btn-pay-main { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 6px; width: 90%; font-weight: bold; font-size: 16px; margin: 10px 0; cursor: pointer; }
 
-        .float-btn { position: fixed; right: 8px; background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 11px; z-index: 999; box-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: bold; }
-        .go-bottom { bottom: 65px; } 
-        .go-top { bottom: 15px; }
+        .float-btn { position: fixed; right: 10px; background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; font-size: 11px; z-index: 999; box-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: bold; }
+        .go-bottom { bottom: 80px; } 
+        .go-top { bottom: 25px; }
 
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 85%; max-width: 300px; padding: 15px; border-radius: 8px; box-sizing: border-box; }
+        .modal-content { background: #fff; width: 85%; max-width: 300px; padding: 15px; border-radius: 8px; box-sizing: border-box; overflow-y: auto; max-height: 90vh; }
         input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        
+        .sub-option { border: 2px solid #ddd; border-radius: 6px; padding: 12px; margin: 8px 0; cursor: pointer; text-align: center; background: #f9f9f9; }
+        .sub-option.active { border-color: var(--vip-red); background: #fff5f5; }
+        .sub-title { font-weight: bold; font-size: 16px; display: block; }
+        .sub-price { color: var(--vip-red); font-weight: 900; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -55,7 +58,6 @@
     </table>
 </div>
 
-<!-- DESCRIPTION BACK AGAIN -->
 <div class="site-desc">People get more from Game with a BOMBAY SPECIAL VIP CHART.</div>
 
 <button class="btn-pay-main" onclick="openVipModal()">JOIN VIP / लॉक खोलें 🔑</button>
@@ -69,29 +71,82 @@
             <h4 style="margin:0;">VIP Registration</h4>
             <input type="text" id="vName" placeholder="अपना नाम लिखें">
             <input type="number" id="vPhone" placeholder="मोबाइल नंबर">
-            <button class="btn-pay-main" style="width:100%;" onclick="goNext()">आगे बढ़ें (Next)</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px; font-weight:bold;">बंद करें</p>
+            <button class="btn-pay-main" style="width:100%;" onclick="goSub()">NEXT</button>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px; font-weight:bold; margin-top:10px;">बंद करें</p>
         </div>
+
+        <!-- Updated Subscriptions: 1 Day and 7 Days -->
+        <div id="step-sub" style="display:none;">
+            <h4 style="margin:0;">Subscription Plan</h4>
+            <div class="sub-option" onclick="selectPlan(this, '1 Day - ₹399')">
+                <span class="sub-title">Full Game (1 Day)</span>
+                <span class="sub-price">₹399</span>
+            </div>
+            <div class="sub-option" onclick="selectPlan(this, '7 Days - ₹999')">
+                <span class="sub-title">Full Game (7 Days)</span>
+                <span class="sub-price">₹999</span>
+            </div>
+            <button class="btn-pay-main" style="width:100%;" onclick="goPay()">आगे बढ़ें (PAY)</button>
+        </div>
+
         <div id="step2" style="display:none;">
             <h4 style="margin:0;">Payment</h4>
-            <p style="font-size:13px; margin:5px 0;">Pay To: <b>OMKAR YADAV</b></p>
-            <img src="paytm-png.jpeg" style="width:130px; border:1px solid #000; margin-bottom:10px;">
+            <p id="selectedPlanDisplay" style="font-size:12px; color:red; font-weight:bold; margin-bottom:5px;"></p>
+            <p style="font-size:11px; margin:0;">Payee: <b>OMKAR YADAV</b></p>
+            <img src="paytm-png.jpeg" style="width:150px; border:2px solid #000; margin:10px 0;">
             <input type="number" id="utrVal" placeholder="12 Digit UTR Number">
             <button class="btn-pay-main" style="width:100%;" onclick="verify()">Verify Payment</button>
         </div>
-        <div id="step3" style="display:none;"><h5>Verifying...</h5><div id="timerBox" style="font-size:35px; color:red; font-weight:bold;">02:00</div></div>
-        <div id="step4" style="display:none;"><h3 style="color:green;">SUBMITTED ✅</h3><button class="btn-pay-main" style="width:100%;" onclick="closeVipModal()">DONE</button></div>
+
+        <div id="step3" style="display:none;">
+            <h5>Verifying...</h5>
+            <div id="timerBox" style="font-size:35px; color:red; font-weight:bold;">02:00</div>
+        </div>
+
+        <div id="step4" style="display:none;">
+            <h3 style="color:green;">SUBMITTED ✅</h3>
+            <button class="btn-pay-main" style="width:100%;" onclick="closeVipModal()">DONE</button>
+        </div>
     </div>
 </div>
 
 <script>
     const CSV = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv&gid=0";
+    let chosenPlan = "";
 
     function openVipModal() { document.getElementById('vipModal').style.display='flex'; resetModal(); }
     function closeVipModal() { document.getElementById('vipModal').style.display='none'; }
-    function resetModal() { document.getElementById('step1').style.display='block'; ['step2','step3','step4'].forEach(id => document.getElementById(id).style.display='none'); }
-    function goNext() { if(document.getElementById('vName').value=="" || document.getElementById('vPhone').value.length<10) return alert("विवरण भरें"); document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block'; }
-    function verify() { if(document.getElementById('utrVal').value.length<10) return alert("गलत UTR नंबर"); document.getElementById('step2').style.display='none'; document.getElementById('step3').style.display='block'; startTimer(); }
+    function resetModal() { 
+        document.getElementById('step1').style.display='block'; 
+        ['step-sub','step2','step3','step4'].forEach(id => document.getElementById(id).style.display='none'); 
+        chosenPlan = "";
+    }
+
+    function goSub() {
+        if(document.getElementById('vName').value=="" || document.getElementById('vPhone').value.length < 10) return alert("विवरण भरें");
+        document.getElementById('step1').style.display='none';
+        document.getElementById('step-sub').style.display='block';
+    }
+
+    function selectPlan(el, plan) {
+        document.querySelectorAll('.sub-option').forEach(opt => opt.classList.remove('active'));
+        el.classList.add('active');
+        chosenPlan = plan;
+    }
+
+    function goPay() {
+        if(!chosenPlan) return alert("प्लान चुनें");
+        document.getElementById('selectedPlanDisplay').innerText = "Plan: " + chosenPlan;
+        document.getElementById('step-sub').style.display='none';
+        document.getElementById('step2').style.display='block';
+    }
+
+    function verify() {
+        if(document.getElementById('utrVal').value.length < 10) return alert("UTR सही डालें");
+        document.getElementById('step2').style.display='none';
+        document.getElementById('step3').style.display='block';
+        startTimer();
+    }
 
     function startTimer() {
         let t = 120;
