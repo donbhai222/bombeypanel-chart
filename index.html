@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO Meta Tags: इससे आपकी साइट सर्च में ऊपर आएगी -->
+    
+    <!-- SEO Meta Tags: इससे आपकी साइट Google Search में ऊपर आएगी -->
     <title>BOMBAY SPECIAL VIP CHART | Satta Matka Fast Live Result</title>
     <meta name="description" content="BOMBAY SPECIAL VIP CHART provides the fastest live results and daily VIP charts. Get accurate Bombay Special updates and guessing here.">
     <meta name="keywords" content="Bombay Special, VIP Chart, Satta Matka, Live Result, Fast Result, Satta Chart, Bombay Satta">
@@ -12,8 +13,8 @@
     
     <style>
         :root { 
-            --gold-gradient: linear-gradient(145deg, #FFD700, #FFA500);
             --dark-blue: #1a024d;
+            --gold: #FFD700;
             --vip-red: #e31e24;
             --grid-border: #999; 
             --white: #ffffff;
@@ -26,13 +27,14 @@
             text-align: center; 
             margin: 0; 
             padding: 0; 
+            padding-bottom: 70px; /* Space for fixed buttons */
         }
 
-        /* Premium Header */
+        /* Header Style */
         .header { 
             background: var(--dark-blue); 
             padding: 20px; 
-            border-bottom: 4px solid #FFD700; 
+            border-bottom: 4px solid var(--gold); 
             position: sticky; 
             top: 0; 
             z-index: 1000;
@@ -41,44 +43,45 @@
         .header h1 { 
             margin: 0; 
             font-size: 22px; 
-            color: #FFD700; 
+            color: var(--gold); 
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 900; 
         }
 
-        /* Live Blinker */
+        /* Live Blinking Tag */
         .live-tag {
             background: var(--vip-red);
             color: white;
-            padding: 5px 15px;
+            padding: 6px 18px;
             border-radius: 20px;
             font-size: 14px;
             font-weight: bold;
             display: inline-block;
-            margin: 10px 0;
+            margin: 15px 0;
+            box-shadow: 0 0 10px rgba(227, 30, 36, 0.5);
             animation: blinker 1s linear infinite;
         }
-        @keyframes blinker { 50% { opacity: 0; } }
+        @keyframes blinker { 50% { opacity: 0.2; } }
 
         .intro-text { 
             background: #fff; 
             padding: 15px; 
             margin: 10px auto; 
             width: 90%; 
-            border-left: 5px solid var(--vip-red);
+            border-left: 6px solid var(--vip-red);
             font-size: 14px; 
             font-weight: bold; 
-            border-radius: 5px; 
+            border-radius: 8px; 
             box-sizing: border-box;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        /* Buttons Styling */
+        /* Buttons Style */
         .scroll-btn { 
-            background: linear-gradient(to right, #65bbf5, #007bff); 
+            background: linear-gradient(to right, #007bff, #0056b3); 
             color: #fff; 
-            padding: 12px 20px; 
+            padding: 12px 25px; 
             border: 2px solid #fff; 
             border-radius: 50px; 
             cursor: pointer; 
@@ -87,51 +90,74 @@
             display: inline-block; 
             text-decoration: none;
             transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .scroll-btn:hover { transform: scale(1.05); }
+        .scroll-btn:active { transform: scale(0.95); }
 
-        /* Chart Area */
+        /* Chart Section */
         #chartArea { 
             background: #fff; 
             width: 95%; 
             margin: 15px auto; 
-            border: 2px solid #444; 
+            border: 2px solid #333; 
             overflow-x: auto; 
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
         
         table { width: 100%; border-collapse: collapse; min-width: 350px; }
-        th { background: #222; color: #FFD700; font-size: 10px; padding: 10px 2px; border: 1px solid var(--grid-border); }
+        th { background: #222; color: var(--gold); font-size: 11px; padding: 12px 2px; border: 1px solid var(--grid-border); text-transform: uppercase; }
         td { border: 1px solid var(--grid-border); height: 60px; vertical-align: middle; position: relative; }
         
-        .date-box { background: #f9f9f9; font-size: 10px; font-weight: bold; color: #333; width: 45px; }
+        .date-box { background: #efefef; font-size: 10px; font-weight: bold; color: #333; width: 45px; }
         .cell-content { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
         
-        .panna { display: flex; flex-direction: column; font-size: 8px; position: absolute; font-weight: bold; color: #666; width: 12px; }
+        .panna { display: flex; flex-direction: column; font-size: 8px; position: absolute; font-weight: bold; color: #555; width: 12px; line-height: 1; }
         .panna.left { left: 4px; } 
         .panna.right { right: 4px; }
         .jodi { font-size: 18px; font-weight: bold; color: #000; z-index: 2; }
         
         .red-house .jodi, .red-house .panna { color: var(--vip-red) !important; }
-        .single-vip-lock { color: var(--vip-red); font-size: 22px; animation: blink 1.5s infinite; cursor: pointer; }
-        @keyframes blink { 50% { opacity: 0.3; } }
+        .single-vip-lock { color: var(--vip-red); font-size: 24px; animation: lockBlink 1.5s infinite; cursor: pointer; }
+        @keyframes lockBlink { 50% { opacity: 0.3; transform: scale(1.1); } }
 
-        /* Modal / Overlay */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-content { background: #fff; width: 90%; max-width: 380px; padding: 20px; border-radius: 25px; text-align: center; border: 3px solid #FFD700; }
-        input { width: 85%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; }
+        /* Floating Top Button */
+        #topBtn {
+            display: none;
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            z-index: 2000;
+            background: var(--dark-blue);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            padding: 12px 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            font-size: 14px;
+        }
+
+        /* Modal Overlay */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal-content { background: #fff; width: 88%; max-width: 400px; padding: 25px; border-radius: 20px; text-align: center; border: 4px solid var(--gold); position: relative; max-height: 90vh; overflow-y: auto; }
+        input { width: 88%; padding: 12px; margin: 10px 0; border: 2px solid #ccc; border-radius: 10px; font-size: 16px; outline: none; }
+        input:focus { border-color: var(--dark-blue); }
         
         .verify-btn { 
             background: linear-gradient(to right, #28a745, #218838); 
             color: #fff; padding: 15px; border: none; border-radius: 12px; 
-            font-weight: bold; width: 90%; cursor: pointer; font-size: 18px; 
-            box-shadow: 0 4px 0 #19692c;
+            font-weight: bold; width: 95%; cursor: pointer; font-size: 18px; 
+            box-shadow: 0 4px 0 #19692c; margin-top: 10px;
         }
+        .verify-btn:active { transform: translateY(3px); box-shadow: none; }
 
-        .plan-content-box { border: 2px solid #eee; border-radius: 12px; padding: 12px; text-align: left; margin-bottom: 10px; transition: 0.3s; }
+        .plan-content-box { border: 2px solid #eee; border-radius: 12px; padding: 12px; text-align: left; margin-bottom: 12px; transition: 0.3s; cursor: pointer; }
+        input[type="radio"] { display: none; }
         input[type="radio"]:checked + .plan-content-box { border-color: var(--vip-red); background: #fff5f5; }
-        #timerDisplay { font-size: 35px; font-weight: bold; color: var(--vip-red); }
+        
+        #timerDisplay { font-size: 40px; font-weight: bold; color: var(--vip-red); margin: 15px 0; }
     </style>
 </head>
 <body>
@@ -144,10 +170,10 @@
 
 <div class="intro-text">
     स्वागत है! बॉम्बे स्पेशल वीआईपी चार्ट में। <br>
-    <span style="color:var(--vip-red)">Unlock VIP access for Today's Fix Game.</span>
+    <span style="color:var(--vip-red)">Unlock VIP for Exclusive access to Today's Result.</span>
 </div>
 
-<button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">See Chart Bottom ↓</button>
+<button class="scroll-btn" onclick="document.getElementById('unlockArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom ↓</button>
 
 <div id="chartArea">
     <table>
@@ -166,50 +192,64 @@
 </div>
 
 <div id="unlockArea" style="padding: 20px 0;">
-    <button class="scroll-btn" style="width:85%; font-size:20px; background:var(--vip-red); padding: 18px; border:none;" onclick="openVipModal()">REMOVE LOCK & GET GAME 🔑</button>
+    <button class="scroll-btn" style="width:88%; font-size:20px; background:var(--vip-red); padding: 18px; border:none; color:white;" onclick="openVipModal()">Remove Lock 🔑</button>
 </div>
 
-<!-- Modal Structure -->
+<button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Go to Top ↑</button>
+
+<!-- VIP Payment Modal -->
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="stepInfo">
-            <h3 style="margin-top:0;">VIP Registration</h3>
-            <input type="text" id="userName" placeholder="आपका नाम">
+            <h3 style="margin: 0 0 10px 0; color: var(--dark-blue);">User Details</h3>
+            <p style="font-size: 13px; font-weight: bold; margin-bottom: 15px;">आगे बढ़ने के लिए नाम और नंबर डालें</p>
+            <input type="text" id="userName" placeholder="आपका पूरा नाम">
             <input type="number" id="userPhone" placeholder="मोबाइल नंबर">
-            <button class="verify-btn" onclick="goToPayment()">NEXT / आगे बढ़ें</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-weight:bold; margin-top:15px;">CANCEL</p>
+            <button class="verify-btn" onclick="goToPayment()">NEXT / आगे बढ़ें</button>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-weight:bold; margin-top:20px;">Close</p>
         </div>
 
         <div id="stepPay" style="display:none;">
-            <h2 id="displayAmt" style="color:var(--vip-red); margin:10px 0;">₹599</h2>
-            <div style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;">
-                <!-- Plans -->
-                <label style="cursor:pointer;"><input type="radio" name="subPlan" value="599" checked onclick="updateAmt(599)"><div class="plan-content-box"><b>1. Single OTC Open (2 Digit)</b><br><small>Charge: ₹599</small></div></label>
-                <label style="cursor:pointer;"><input type="radio" name="subPlan" value="399" onclick="updateAmt(399)"><div class="plan-content-box"><b>2. Single Panna</b><br><small>Charge: ₹399</small></div></label>
-                <label style="cursor:pointer;"><input type="radio" name="subPlan" value="999" onclick="updateAmt(999)"><div class="plan-content-box"><b>3. 2 Jodi Single</b><br><small>Charge: ₹999</small></div></label>
+            <h2 id="displayAmt" style="color:var(--vip-red); margin: 0 0 10px 0;">₹599</h2>
+            <p style="font-size:12px; font-weight:bold; margin-bottom:10px;">अपना प्लान चुनें:</p>
+            <div style="max-height: 200px; overflow-y: auto; margin-bottom: 15px; text-align: left;">
+                <label><input type="radio" name="subPlan" value="599" checked onclick="updateAmt(599)"><div class="plan-content-box"><b>1. Single OTC Open (2 Ank)</b><br><small>Charge: ₹599</small></div></label>
+                <label><input type="radio" name="subPlan" value="399" onclick="updateAmt(399)"><div class="plan-content-box"><b>2. Single Panna (Patti)</b><br><small>Charge: ₹399</small></div></label>
+                <label><input type="radio" name="subPlan" value="999" onclick="updateAmt(999)"><div class="plan-content-box"><b>3. 2 Jodi Single (Direct)</b><br><small>Charge: ₹999</small></div></label>
             </div>
-            <p>Pay to: <b>Omkar Yadav</b></p>
-            <img src="paytm-png.jpeg" style="width:150px; border:2px solid #333;" alt="QR Code">
+            <p style="font-size:14px; margin: 5px 0;">Pay to: <b>Omkar Yadav</b></p>
+            <img src="paytm-png.jpeg" style="width:160px; height:160px; border:2px solid #333; margin-bottom:10px;" alt="QR Code">
             <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR / Ref No.">
             <button class="verify-btn" onclick="startTimerProcess()">VERIFY PAYMENT</button>
+            <p onclick="resetSteps()" style="cursor:pointer; color:#666; margin-top:15px; font-weight:bold;">← Back</p>
         </div>
 
         <div id="stepTimer" style="display:none;">
-            <h3>Verifying Payment...</h3>
+            <h3>Verifying...</h3>
+            <p>कृपया प्रतीक्षा करें, पेमेंट चेक हो रहा है।</p>
             <div id="timerDisplay">02:00</div>
-            <p>Don't close this window.</p>
         </div>
 
         <div id="stepFailed" style="display:none;">
             <h2 style="color:#28a745;">SUCCESS</h2>
-            <p>पेमेंट कन्फर्म हो गया है! गेम 30 मिनट में अनलॉक हो जाएगा।</p>
-            <button class="verify-btn" style="background:#444;" onclick="closeVipModal()">DONE</button>
+            <p style="font-weight:bold; padding:10px;">UTR नंबर सबमिट हो गया है! रिज़ल्ट 30 मिनट में अनलॉक हो जाएगा।</p>
+            <button class="verify-btn" style="background:#444; box-shadow: 0 4px 0 #222;" onclick="closeVipModal()">CLOSE</button>
         </div>
     </div>
 </div>
 
 <script>
     const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv&gid=0";
+
+    // Show/Hide Top Button
+    window.onscroll = function() {
+        var btn = document.getElementById("topBtn");
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            btn.style.display = "block";
+        } else {
+            btn.style.display = "none";
+        }
+    };
 
     function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
     function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; }
@@ -222,22 +262,23 @@
     function updateAmt(val) { document.getElementById('displayAmt').innerText = "₹" + val; }
     
     function goToPayment() {
-        if(document.getElementById('userName').value.trim() === "" || document.getElementById('userPhone').value.length < 10) {
-            alert("कृपया सही जानकारी भरें।"); return;
-        }
+        const n = document.getElementById('userName').value.trim();
+        const p = document.getElementById('userPhone').value.trim();
+        if(n === "" || p.length < 10) { alert("कृपया सही नाम और नंबर भरें।"); return; }
         document.getElementById('stepInfo').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
     }
 
     function startTimerProcess() {
-        if(document.getElementById('utrInput').value.length < 10) { alert("सही UTR नंबर डालें।"); return; }
+        const u = document.getElementById('utrInput').value;
+        if(u.length < 10) { alert("कृपया सही UTR नंबर डालें।"); return; }
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepTimer').style.display = 'block';
-        let timeLeft = 120;
-        const countdown = setInterval(() => {
-            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
-            document.getElementById('timerDisplay').innerText = `0${m}:${s < 10 ? '0'+s : s}`;
-            if (timeLeft-- <= 0) { clearInterval(countdown); showSuccess(); }
+        let t = 120;
+        const timer = setInterval(() => {
+            let mins = Math.floor(t / 60), secs = t % 60;
+            document.getElementById('timerDisplay').innerText = `0${mins}:${secs < 10 ? '0'+secs : secs}`;
+            if (t-- <= 0) { clearInterval(timer); showSuccess(); }
         }, 1000);
     }
 
@@ -247,8 +288,9 @@
     }
 
     async function loadChart() {
+        const gridBody = document.getElementById('gridData');
         try {
-            const res = await fetch(CSV_URL + "&t=" + new Date().getTime());
+            const res = await fetch(CSV_URL + "&cache=" + new Date().getTime());
             const data = await res.text();
             const rows = data.split(/\r?\n/).filter(r => r.trim() !== '').map(r => r.split(','));
             let html = '', lockPlaced = false;
@@ -258,25 +300,34 @@
                 if(!dt) continue;
                 html += `<tr><td class="date-box">${dt}</td>`;
                 for(let j = 1; j <= 16; j += 3) {
-                    let lp = (rows[i][j] || "").trim(), jd = (rows[i][j+1] || "").trim(), rp = (rows[i][j+2] || "").trim();
+                    let lp = (rows[i][j] || "").trim().replace(/"/g, "");
+                    let jd = (rows[i][j+1] || "").trim().replace(/"/g, "");
+                    let rp = (rows[i][j+2] || "").trim().replace(/"/g, "");
+                    
                     if(!lp && !jd && !rp) {
                         if(!lockPlaced) {
                             html += `<td onclick="openVipModal()" style="cursor:pointer;"><span class="single-vip-lock">🔒</span></td>`;
                             lockPlaced = true;
                         } else { html += `<td></td>`; }
                     } else {
-                        let isRed = (jd.length === 2 && (jd[0] === jd[1] || Math.abs(jd[0] - jd[1]) === 5));
-                        html += `<td class="${isRed ? 'red-house' : ''}"><div class="cell-content">
-                            <div class="panna left">${lp.split('').map(s=>`<span>${s}</span>`).join('')}</div>
-                            <div class="jodi">${jd}</div>
-                            <div class="panna right">${rp.split('').map(s=>`<span>${s}</span>`).join('')}</div>
-                        </div></td>`;
+                        let isRed = false;
+                        if(jd && jd.length === 2) {
+                            let d1 = parseInt(jd[0]), d2 = parseInt(jd[1]);
+                            if(d1 === d2 || Math.abs(d1 - d2) === 5) isRed = true;
+                        }
+                        html += `<td class="${isRed ? 'red-house' : ''}">
+                            <div class="cell-content">
+                                <div class="panna left">${lp.split('').map(s=>`<span>${s}</span>`).join('')}</div>
+                                <div class="jodi">${jd}</div>
+                                <div class="panna right">${rp.split('').map(s=>`<span>${s}</span>`).join('')}</div>
+                            </div>
+                        </td>`;
                     }
                 }
                 html += `</tr>`;
             }
-            document.getElementById('gridData').innerHTML = html;
-        } catch(e) { document.getElementById('gridData').innerHTML = '<tr><td colspan="7">Error Loading Data.</td></tr>'; }
+            gridBody.innerHTML = html;
+        } catch(e) { gridBody.innerHTML = '<tr><td colspan="7" style="color:red; padding:20px;">डाटा लोड नहीं हुआ। रिफ्रेश करें।</td></tr>'; }
     }
     window.onload = loadChart;
 </script>
