@@ -2,65 +2,85 @@
 <html lang="hi">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>BOMBAY SPECIAL VIP CHART</title>
     <style>
         :root { --dark-blue: #1a024d; --gold: #FFD700; --vip-red: #e31e24; --grid-border: #000; }
-        body { background: #FFBF82; color: var(--dark-blue); font-family: 'Arial', sans-serif; text-align: center; margin: 0; padding-bottom: 60px; overflow-x: hidden; }
+        body { background: #FFBF82; color: var(--dark-blue); font-family: 'Arial Narrow', sans-serif; text-align: center; margin: 0; padding-bottom: 60px; overflow-x: hidden; }
         
-        .header { background: var(--dark-blue); padding: 10px; border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .header h1 { margin: 0; font-size: 16px; color: var(--gold); text-transform: uppercase; font-weight: 900; }
+        .header { background: var(--dark-blue); padding: 8px; border-bottom: 3px solid var(--gold); }
+        .header h1 { margin: 0; font-size: 15px; color: var(--gold); text-transform: uppercase; }
 
-        /* CHART CONTAINER - 96% width ताकि साइड में हल्की जगह रहे और सब फिट आए */
+        /* Full Width Container */
         #chartWrapper { 
-            width: 96%; 
-            margin: 10px auto; 
+            width: 100%; 
+            margin: 5px 0;
             background: #fff;
-            border: 1px solid #000;
-            border-radius: 4px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            overflow: hidden; /* No scroll, direct fit */
+            overflow-x: hidden; /* नो स्क्रॉल, सब अंदर फिट */
         }
 
         table { 
             border-collapse: collapse; 
             width: 100%; 
-            table-layout: fixed; /* इससे सारे सेल बराबर साइज के रहेंगे */
+            table-layout: fixed; /* सख्त चौड़ाई */
         }
         
-        th { background: #ffff00; color: #000; font-size: 9px; padding: 6px 0; border: 1px solid var(--grid-border); font-weight: 900; }
+        th { background: #ffff00; color: #000; font-size: 8px; padding: 5px 0; border: 1px solid var(--grid-border); font-weight: bold; }
         
-        /* FULL FIT CELL LOGIC */
         td { 
             border: 1px solid var(--grid-border); 
-            height: 52px !important; 
+            height: 48px !important; 
             background: #fff; 
             vertical-align: middle;
             text-align: center;
             padding: 0;
+            overflow: hidden;
         }
         
-        /* Date column width reduced to fit others */
-        .date-box { background: #f0f0f0 !important; font-size: 8.5px; font-weight: 900; color: #000; width: 45px !important; }
+        /* Date column - Very narrow to save space */
+        .date-box { background: #f0f0f0 !important; font-size: 7px; font-weight: bold; width: 38px !important; }
         
-        .cell-content { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 1px; }
-        .panna-vertical { display: flex; flex-direction: column; font-size: 8px; font-weight: bold; line-height: 1; width: 9px; letter-spacing: -0.5px; }
-        .jodi { font-size: 19px; font-weight: 900; color: #000; letter-spacing: -1px; }
+        .cell-content { 
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
+            height: 100%; 
+        }
+
+        /* Panna in very small size */
+        .panna-vertical { 
+            display: flex; 
+            flex-direction: column; 
+            font-size: 7px; 
+            line-height: 0.85; 
+            width: 8px; 
+            font-weight: bold;
+        }
+
+        /* Jodi size optimized for mobile */
+        .jodi { 
+            font-size: 16px; 
+            font-weight: 900; 
+            color: #000; 
+            margin: 0 1px;
+            letter-spacing: -1px;
+        }
         
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
-        .lock-btn { color: var(--vip-red); font-size: 18px; cursor: pointer; }
+        .lock-btn { color: var(--vip-red); font-size: 16px; cursor: pointer; }
 
-        .btn-pay-main { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 6px; width: 90%; font-weight: bold; font-size: 16px; margin: 15px 0; cursor: pointer; }
+        .btn-pay-main { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 6px; width: 90%; font-weight: bold; font-size: 16px; margin: 10px 0; cursor: pointer; }
 
-        /* Floating Buttons Smaller */
-        .float-btn { position: fixed; right: 8px; background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 50%; font-weight: bold; z-index: 9999; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
-        .go-top { bottom: 60px; } 
-        .go-bottom { bottom: 15px; }
+        /* Floating buttons size reduced */
+        .float-btn { position: fixed; right: 5px; background: var(--vip-red); color: white; border: 1px solid #fff; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 10px; z-index: 999; }
+        .go-top { bottom: 55px; } 
+        .go-bottom { bottom: 10px; }
 
-        /* Modal Fit */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 90%; max-width: 320px; padding: 15px; border-radius: 10px; border: 3px solid var(--gold); }
-        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        /* Modal logic remains */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
+        .modal-content { background: #fff; width: 85%; max-width: 300px; padding: 15px; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -71,7 +91,7 @@
     <table>
         <thead>
             <tr>
-                <th style="width:45px;">DATE</th>
+                <th style="width:38px;">DATE</th>
                 <th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
             </tr>
         </thead>
@@ -84,23 +104,24 @@
 <div class="float-btn go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
 <div class="float-btn go-bottom" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">↓</div>
 
+<!-- Registration Modal -->
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="step1">
-            <h3 style="margin:0; font-size:18px;">VIP Registration</h3>
-            <input type="text" id="vName" placeholder="अपना नाम">
-            <input type="number" id="vPhone" placeholder="मोबाइल नंबर">
-            <button class="btn-pay-main" style="width:100%;" onclick="goNext()">Next</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-weight:bold; font-size:12px;">CLOSE</p>
+            <h4 style="margin:0;">Register</h4>
+            <input type="text" id="vName" placeholder="Name" style="width:100%; margin:10px 0; padding:8px;">
+            <input type="number" id="vPhone" placeholder="Mobile" style="width:100%; margin:10px 0; padding:8px;">
+            <button class="btn-pay-main" style="width:100%;" onclick="goNext()">NEXT</button>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px;">CLOSE</p>
         </div>
         <div id="step2" style="display:none;">
             <p>Pay: <b>OMKAR YADAV</b></p>
-            <img src="paytm-png.jpeg" style="width:130px; border:1px solid #000;">
-            <input type="number" id="utrVal" placeholder="12 Digit UTR Number">
-            <button class="btn-pay-main" style="width:100%;" onclick="verify()">Verify</button>
+            <img src="paytm-png.jpeg" style="width:120px;">
+            <input type="number" id="utrVal" placeholder="12 Digit UTR" style="width:100%; margin:10px 0; padding:8px;">
+            <button class="btn-pay-main" style="width:100%;" onclick="verify()">VERIFY</button>
         </div>
-        <div id="step3" style="display:none;"><h3>Verifying...</h3><div id="timerBox" style="font-size:35px; color:red; font-weight:bold;">02:00</div></div>
-        <div id="step4" style="display:none;"><h3 style="color:green;">SUBMITTED ✅</h3><button class="btn-pay-main" style="width:100%;" onclick="closeVipModal()">DONE</button></div>
+        <div id="step3" style="display:none;"><h5>Checking...</h5><div id="timerBox" style="font-size:30px; color:red;">02:00</div></div>
+        <div id="step4" style="display:none;"><h3 style="color:green;">DONE ✅</h3><button class="btn-pay-main" onclick="closeVipModal()">CLOSE</button></div>
     </div>
 </div>
 
@@ -110,8 +131,8 @@
     function openVipModal() { document.getElementById('vipModal').style.display='flex'; resetModal(); }
     function closeVipModal() { document.getElementById('vipModal').style.display='none'; }
     function resetModal() { document.getElementById('step1').style.display='block'; ['step2','step3','step4'].forEach(id => document.getElementById(id).style.display='none'); }
-    function goNext() { if(document.getElementById('vName').value == "" || document.getElementById('vPhone').value.length < 10) { alert("Details fill karein"); return; } document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block'; }
-    function verify() { if(document.getElementById('utrVal').value.length < 10) { alert("Invalid UTR"); return; } document.getElementById('step2').style.display='none'; document.getElementById('step3').style.display='block'; startTimer(); }
+    function goNext() { if(document.getElementById('vName').value=="" || document.getElementById('vPhone').value.length<10) return alert("Fill details"); document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block'; }
+    function verify() { if(document.getElementById('utrVal').value.length<10) return alert("Invalid UTR"); document.getElementById('step2').style.display='none'; document.getElementById('step3').style.display='block'; startTimer(); }
 
     function startTimer() {
         let t = 120;
