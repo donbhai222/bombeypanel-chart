@@ -5,59 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BOMBAY SPECIAL VIP CHART</title>
     <style>
-        :root { --dark-blue: #1a024d; --gold: #FFD700; --vip-red: #e31e24; --grid-border: #666; }
+        :root { --dark-blue: #1a024d; --gold: #FFD700; --vip-red: #e31e24; --grid-border: #000; }
         body { background: #FFBF82; color: var(--dark-blue); font-family: 'Arial', sans-serif; text-align: center; margin: 0; padding-bottom: 100px; }
         
         .header { background: var(--dark-blue); padding: 15px; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .header h1 { margin: 0; font-size: 20px; color: var(--gold); text-transform: uppercase; }
+        .header h1 { margin: 0; font-size: 22px; color: var(--gold); text-transform: uppercase; font-weight: 900; }
 
-        .desc-section { background: #fff; width: 92%; margin: 10px auto; padding: 10px; border-radius: 5px; border-left: 5px solid var(--vip-red); text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .desc-section p { margin: 0; font-size: 13px; font-weight: bold; color: #333; }
+        .desc-section { background: #fff; width: 92%; margin: 10px auto; padding: 12px; border-radius: 5px; border-left: 6px solid var(--vip-red); text-align: left; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
+        .desc-section p { margin: 0; font-size: 14px; font-weight: bold; color: #222; }
 
-        /* Chart Area - Strict Grid */
-        #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 2px solid #000; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        table { border-collapse: collapse; margin: 0 auto; table-layout: fixed; width: auto; }
+        /* KALYAN STYLE CHART AREA */
+        #chartArea { background: #fff; width: 98%; margin: 10px auto; border: 2px solid #000; overflow-x: auto; }
+        table { border-collapse: collapse; margin: 0 auto; width: 100%; table-layout: fixed; min-width: 450px; }
         
-        th { background: #333; color: var(--gold); font-size: 11px; padding: 8px 0; border: 1px solid var(--grid-border); text-transform: uppercase; }
+        th { background: #ffff00; color: #000; font-size: 14px; padding: 12px 0; border: 1px solid var(--grid-border); font-weight: 900; }
         
-        /* THE SQUARE BOX LOGIC - Strict Fix */
+        /* Fixed Size like Kalyan Chart */
         td { 
             border: 1px solid var(--grid-border); 
-            width: 60px !important;  /* Fixed Width */
-            min-width: 60px !important; 
-            max-width: 60px !important;
-            height: 60px !important; /* Fixed Height */
-            min-height: 60px !important;
+            height: 85px !important; /* Proper Height for Kalyan Look */
             background: #fff; 
             padding: 0;
             vertical-align: middle;
             text-align: center;
+            position: relative;
         }
         
-        /* Date Column Styling */
-        .date-box { background: #eee !important; font-size: 10px; font-weight: bold; color: #000; width: 55px !important; min-width: 55px !important; }
+        .date-box { background: #f0f0f0 !important; font-size: 12px; font-weight: 900; color: #000; width: 65px !important; }
         
-        /* Panna-Jodi Content */
-        .cell-content { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-        .panna-vertical { display: flex; flex-direction: column; font-size: 9px; font-weight: bold; line-height: 1; width: 12px; color: #444; }
-        .jodi { font-size: 22px; font-weight: bold; color: #000; margin: 0 2px; }
+        /* Jodi & Panna Styling */
+        .cell-content { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 5px; }
+        .panna-vertical { display: flex; flex-direction: column; font-size: 12px; font-weight: bold; line-height: 1.1; width: 15px; color: #333; }
+        .jodi { font-size: 32px; font-weight: 900; color: #000; letter-spacing: -1px; }
         
+        /* Red House (Same as Satta Rules) */
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
-        .lock-btn { color: var(--vip-red); font-size: 24px; cursor: pointer; }
+        .lock-btn { color: var(--vip-red); font-size: 28px; cursor: pointer; filter: drop-shadow(1px 1px 1px #000); }
 
-        /* Floating Buttons */
-        .float-btn { position: fixed; right: 10px; background: var(--vip-red); color: white; border: 2px solid #fff; border-radius: 50px; font-weight: bold; z-index: 9999; cursor: pointer; font-size: 11px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.4); }
-        .go-top { bottom: 80px; } 
+        /* Floating Nav Buttons */
+        .float-btn { position: fixed; right: 12px; background: var(--vip-red); color: white; border: 2px solid #fff; border-radius: 50%; font-weight: bold; z-index: 9999; cursor: pointer; font-size: 11px; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .go-top { bottom: 85px; } 
         .go-bottom { bottom: 20px; }
 
-        .btn-pay-main { background: var(--vip-red); color: white; padding: 15px; border: none; border-radius: 8px; width: 90%; font-weight: bold; font-size: 18px; margin: 20px 0; cursor: pointer; }
+        .btn-pay-main { background: var(--vip-red); color: white; padding: 16px; border: none; border-radius: 10px; width: 90%; font-weight: bold; font-size: 20px; margin: 25px 0; cursor: pointer; box-shadow: 0 4px 10px rgba(227,30,36,0.4); }
 
-        /* Modal Settings */
+        /* VIP Modal */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 90%; max-width: 380px; padding: 20px; border-radius: 10px; border: 4px solid var(--gold); }
-        input { width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        .option-box { border: 2px solid #ddd; padding: 12px; margin: 10px 0; border-radius: 8px; text-align: left; }
-        .option-box.active { border: 2px solid var(--vip-red); background: #fff0f0; }
+        .modal-content { background: #fff; width: 90%; max-width: 400px; padding: 25px; border-radius: 15px; border: 5px solid var(--gold); }
+        input { width: 90%; padding: 14px; margin: 12px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
+        .option-box { border: 2px solid #ddd; padding: 15px; margin: 12px 0; border-radius: 10px; text-align: left; }
+        .option-box.active { border: 2px solid var(--vip-red); background: #fff5f5; }
     </style>
 </head>
 <body>
@@ -65,7 +62,7 @@
 <div class="header"><h1>BOMBAY SPECIAL VIP CHART</h1></div>
 
 <div class="desc-section">
-    <p>🎯 <span>VIP सेवा:</span> सबसे तेज़ और सटीक फिक्स गेम यहाँ देखें।</p>
+    <p>🎯 <span>VIP सेवा:</span> सबसे तेज़ और सटीक कल्याण स्पेशल गेम यहाँ देखें।</p>
 </div>
 
 <div class="float-btn go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">TOP ↑</div>
@@ -74,7 +71,7 @@
     <table>
         <thead>
             <tr>
-                <th style="width:55px;">DATE</th>
+                <th style="width:65px;">DATE</th>
                 <th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
             </tr>
         </thead>
@@ -86,31 +83,32 @@
 
 <div class="float-btn go-bottom" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">Down ↓</div>
 
-<!-- VIP MODAL -->
+<!-- Modal Section -->
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="step1">
-            <h3 style="margin-top:0;">VIP Registration</h3>
-            <input type="text" id="vName" placeholder="आपका नाम">
+            <h3 style="margin-top:0; color:var(--dark-blue);">VIP REGISTRATION</h3>
+            <input type="text" id="vName" placeholder="अपना नाम लिखें">
             <input type="number" id="vPhone" placeholder="मोबाइल नंबर">
-            <button class="btn-pay-main" style="width:100%;" onclick="goNext()">Next / आगे बढ़ें</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-weight:bold;">Close</p>
+            <button class="btn-pay-main" style="width:100%; margin: 15px 0;" onclick="goNext()">आगे बढ़ें / NEXT</button>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-weight:bold;">बंद करें [X]</p>
         </div>
         <div id="step2" style="display:none;">
-            <h3>Select Plan</h3>
-            <div class="option-box active" onclick="setPlan(this, 999)"><b>1 Day Plan</b><br><span>Charge: ₹999</span></div>
-            <div class="option-box" onclick="setPlan(this, 1999)"><b>7 Days Plan</b><br><span>Charge: ₹1999</span></div>
-            <p>Pay To: <b>OMKAR YADAV</b> | Amt: <b id="amtVal" style="color:red;">₹999</b></p>
-            <img src="paytm-png.jpeg" style="width:140px; border:1px solid #000;">
-            <input type="number" id="utrVal" placeholder="Enter 12 Digit UTR">
-            <button class="btn-pay-main" style="width:100%;" onclick="verify()">Verify Payment</button>
+            <h3>SELECT VIP PLAN</h3>
+            <div class="option-box active" onclick="setPlan(this, 999)"><b>1 DAY VIP ACCESS</b><br><span>Charge: ₹999</span></div>
+            <div class="option-box" onclick="setPlan(this, 1999)"><b>7 DAYS VIP ACCESS</b><br><span>Charge: ₹1999</span></div>
+            <p style="font-size:18px;">Pay To: <b>OMKAR YADAV</b><br>Amount: <b id="amtVal" style="color:red;">₹999</b></p>
+            <img src="paytm-png.jpeg" style="width:160px; border:2px solid #000; border-radius:5px;">
+            <input type="number" id="utrVal" placeholder="Enter 12 Digit UTR Number">
+            <button class="btn-pay-main" style="width:100%; margin: 15px 0;" onclick="verify()">VERIFY PAYMENT</button>
         </div>
         <div id="step3" style="display:none;">
-            <h3>Verifying...</h3>
-            <div id="timerBox" style="font-size:40px; color:red; font-weight:bold;">02:00</div>
+            <h3>Verifying Payment...</h3>
+            <div id="timerBox" style="font-size:50px; color:red; font-weight:bold;">02:00</div>
         </div>
         <div id="step4" style="display:none;">
             <h2 style="color:green;">SUBMITTED ✅</h2>
+            <p>Admin is verifying. Your game will unlock soon.</p>
             <button class="btn-pay-main" style="width:100%;" onclick="closeVipModal()">DONE</button>
         </div>
     </div>
@@ -127,7 +125,7 @@
     }
 
     function goNext() {
-        if(document.getElementById('vName').value == "" || document.getElementById('vPhone').value.length < 10) { alert("Details fill karein"); return; }
+        if(document.getElementById('vName').value == "" || document.getElementById('vPhone').value.length < 10) { alert("विवरण सही भरें"); return; }
         document.getElementById('step1').style.display='none';
         document.getElementById('step2').style.display='block';
     }
@@ -139,7 +137,7 @@
     }
 
     function verify() {
-        if(document.getElementById('utrVal').value.length < 10) { alert("Invalid UTR"); return; }
+        if(document.getElementById('utrVal').value.length < 10) { alert("UTR नंबर गलत है"); return; }
         document.getElementById('step2').style.display='none';
         document.getElementById('step3').style.display='block';
         let t = 120;
