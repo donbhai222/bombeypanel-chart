@@ -8,62 +8,62 @@
         :root { --dark-blue: #1a024d; --gold: #FFD700; --vip-red: #e31e24; --grid-border: #999; }
         body { background: #FFBF82; color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding-bottom: 100px; }
         
-        /* Header & Title */
+        /* Header */
         .header { background: var(--dark-blue); padding: 15px; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .header h1 { margin: 0; font-size: 20px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
+        .header h1 { margin: 0; font-size: 20px; color: var(--gold); text-transform: uppercase; }
 
         /* Description Box */
-        .description-box { 
-            background: rgba(26, 2, 77, 0.05); 
-            margin: 10px auto; 
-            width: 90%; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border-left: 5px solid var(--vip-red);
-            text-align: left;
-            line-height: 1.5;
-        }
-        .description-box p { margin: 0; font-size: 13px; font-weight: bold; color: #333; }
-        .description-box span { color: var(--vip-red); }
+        .desc-section { background: #fff; width: 90%; margin: 12px auto; padding: 12px; border-radius: 8px; border-left: 5px solid var(--vip-red); text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .desc-section p { margin: 0 0 5px 0; font-size: 13px; font-weight: bold; color: #333; line-height: 1.4; }
+        .desc-section span { color: var(--vip-red); }
 
-        /* Chart Area */
-        #chartArea { background: #fff; width: 90%; margin: 15px auto; border: 2px solid #333; border-radius: 5px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 380px; }
-        th { background: #222; color: var(--gold); font-size: 10px; padding: 10px 2px; border: 1px solid var(--grid-border); }
-        td { border: 1px solid var(--grid-border); height: 70px; vertical-align: middle; background: #fff; }
+        /* Square Chart Styling */
+        #chartArea { background: #fff; width: 95%; margin: 10px auto; border: 2px solid #333; border-radius: 5px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; } /* Layout fixed for squares */
         
-        .date-box { background: #f2f2f2; font-size: 11px; font-weight: bold; color: #000; width: 75px !important; line-height: 1.3; }
+        th { background: #222; color: var(--gold); font-size: 10px; padding: 10px 0; border: 1px solid var(--grid-border); }
         
-        /* Vertical Panna */
-        .cell-content { display: flex; align-items: center; justify-content: center; gap: 4px; }
-        .panna-vertical { display: flex; flex-direction: column; font-size: 10px; font-weight: bold; line-height: 1.1; color: #000; width: 12px; }
-        .jodi { font-size: 22px; font-weight: bold; color: #000; min-width: 30px; }
+        /* Fixed height and width for Square effect */
+        td { 
+            border: 1px solid var(--grid-border); 
+            height: 65px; /* Height set */
+            width: 65px;  /* Width set equal to height */
+            vertical-align: middle; 
+            background: #fff; 
+            padding: 0;
+        }
+        
+        .date-box { background: #f2f2f2; font-size: 10px; font-weight: bold; color: #000; line-height: 1.2; word-break: break-word; }
+        
+        /* Content alignment inside square */
+        .cell-content { display: flex; align-items: center; justify-content: center; gap: 2px; height: 100%; }
+        .panna-vertical { display: flex; flex-direction: column; font-size: 9px; font-weight: bold; line-height: 1; width: 10px; }
+        .jodi { font-size: 20px; font-weight: bold; min-width: 25px; }
         
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
-        .lock-btn { color: var(--vip-red); font-size: 24px; cursor: pointer; }
+        .lock-btn { color: var(--vip-red); font-size: 22px; cursor: pointer; }
 
-        /* Nav Buttons */
+        /* Floating Buttons */
         .float-btn { position: fixed; right: 15px; background: var(--vip-red); color: white; border: 2px solid #fff; border-radius: 50px; font-weight: bold; z-index: 9999; cursor: pointer; font-size: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; }
         .go-top { bottom: 75px; } 
         .go-bottom { bottom: 20px; }
 
-        /* Modal */
+        /* Modal & UI */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; }
         .modal-content { background: #fff; width: 88%; max-width: 380px; padding: 20px; border-radius: 15px; border: 4px solid var(--gold); color: #000; }
         .btn-pay { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; font-weight: bold; font-size: 16px; margin-top: 10px; cursor: pointer; }
-        .option-box { border: 2px solid #ddd; padding: 12px; margin: 10px 0; border-radius: 10px; text-align: left; }
+        .option-box { border: 1px solid #ddd; padding: 12px; margin: 10px 0; border-radius: 10px; text-align: left; }
         .option-box.active { border: 2px solid var(--vip-red); background: #fff0f0; }
-        input { width: 90%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
+        input { width: 90%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; }
     </style>
 </head>
 <body>
 
 <div class="header"><h1>BOMBAY SPECIAL VIP CHART</h1></div>
 
-<!-- NEW DESCRIPTION SECTION -->
-<div class="description-box">
-    <p>🎯 <span>VIP सेवा:</span> सबसे तेज़ और सटीक जोड़ी-पन्ना चार्ट।</p>
-    <p>🚀 Get the most accurate <span>VIP Fix Game</span> with 100% satisfaction. Join our premium membership to unlock hidden charts and daily profits.</p>
+<div class="desc-section">
+    <p>🎯 <span>VIP सेवा:</span> सबसे तेज़ और सटीक जोड़ी-पन्ना चार्ट यहाँ देखें।</p>
+    <p>🚀 Get the most accurate <span>VIP Fix Game</span> results. Join our premium membership to unlock special charts and win daily.</p>
 </div>
 
 <div class="float-btn go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">TOP ↑</div>
@@ -71,7 +71,7 @@
 <div id="chartArea">
     <table>
         <thead>
-            <tr><th style="width:75px;">DATE</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr>
+            <tr><th style="width:60px;">DATE</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr>
         </thead>
         <tbody id="gridData"></tbody>
     </table>
@@ -83,28 +83,28 @@
 
 <div class="float-btn go-bottom" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">Down ↓</div>
 
-<!-- Modal Structure remains the same for functionality -->
+<!-- Modal remains functional with previous steps -->
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="step1">
-            <h3 style="margin:0 0 10px 0;">VIP Registration</h3>
-            <input type="text" id="vName" placeholder="अपना नाम / Name">
-            <input type="number" id="vPhone" placeholder="मोबाइल नंबर / Mobile">
-            <button class="btn-pay" onclick="goNext()">आगे बढ़ें / Next</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:15px; font-weight:bold;">बंद करें / Close</p>
+            <h3>VIP Registration</h3>
+            <input type="text" id="vName" placeholder="Name">
+            <input type="number" id="vPhone" placeholder="Mobile">
+            <button class="btn-pay" onclick="goNext()">Next</button>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; margin-top:15px; font-weight:bold;">Close</p>
         </div>
 
         <div id="step2" style="display:none;">
-            <h3 style="margin:0 0 10px 0;">प्लान चुनें / Choose Plan</h3>
+            <h3>Choose Plan</h3>
             <div class="option-box active" onclick="setPlan(this, 999)">
-                <b>1. एक दिन के लिए / For 1 Day</b><br><span>Charge: ₹999</span>
+                <b>1. For 1 Day</b><br><span>Charge: ₹999</span>
             </div>
             <div class="option-box" onclick="setPlan(this, 1999)">
-                <b>2. सात दिन के लिए / For 7 Days</b><br><span>Charge: ₹1999</span>
+                <b>2. For 7 Days</b><br><span>Charge: ₹1999</span>
             </div>
-            <p style="margin: 10px 0;">Pay To: <b>OMKAR YADAV</b><br>Amount: <b id="amtVal" style="color:red; font-size: 18px;">₹999</b></p>
-            <img src="paytm-png.jpeg" style="width:150px; border:1px solid #333; margin-bottom:10px;">
-            <input type="number" id="utrVal" placeholder="Enter 12 Digit UTR Number">
+            <p>Pay To: <b>OMKAR YADAV</b><br>Amount: <b id="amtVal" style="color:red; font-size: 18px;">₹999</b></p>
+            <img src="paytm-png.jpeg" style="width:140px; margin-bottom:10px;">
+            <input type="number" id="utrVal" placeholder="Enter 12 Digit UTR">
             <button class="btn-pay" onclick="verify()">Verify Payment</button>
         </div>
 
@@ -115,7 +115,6 @@
 
         <div id="step4" style="display:none;">
             <h2 style="color:green;">SUBMITTED ✅</h2>
-            <p>30 मिनट इंतज़ार करें, गेम अनलॉक हो जायेगा।</p>
             <button class="btn-pay" onclick="closeVipModal()">DONE</button>
         </div>
     </div>
@@ -132,7 +131,7 @@
     }
 
     function goNext() {
-        if(document.getElementById('vName').value == "" || document.getElementById('vPhone').value.length < 10) { alert("विवरण सही भरें"); return; }
+        if(document.getElementById('vName').value == "" || document.getElementById('vPhone').value.length < 10) { alert("Please fill details"); return; }
         document.getElementById('step1').style.display='none';
         document.getElementById('step2').style.display='block';
     }
@@ -144,7 +143,7 @@
     }
 
     function verify() {
-        if(document.getElementById('utrVal').value.length < 10) { alert("UTR नंबर डालें"); return; }
+        if(document.getElementById('utrVal').value.length < 10) { alert("Invalid UTR"); return; }
         document.getElementById('step2').style.display='none';
         document.getElementById('step3').style.display='block';
         let t = 120;
