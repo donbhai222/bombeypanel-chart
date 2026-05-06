@@ -11,76 +11,32 @@
         .header { background: var(--dark-blue); padding: 8px; border-bottom: 3px solid var(--gold); }
         .header h1 { margin: 0; font-size: 15px; color: var(--gold); text-transform: uppercase; }
 
-        /* Full Width Container */
-        #chartWrapper { 
-            width: 100%; 
-            margin: 5px 0;
-            background: #fff;
-            overflow-x: hidden; /* नो स्क्रॉल, सब अंदर फिट */
-        }
-
-        table { 
-            border-collapse: collapse; 
-            width: 100%; 
-            table-layout: fixed; /* सख्त चौड़ाई */
-        }
-        
+        #chartWrapper { width: 100%; margin: 5px 0; background: #fff; overflow-x: hidden; }
+        table { border-collapse: collapse; width: 100%; table-layout: fixed; }
         th { background: #ffff00; color: #000; font-size: 8px; padding: 5px 0; border: 1px solid var(--grid-border); font-weight: bold; }
         
-        td { 
-            border: 1px solid var(--grid-border); 
-            height: 48px !important; 
-            background: #fff; 
-            vertical-align: middle;
-            text-align: center;
-            padding: 0;
-            overflow: hidden;
-        }
-        
-        /* Date column - Very narrow to save space */
+        td { border: 1px solid var(--grid-border); height: 48px !important; background: #fff; vertical-align: middle; text-align: center; padding: 0; }
         .date-box { background: #f0f0f0 !important; font-size: 7px; font-weight: bold; width: 38px !important; }
         
-        .cell-content { 
-            display: flex; 
-            flex-direction: row; 
-            align-items: center; 
-            justify-content: center; 
-            width: 100%; 
-            height: 100%; 
-        }
-
-        /* Panna in very small size */
-        .panna-vertical { 
-            display: flex; 
-            flex-direction: column; 
-            font-size: 7px; 
-            line-height: 0.85; 
-            width: 8px; 
-            font-weight: bold;
-        }
-
-        /* Jodi size optimized for mobile */
-        .jodi { 
-            font-size: 16px; 
-            font-weight: 900; 
-            color: #000; 
-            margin: 0 1px;
-            letter-spacing: -1px;
-        }
+        .cell-content { display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%; height: 100%; }
+        .panna-vertical { display: flex; flex-direction: column; font-size: 7px; line-height: 0.85; width: 8px; font-weight: bold; }
+        .jodi { font-size: 16px; font-weight: 900; color: #000; margin: 0 1px; letter-spacing: -1px; }
         
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
         .lock-btn { color: var(--vip-red); font-size: 16px; cursor: pointer; }
 
+        /* DESCRIPTION STYLE */
+        .site-desc { font-size: 13px; font-weight: bold; margin: 10px 5px; color: #1a024d; line-height: 1.4; }
+
         .btn-pay-main { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 6px; width: 90%; font-weight: bold; font-size: 16px; margin: 10px 0; cursor: pointer; }
 
-        /* Floating buttons size reduced */
-        .float-btn { position: fixed; right: 5px; background: var(--vip-red); color: white; border: 1px solid #fff; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 10px; z-index: 999; }
-        .go-top { bottom: 55px; } 
-        .go-bottom { bottom: 10px; }
+        .float-btn { position: fixed; right: 8px; background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 11px; z-index: 999; box-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: bold; }
+        .go-bottom { bottom: 65px; } 
+        .go-top { bottom: 15px; }
 
-        /* Modal logic remains */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 85%; max-width: 300px; padding: 15px; border-radius: 8px; }
+        .modal-content { background: #fff; width: 85%; max-width: 300px; padding: 15px; border-radius: 8px; box-sizing: border-box; }
+        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -99,29 +55,32 @@
     </table>
 </div>
 
+<!-- DESCRIPTION BACK AGAIN -->
+<div class="site-desc">People get more from Game with a BOMBAY SPECIAL VIP CHART.</div>
+
 <button class="btn-pay-main" onclick="openVipModal()">JOIN VIP / लॉक खोलें 🔑</button>
 
-<div class="float-btn go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
-<div class="float-btn go-bottom" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">↓</div>
+<div class="float-btn go-bottom" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">Down</div>
+<div class="float-btn go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Top</div>
 
-<!-- Registration Modal -->
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="step1">
-            <h4 style="margin:0;">Register</h4>
-            <input type="text" id="vName" placeholder="Name" style="width:100%; margin:10px 0; padding:8px;">
-            <input type="number" id="vPhone" placeholder="Mobile" style="width:100%; margin:10px 0; padding:8px;">
-            <button class="btn-pay-main" style="width:100%;" onclick="goNext()">NEXT</button>
-            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px;">CLOSE</p>
+            <h4 style="margin:0;">VIP Registration</h4>
+            <input type="text" id="vName" placeholder="अपना नाम लिखें">
+            <input type="number" id="vPhone" placeholder="मोबाइल नंबर">
+            <button class="btn-pay-main" style="width:100%;" onclick="goNext()">आगे बढ़ें (Next)</button>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-size:12px; font-weight:bold;">बंद करें</p>
         </div>
         <div id="step2" style="display:none;">
-            <p>Pay: <b>OMKAR YADAV</b></p>
-            <img src="paytm-png.jpeg" style="width:120px;">
-            <input type="number" id="utrVal" placeholder="12 Digit UTR" style="width:100%; margin:10px 0; padding:8px;">
-            <button class="btn-pay-main" style="width:100%;" onclick="verify()">VERIFY</button>
+            <h4 style="margin:0;">Payment</h4>
+            <p style="font-size:13px; margin:5px 0;">Pay To: <b>OMKAR YADAV</b></p>
+            <img src="paytm-png.jpeg" style="width:130px; border:1px solid #000; margin-bottom:10px;">
+            <input type="number" id="utrVal" placeholder="12 Digit UTR Number">
+            <button class="btn-pay-main" style="width:100%;" onclick="verify()">Verify Payment</button>
         </div>
-        <div id="step3" style="display:none;"><h5>Checking...</h5><div id="timerBox" style="font-size:30px; color:red;">02:00</div></div>
-        <div id="step4" style="display:none;"><h3 style="color:green;">DONE ✅</h3><button class="btn-pay-main" onclick="closeVipModal()">CLOSE</button></div>
+        <div id="step3" style="display:none;"><h5>Verifying...</h5><div id="timerBox" style="font-size:35px; color:red; font-weight:bold;">02:00</div></div>
+        <div id="step4" style="display:none;"><h3 style="color:green;">SUBMITTED ✅</h3><button class="btn-pay-main" style="width:100%;" onclick="closeVipModal()">DONE</button></div>
     </div>
 </div>
 
@@ -131,8 +90,8 @@
     function openVipModal() { document.getElementById('vipModal').style.display='flex'; resetModal(); }
     function closeVipModal() { document.getElementById('vipModal').style.display='none'; }
     function resetModal() { document.getElementById('step1').style.display='block'; ['step2','step3','step4'].forEach(id => document.getElementById(id).style.display='none'); }
-    function goNext() { if(document.getElementById('vName').value=="" || document.getElementById('vPhone').value.length<10) return alert("Fill details"); document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block'; }
-    function verify() { if(document.getElementById('utrVal').value.length<10) return alert("Invalid UTR"); document.getElementById('step2').style.display='none'; document.getElementById('step3').style.display='block'; startTimer(); }
+    function goNext() { if(document.getElementById('vName').value=="" || document.getElementById('vPhone').value.length<10) return alert("विवरण भरें"); document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block'; }
+    function verify() { if(document.getElementById('utrVal').value.length<10) return alert("गलत UTR नंबर"); document.getElementById('step2').style.display='none'; document.getElementById('step3').style.display='block'; startTimer(); }
 
     function startTimer() {
         let t = 120;
@@ -149,7 +108,6 @@
             const data = await res.text();
             const rows = data.split('\n').filter(r => r.trim() !== '').map(r => r.split(','));
             let html = '', lockShown = false;
-
             for(let i=1; i<rows.length; i++) {
                 let d = (rows[i][0] || "").trim(); if(!d) continue;
                 html += `<tr><td class="date-box">${d}</td>`;
