@@ -6,7 +6,7 @@
     <title>BOMBAY SPECIAL VIP CHART</title>
     <style>
         :root { --dark-blue: #1a024d; --gold: #FFD700; --vip-red: #e31e24; --grid-border: #999; }
-        body { background: #FFBF82; color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding-bottom: 80px; }
+        body { background: #FFBF82; color: var(--dark-blue); font-family: sans-serif; text-align: center; margin: 0; padding-bottom: 50px; }
         
         .header { background: var(--dark-blue); padding: 15px; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
         .header h1 { margin: 0; font-size: 20px; color: var(--gold); text-transform: uppercase; }
@@ -15,17 +15,11 @@
         @keyframes blink { 50% { opacity: 0.3; } }
 
         /* Navigation Buttons */
-        .nav-btn { background: #007bff; color: white; padding: 10px 20px; border: 2px solid white; border-radius: 5px; font-weight: bold; cursor: pointer; margin: 10px; display: inline-block; text-decoration: none; }
-        
-        #topBtn { 
-            display: none; position: fixed; bottom: 20px; right: 20px; z-index: 2000; 
-            background: var(--dark-blue); color: var(--gold); border: 2px solid var(--gold); 
-            padding: 12px 18px; border-radius: 50px; cursor: pointer; font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
+        .nav-btn { background: var(--dark-blue); color: var(--gold); padding: 8px 15px; border: 2px solid var(--gold); border-radius: 5px; cursor: pointer; margin: 10px; font-weight: bold; }
+        #topBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 2000; background: var(--dark-blue); color: var(--gold); border: 2px solid var(--gold); padding: 10px 15px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
         /* Chart Styling */
-        #chartArea { background: #fff; width: 95%; margin: 10px auto; border: 2px solid #333; overflow-x: auto; border-radius: 8px; }
+        #chartArea { background: #fff; width: 90%; margin: 10px auto; border: 2px solid #333; overflow-x: auto; border-radius: 8px; }
         table { width: 100%; border-collapse: collapse; min-width: 350px; }
         th { background: #222; color: var(--gold); font-size: 11px; padding: 10px 2px; border: 1px solid var(--grid-border); }
         td { border: 1px solid var(--grid-border); height: 55px; vertical-align: middle; position: relative; }
@@ -35,18 +29,22 @@
         .panna.left { left: 4px; } .panna.right { right: 4px; }
         .jodi { font-size: 18px; font-weight: bold; }
         .red-house .jodi, .red-house .panna { color: var(--vip-red) !important; }
+        .single-vip-lock { color: var(--vip-red); font-size: 22px; cursor: pointer; animation: lockBlink 1.5s infinite; }
+        @keyframes lockBlink { 50% { opacity: 0.4; } }
 
-        /* VIP Section */
-        .vip-section { background: #fff; width: 92%; margin: 20px auto; padding: 15px; border-radius: 15px; border: 3px solid var(--dark-blue); box-sizing: border-box; }
+        /* Modal / Subscription */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
+        .modal-content { background: #fff; width: 92%; max-width: 400px; padding: 15px; border-radius: 15px; border: 4px solid var(--gold); position: relative; max-height: 90vh; overflow-y: auto; text-align: center; }
+        input { width: 85%; padding: 10px; margin: 8px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 15px; }
+        .verify-btn { background: #28a745; color: #fff; padding: 12px; border: none; border-radius: 8px; font-weight: bold; width: 95%; cursor: pointer; font-size: 16px; margin-top: 10px; }
+
+        /* Option Boxes */
         .option-box { border: 2px solid #ddd; border-radius: 10px; padding: 10px; margin-bottom: 10px; text-align: left; cursor: pointer; }
         .option-box.active { border-color: var(--vip-red); background: #fff5f5; }
-        .option-box b { color: var(--vip-red); font-size: 14px; display: block; }
-        .option-box p { margin: 3px 0; font-size: 12px; color: #333; font-weight: bold; }
+        .option-box b { color: var(--vip-red); font-size: 15px; }
+        .option-box p { margin: 3px 0; font-size: 12px; color: #555; font-weight: bold; }
 
-        input { width: 90%; padding: 12px; margin: 8px 0; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
-        .verify-btn { background: #28a745; color: #fff; padding: 15px; border: none; border-radius: 8px; font-weight: bold; width: 90%; cursor: pointer; font-size: 18px; margin-top: 10px; }
-        
-        #timerDisplay { font-size: 40px; font-weight: bold; color: var(--vip-red); margin: 15px 0; }
+        #timerDisplay { font-size: 35px; font-weight: bold; color: var(--vip-red); margin: 10px 0; }
     </style>
 </head>
 <body>
@@ -54,9 +52,9 @@
 <div class="header"><h1>BOMBAY SPECIAL VIP CHART</h1></div>
 <div class="live-tag">🔴 LIVE UPDATES</div>
 
-<br>
-<!-- Go to Bottom Button -->
-<button class="nav-btn" onclick="document.getElementById('vipActionArea').scrollIntoView({behavior: 'smooth'});">Go to Bottom ↓</button>
+<div>
+    <button class="nav-btn" onclick="document.getElementById('bottom-action').scrollIntoView({behavior: 'smooth'});">Go to Bottom ↓</button>
+</div>
 
 <div id="chartArea">
     <table>
@@ -65,56 +63,71 @@
     </table>
 </div>
 
-<div class="vip-section" id="vipActionArea">
-    <div id="stepInfo">
-        <h3 style="margin-top:0;">VIP गेम के लिए यहाँ रजिस्टर करें</h3>
-        <input type="text" id="userName" placeholder="अपना नाम लिखें">
-        <input type="number" id="userPhone" placeholder="मोबाइल नंबर">
-        <button class="verify-btn" onclick="goToPayment()" style="background: var(--dark-blue);">Next / आगे बढ़ें</button>
-    </div>
-
-    <div id="stepPay" style="display:none;">
-        <h3 style="margin:0 0 15px 0; color: var(--vip-red);">प्लान चुनें</h3>
-        <div class="option-box active" onclick="selectPlan(this, 399)"><b>1. SINGLE PANNA</b><p>Charge: ₹399</p></div>
-        <div class="option-box" onclick="selectPlan(this, 999)"><b>2. 2 JODI SINGLE</b><p>Charge: ₹999</p></div>
-        <div class="option-box" onclick="selectPlan(this, 599)"><b>3. SINGLE CLOSE</b><p>Charge: ₹599</p></div>
-        <div class="option-box" onclick="selectPlan(this, 599)"><b>4. SINGLE OTC OPEN</b><p>Charge: ₹599</p></div>
-
-        <div style="background: #f9f9f9; padding: 10px; border-radius: 10px;">
-            <p>Pay: <b id="displayAmt" style="color:red;">₹399</b> to <b>Omkar Yadav</b></p>
-            <img src="paytm-png.jpeg" style="width:170px; border: 1px solid #333; border-radius:8px;" alt="QR Code">
-        </div>
-        <input type="number" id="utrInput" placeholder="12-Digit UTR Number">
-        <button class="verify-btn" onclick="startTimer()">VERIFY PAYMENT</button>
-    </div>
-
-    <div id="stepTimer" style="display:none;">
-        <h3>Verifying Payment...</h3>
-        <div id="timerDisplay">02:00</div>
-    </div>
-
-    <div id="stepFailed" style="display:none;">
-        <h2 style="color:#28a745;">SUBMITTED</h2>
-        <p>30 मिनट में गेम अपने आप अनलॉक हो जाएगा।</p>
-        <button class="verify-btn" onclick="location.reload()">Back to Home</button>
-    </div>
+<div id="bottom-action" style="padding: 20px 0;">
+    <button class="verify-btn" style="width:85%; background:var(--vip-red); font-size:18px;" onclick="openVipModal()">REMOVE LOCK / गेम लें 🔑</button>
 </div>
 
-<!-- Floating Top Button -->
 <button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Top ↑</button>
+
+<div id="vipModal" class="overlay">
+    <div class="modal-content">
+        <div id="stepInfo">
+            <h3 style="margin-top:0;">VIP Registration</h3>
+            <input type="text" id="userName" placeholder="अपना नाम लिखें">
+            <input type="number" id="userPhone" placeholder="मोबाइल नंबर">
+            <button class="verify-btn" onclick="goToPayment()">Next / आगे बढ़ें</button>
+            <p onclick="closeVipModal()" style="color:red; cursor:pointer; font-weight:bold; margin-top:15px;">Close</p>
+        </div>
+
+        <div id="stepPay" style="display:none;">
+            <h3 style="margin:0 0 10px 0;">Select Plan</h3>
+            <div class="option-box active" onclick="selectPlan(this, 399)">
+                <b>1. SINGLE PANNA (PATTI)</b>
+                <p>Charge: ₹399</p>
+            </div>
+            <div class="option-box" onclick="selectPlan(this, 999)">
+                <b>2. 2 JODI SINGLE (DIRECT)</b>
+                <p>Charge: ₹999</p>
+            </div>
+            <div class="option-box" onclick="selectPlan(this, 599)">
+                <b>3. SINGLE CLOSE (FIX)</b>
+                <p>Charge: ₹599</p>
+            </div>
+            <div class="option-box" onclick="selectPlan(this, 599)">
+                <b>4. SINGLE OTC OPEN (2 DIGIT)</b>
+                <p>Charge: ₹599</p>
+            </div>
+
+            <p style="font-size:13px;">Pay <b id="displayAmt" style="color:red;">₹399</b> to <b>Omkar Yadav</b></p>
+            <img src="paytm-png.jpeg" style="width:150px; border:1px solid #333; border-radius: 8px;" alt="QR">
+            <input type="number" id="utrInput" placeholder="Enter 12 Digit UTR No.">
+            <button class="verify-btn" onclick="startTimer()">Verify Payment</button>
+            <p onclick="resetSteps()" style="cursor:pointer; font-size:12px; margin-top:10px; font-weight:bold;">← Back</p>
+        </div>
+
+        <div id="stepTimer" style="display:none;">
+            <h3>Verifying...</h3>
+            <div id="timerDisplay">02:00</div>
+            <p>Please wait, checking payment status.</p>
+        </div>
+
+        <div id="stepFailed" style="display:none;">
+            <h2 style="color:#28a745;">SUBMITTED</h2>
+            <p style="font-weight:bold;">UTR नंबर चेक किया जा रहा है। 30 मिनट में गेम अनलॉक होगा।</p>
+            <button class="verify-btn" style="background:#333;" onclick="location.reload()">DONE</button>
+        </div>
+    </div>
+</div>
 
 <script>
     const CSV_URL = "https://docs.google.com/spreadsheets/d/1IReRyQjRvWWVjZTym_8DDXvx9Jttjfgy18McY53gM5w/export?format=csv&gid=0";
 
-    // Scroll Control for Top Button Visibility
-    window.onscroll = function() {
-        const btn = document.getElementById("topBtn");
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-            btn.style.display = "block";
-        } else {
-            btn.style.display = "none";
-        }
-    };
+    function openVipModal() { document.getElementById('vipModal').style.display = 'flex'; resetSteps(); }
+    function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; }
+    function resetSteps() {
+        document.getElementById('stepInfo').style.display = 'block';
+        ['stepPay','stepTimer','stepFailed'].forEach(id => document.getElementById(id).style.display='none');
+    }
 
     function selectPlan(el, amt) {
         document.querySelectorAll('.option-box').forEach(box => box.classList.remove('active'));
@@ -124,14 +137,14 @@
 
     function goToPayment() {
         if(document.getElementById('userName').value === "" || document.getElementById('userPhone').value.length < 10) {
-            alert("कृपया नाम और नंबर सही भरें"); return;
+            alert("सही नाम और नंबर डालें"); return;
         }
         document.getElementById('stepInfo').style.display = 'none';
         document.getElementById('stepPay').style.display = 'block';
     }
 
     function startTimer() {
-        if(document.getElementById('utrInput').value.length < 10) { alert("सही UTR नंबर डालें"); return; }
+        if(document.getElementById('utrInput').value.length < 10) { alert("UTR नंबर डालें"); return; }
         document.getElementById('stepPay').style.display = 'none';
         document.getElementById('stepTimer').style.display = 'block';
         let t = 120;
@@ -159,25 +172,9 @@
                 for(let j = 1; j <= 16; j += 3) {
                     let lp = (rows[i][j] || "").trim(), jd = (rows[i][j+1] || "").trim(), rp = (rows[i][j+2] || "").trim();
                     if(!lp && !jd && !rp) {
-                        if(!lockPlaced) { 
-                            html += `<td onclick="document.getElementById('vipActionArea').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;"><span style="color:red; font-size:22px;">🔒</span></td>`; 
-                            lockPlaced = true; 
-                        } else { html += `<td></td>`; }
+                        if(!lockPlaced) { html += `<td onclick="openVipModal()" style="cursor:pointer;"><span class="single-vip-lock">🔒</span></td>`; lockPlaced = true; }
+                        else { html += `<td></td>`; }
                     } else {
                         let isRed = (jd.length === 2 && (jd[0] === jd[1] || Math.abs(jd[0] - jd[1]) === 5));
                         html += `<td class="${isRed ? 'red-house' : ''}"><div class="cell-content">
-                            <div class="panna left">${lp.split('').map(s=>`<span>${s}</span>`).join('')}</div>
-                            <div class="jodi">${jd}</div>
-                            <div class="panna right">${rp.split('').map(s=>`<span>${s}</span>`).join('')}</div>
-                        </div></td>`;
-                    }
-                }
-                html += `</tr>`;
-            }
-            document.getElementById('gridData').innerHTML = html;
-        } catch(e) { console.error("Error:", e); }
-    }
-    window.onload = loadChart;
-</script>
-</body>
-</html>
+                            <div class="panna left">${lp.split('').map(s=>
