@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <!-- Title Updated -->
     <title>BIG STAR PINAL CHART</title>
     
     <meta name="description" content="BIG STAR PINAL CHART - सबसे तेज़ और सटीक सट्टा मटका चार्ट।">
@@ -19,7 +18,9 @@
         .special-note { background: #fff; padding: 12px; margin: 10px auto; width: 90%; border-left: 5px solid var(--vip-red); border-radius: 4px; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); box-sizing: border-box; }
         .special-note p { margin: 0; font-size: 13px; color: #333; line-height: 1.5; }
 
-        /* Mobile Optimized Chart Wrapper (90% width) */
+        /* Nav Buttons Styling */
+        .nav-btn { background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 20px; padding: 8px 20px; display: inline-block; font-size: 12px; margin: 10px 0; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
         #chartWrapper { width: 90%; margin: 10px auto; background: #fff; border: 1px solid #000; overflow-x: auto; }
         table { border-collapse: collapse; width: 100%; min-width: 300px; table-layout: fixed; }
         th { background: #ffff00; color: #000; font-size: 10px; padding: 6px 0; border: 1px solid var(--grid-border); }
@@ -32,7 +33,6 @@
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
         .lock-btn { color: var(--vip-red); font-size: 18px; cursor: pointer; }
 
-        .nav-btn { background: var(--vip-red); color: white; border: 1.5px solid #fff; border-radius: 20px; padding: 8px 20px; display: inline-block; font-size: 12px; margin: 10px 0; font-weight: bold; cursor: pointer; }
         .btn-pay-main { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 6px; width: 90%; font-weight: bold; font-size: 16px; margin: 10px 0; cursor: pointer; }
 
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
@@ -40,7 +40,7 @@
         
         .sub-option { border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin: 10px 0; cursor: pointer; background: #fafafa; text-align: center; }
         .sub-option.active { border-color: var(--vip-red); background: #fff0f0; }
-        .sub-title-hi { font-size: 15px; color: #333; display: block; font-weight: bold; margin-bottom: 5px; }
+        .sub-title-hi { font-size: 15px; color: #333; display: block; font-weight: bold; }
         .sub-price { color: var(--vip-red); font-weight: 900; font-size: 24px; display: block; }
 
         .qr-img { width: 200px; height: auto; border: 2px solid #000; margin: 10px auto; display: block; }
@@ -49,7 +49,6 @@
 </head>
 <body>
 
-<!-- Header Updated -->
 <div class="header"><h1>BIG STAR PINAL CHART</h1></div>
 
 <div class="special-note">
@@ -57,6 +56,9 @@
         <strong>विशेष सूचना:</strong> सबसे भरोसेमंद और सटीक जानकारी के लिए <b>BIG STAR PINAL CHART</b> ही चुनें। यहाँ एक्सपर्ट्स द्वारा तैयार VIP गेम मिलता है।
     </p>
 </div>
+
+<!-- Go to Bottom Button -->
+<div class="nav-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">Go to Bottom ↓</div>
 
 <div id="chartWrapper">
     <table>
@@ -70,11 +72,14 @@
     </table>
 </div>
 
+<!-- Go to Top Button -->
+<div class="nav-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Go to Top ↑</div>
+
 <div class="site-desc" style="font-size: 13px; font-weight: bold; margin: 15px 5px;">People get more from Game with a BIG STAR PINAL CHART.</div>
 
 <button class="btn-pay-main" onclick="openVipModal()">JOIN VIP / लॉक खोलें 🔑</button>
 
-<!-- Modal Setup -->
+<!-- VIP Modal -->
 <div id="vipModal" class="overlay">
     <div class="modal-content">
         <div id="step1">
@@ -88,11 +93,11 @@
         <div id="step-sub" style="display:none;">
             <h3>Select Plan / प्लान चुनें</h3>
             <div class="sub-option" onclick="selectPlan(this, '1 Day VIP - ₹999')">
-                <span class="sub-title-hi">1 दिन के लिए लॉक खोलें (Hindi/English)</span>
+                <span class="sub-title-hi">1 दिन के लिए लॉक खोलें</span>
                 <span class="sub-price">₹999</span>
             </div>
             <div class="sub-option" onclick="selectPlan(this, '7 Days VIP - ₹1999')">
-                <span class="sub-title-hi">7 दिनों के लिए लॉक खोलें (Hindi/English)</span>
+                <span class="sub-title-hi">7 दिनों के लिए लॉक खोलें</span>
                 <span class="sub-price">₹1999</span>
             </div>
             <button class="btn-pay-main" style="width:100%;" onclick="goPay()">NEXT / आगे बढ़ें</button>
@@ -103,12 +108,12 @@
             <p id="planDisp" style="color:red; font-weight:bold;"></p>
             <p>Payee Name: <b>OMKAR YADAV</b></p>
             <img src="paytm-png.jpeg" class="qr-img" alt="QR Code">
-            <input type="number" id="utrVal" placeholder="Enter 12 Digit UTR / Ref No.">
+            <input type="number" id="utrVal" placeholder="Enter 12 Digit UTR Number">
             <button class="btn-pay-main" style="width:100%;" onclick="verify()">VERIFY PAYMENT</button>
         </div>
 
         <div id="step3" style="display:none;">
-            <h3>Verifying Details...</h3>
+            <h3>Verifying...</h3>
             <div id="timerBox" style="font-size:40px; color:red; font-weight:bold;">02:00</div>
         </div>
 
