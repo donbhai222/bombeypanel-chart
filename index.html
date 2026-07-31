@@ -22,20 +22,20 @@
             --vip-red: #dc2626; 
             --vip-green: #16a34a; 
             --grid-border: #334155; 
-            --bg-gradient: linear-gradient(135deg, #1e1b4b 0%, #31103f 100%);
+            --bg-gradient: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
             --card-bg: #ffffff;
         }
         body { background: var(--bg-gradient); color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding-bottom: 50px; overflow-x: hidden; }
         
-        /* Green Background for Main Header */
-        .header { background: var(--vip-green); padding: 14px; border-bottom: 3px solid var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        /* Red Background for Main Header and Headings */
+        .header { background: var(--vip-red); padding: 14px; border-bottom: 3px solid var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         .header h1 { margin: 0; font-size: 20px; color: #ffffff; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
 
-        .special-note { background: rgba(255, 255, 255, 0.95); padding: 14px; margin: 12px auto; width: 90%; max-width: 500px; border-left: 5px solid var(--vip-green); border-radius: 8px; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.2); box-sizing: border-box; }
+        .special-note { background: rgba(255, 255, 255, 0.95); padding: 14px; margin: 12px auto; width: 90%; max-width: 500px; border-left: 5px solid var(--vip-red); border-radius: 8px; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.2); box-sizing: border-box; }
         .special-note p { margin: 0; font-size: 13px; color: #1e293b; line-height: 1.6; font-weight: 500; }
 
-        .nav-btn { background: var(--vip-green); color: white; border: 1.5px solid rgba(255,255,255,0.3); border-radius: 25px; padding: 8px 22px; display: inline-block; font-size: 12px; margin: 10px 0; font-weight: 700; cursor: pointer; box-shadow: 0 3px 8px rgba(22, 163, 74, 0.4); transition: 0.2s; }
-        .nav-btn:hover { background: #15803d; }
+        .nav-btn { background: var(--vip-red); color: white; border: 1.5px solid rgba(255,255,255,0.3); border-radius: 25px; padding: 8px 22px; display: inline-block; font-size: 12px; margin: 10px 0; font-weight: 700; cursor: pointer; box-shadow: 0 3px 8px rgba(220, 38, 38, 0.4); transition: 0.2s; }
+        .nav-btn:hover { background: #b91c1c; }
 
         #chartWrapper { width: 90%; max-width: 600px; margin: 10px auto; background: #fff; border: 2px solid #000; border-radius: 6px; overflow-x: auto; box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
         table { border-collapse: collapse; width: 100%; min-width: 300px; table-layout: fixed; }
@@ -49,30 +49,30 @@
         .red-house .jodi, .red-house .panna-vertical { color: var(--vip-red) !important; }
         
         /* Clean Lock Button */
-        .lock-btn { color: var(--vip-green); font-size: 20px; font-weight: bold; cursor: pointer; background: #f0fdf4; padding: 6px 12px; border-radius: 6px; border: 1px dashed var(--vip-green); display: inline-block; transition: 0.2s; }
-        .lock-btn:hover { background: #dcfce7; }
+        .lock-btn { color: var(--vip-red); font-size: 20px; font-weight: bold; cursor: pointer; background: #fef2f2; padding: 6px 12px; border-radius: 6px; border: 1px dashed var(--vip-red); display: inline-block; transition: 0.2s; }
+        .lock-btn:hover { background: #fee2e2; }
 
-        /* Green Background for Main 'Khata Banaye' / Join VIP Button */
-        .btn-pay-main { background: var(--vip-green); color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; font-weight: 700; font-size: 15px; margin: 10px 0; cursor: pointer; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3); transition: 0.2s; box-sizing: border-box; }
-        .btn-pay-main:hover { background: #15803d; }
+        /* Red Background for Main 'Khata Banaye' / Join VIP Button */
+        .btn-pay-main { background: var(--vip-red); color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; font-weight: 700; font-size: 15px; margin: 10px 0; cursor: pointer; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); transition: 0.2s; box-sizing: border-box; }
+        .btn-pay-main:hover { background: #b91c1c; }
 
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; }
         .modal-content { background: var(--card-bg); width: 95%; max-width: 650px; padding: 20px; border-radius: 14px; box-sizing: border-box; text-align: left; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.4); color: #1e293b; }
         
         .qr-img { width: 160px; height: auto; border: 2px solid #cbd5e1; border-radius: 8px; margin: 10px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         input { width: 100%; padding: 11px 14px; margin: 8px 0; border: 1.5px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 13px; outline: none; transition: 0.2s; }
-        input:focus { border-color: var(--vip-green); box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1); }
+        input:focus { border-color: var(--vip-red); box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1); }
         
-        /* Modal Headings styled with Green accent or banner */
-        .modal-header-box { background: var(--vip-green); color: white; padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; font-weight: 800; font-size: 15px; text-align: center; letter-spacing: 0.5px; }
+        /* Modal Headings styled with Red accent */
+        .modal-header-box { background: var(--vip-red); color: white; padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; font-weight: 800; font-size: 15px; text-align: center; letter-spacing: 0.5px; }
 
-        .notice-box { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid var(--vip-green); padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 11.5px; color: #334155; line-height: 1.5; word-break: break-word; box-sizing: border-box; width: 100%; }
+        .notice-box { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid var(--vip-red); padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 11.5px; color: #334155; line-height: 1.5; word-break: break-word; box-sizing: border-box; width: 100%; }
         .instruction-box { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; margin: 10px 0; font-size: 11.5px; color: #334155; line-height: 1.5; word-break: break-word; box-sizing: border-box; width: 100%; }
         .instruction-box ul { margin: 6px 0 0 15px; padding: 0; }
         .instruction-box li { margin-bottom: 4px; }
 
         .upi-box { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 8px 12px; border-radius: 8px; margin: 8px 0; font-size: 13px; font-weight: 700; border: 1.5px solid #cbd5e1; color: #0f172a; box-sizing: border-box; width: 100%; }
-        .copy-btn { background: var(--vip-green); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; cursor: pointer; font-weight: 600; flex-shrink: 0; }
+        .copy-btn { background: var(--vip-red); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; cursor: pointer; font-weight: 600; flex-shrink: 0; }
         
         .next-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; margin: 10px 0; font-size: 11.5px; color: #334155; text-align: left; line-height: 1.6; word-break: break-word; box-sizing: border-box; width: 100%; }
         .next-box ol { margin: 6px 0 0 15px; padding: 0; }
@@ -81,13 +81,13 @@
         /* Subscription Plans Styling (4 Box Grid) */
         .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 12px 0; }
         .sub-plan-card { border: 2px solid #cbd5e1; border-radius: 10px; padding: 10px; background: linear-gradient(145deg, #ffffff, #f1f5f9); text-align: center; transition: 0.2s; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .sub-plan-card:hover { border-color: var(--vip-green); box-shadow: 0 6px 15px rgba(22, 163, 74, 0.2); transform: translateY(-3px); }
+        .sub-plan-card:hover { border-color: var(--vip-red); box-shadow: 0 6px 15px rgba(220, 38, 38, 0.2); transform: translateY(-3px); }
         .sub-plan-logo { font-size: 24px; margin-bottom: 4px; }
         .sub-plan-title { font-size: 12px; font-weight: 800; color: var(--dark-blue); }
-        .sub-plan-price { font-size: 16px; font-weight: 900; color: var(--vip-green); margin: 6px 0; }
+        .sub-plan-price { font-size: 16px; font-weight: 900; color: var(--vip-red); margin: 6px 0; }
         .sub-plan-desc { font-size: 9.5px; color: #475569; line-height: 1.3; margin-bottom: 8px; font-weight: 600; }
-        .sel-btn { background: var(--vip-green); color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; box-sizing: border-box; }
-        .sel-btn:hover { background: #15803d; }
+        .sel-btn { background: var(--vip-red); color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; box-sizing: border-box; }
+        .sel-btn:hover { background: #b91c1c; }
     </style>
 </head>
 <body>
@@ -118,7 +118,7 @@
 
 <div class="site-desc" style="font-size: 13px; font-weight: 700; margin: 15px 5px; color: #f1f5f9; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">People get more from Game with a BIG STAR PINAL CHART and BOMBAY SPECIAL VIP CHART.</div>
 
-<!-- Green Background Button -->
+<!-- Red Background Button -->
 <button class="btn-pay-main" style="width:90%; max-width:360px;" onclick="openVipModal()">खाता बनाएँ / CREATE ACCOUNT 🔑</button>
 
 <div id="vipModal" class="overlay">
@@ -153,7 +153,7 @@
             
             <div style="text-align: center; margin-bottom: 8px;">
                 <span style="font-size: 11.5px; font-weight: 700; color: #334155;">Registration Fee / पंजीकरण शुल्क:</span><br>
-                <span style="color:var(--vip-green); font-weight:900; font-size: 24px;">₹899</span>
+                <span style="color:var(--vip-red); font-weight:900; font-size: 24px;">₹399</span>
             </div>
 
             <img src="paytm-png.jpeg" class="qr-img" alt="QR Code">
@@ -173,7 +173,7 @@
             </div>
 
             <button class="btn-pay-main" style="margin: 8px 0 4px 0;" onclick="goToPaymentDetails()">PAYMENT DONE / भुगतान हो गया</button>
-            <p onclick="document.getElementById('step2').style.display='none'; document.getElementById('step-create-account').style.display='block';" style="color:var(--vip-green); cursor:pointer; font-size:12px; margin-top:8px; text-align: center; font-weight: 700;">← वापस जाएं (Back)</p>
+            <p onclick="document.getElementById('step2').style.display='none'; document.getElementById('step-create-account').style.display='block';" style="color:var(--vip-red); cursor:pointer; font-size:12px; margin-top:8px; text-align: center; font-weight: 700;">← वापस जाएं (Back)</p>
         </div>
 
         <!-- Step 2.1: Payment Details Input Page -->
@@ -191,13 +191,13 @@
 
             <button class="btn-pay-main" style="margin-top: 10px;" onclick="submitPayment()">SUBMIT PAYMENT DETAILS</button>
             <p style="text-align: center; font-size: 11px; color: #64748b; margin-top: 2px; font-weight: 600;">भुगतान विवरण जमा करें</p>
-            <p onclick="document.getElementById('step-pay-details').style.display='none'; document.getElementById('step2').style.display='block';" style="color:var(--vip-green); cursor:pointer; font-size:12px; margin-top:8px; text-align: center; font-weight: 700;">← वापस जाएं (Back)</p>
+            <p onclick="document.getElementById('step-pay-details').style.display='none'; document.getElementById('step2').style.display='block';" style="color:var(--vip-red); cursor:pointer; font-size:12px; margin-top:8px; text-align: center; font-weight: 700;">← वापस जाएं (Back)</p>
         </div>
 
         <!-- Step 3: Thank You & Pending Approval with Timer -->
         <div id="step3" style="display:none; text-align: center;">
-            <div class="modal-header-box" style="background: var(--vip-green);">THANK YOU / धन्यवाद</div>
-            <p style="font-size: 13px; font-weight: 800; color: var(--vip-green); margin: 6px 0;">Pending Admin Approval</p>
+            <div class="modal-header-box" style="background: var(--vip-red);">THANK YOU / धन्यवाद</div>
+            <p style="font-size: 13px; font-weight: 800; color: var(--vip-red); margin: 6px 0;">Pending Admin Approval</p>
             
             <div class="notice-box" style="text-align: left; font-size: 11.5px;">
                 आपका पेमेंट सफल रहा। अकाउंट एडमिन द्वारा जाँच के बाद ओपन किया जाएगा。<br>
@@ -214,7 +214,7 @@
             </div>
 
             <div style="font-size: 11.5px; font-weight: 700; margin-top: 10px; color: #334155;">Verification Timer / सत्यापन टाइमर:</div>
-            <div id="timerBox" style="font-size: 32px; color: var(--vip-green); font-weight: 900; margin: 5px 0;">02:00</div>
+            <div id="timerBox" style="font-size: 32px; color: var(--vip-red); font-weight: 900; margin: 5px 0;">02:00</div>
         </div>
 
         <!-- Step 5: Subscription Plans Page (4 Box Grid Layout) -->
@@ -227,33 +227,33 @@
                 <div class="sub-plan-card">
                     <div>
                         <div class="sub-plan-logo">🔑</div>
-                        <div class="sub-plan-title">Starter - 1 Day</div>
-                        <div class="sub-plan-price">₹1499</div>
+                        <div class="sub-plan-title">1 दिन के लिए खोलने का चार्ज<br>1 Day Access</div>
+                        <div class="sub-plan-price">₹999</div>
                         <div class="sub-plan-desc">Real-time update<br>24 Hour Access</div>
                     </div>
-                    <button class="sel-btn" onclick="openPlanPayment('Starter - 1 Day', '1499')">SELECT</button>
+                    <button class="sel-btn" onclick="openPlanPayment('1 दिन के लिए खोलने का चार्ज (Starter - 1 Day)', '999')">SELECT</button>
                 </div>
 
                 <!-- Popular Plan -->
                 <div class="sub-plan-card">
                     <div>
                         <div class="sub-plan-logo">⚡</div>
-                        <div class="sub-plan-title">Popular - 7 Days</div>
-                        <div class="sub-plan-price">₹2499</div>
+                        <div class="sub-plan-title">7 दिन के लिए खोलने का चार्ज<br>7 Days Access</div>
+                        <div class="sub-plan-price">₹1999</div>
                         <div class="sub-plan-desc">Standard support<br>7 Days Access</div>
                     </div>
-                    <button class="sel-btn" onclick="openPlanPayment('Popular - 7 Days', '2499')">SELECT</button>
+                    <button class="sel-btn" onclick="openPlanPayment('7 दिन के लिए खोलने का चार्ज (Popular - 7 Days)', '1999')">SELECT</button>
                 </div>
 
                 <!-- Best Value Plan -->
                 <div class="sub-plan-card">
                     <div>
                         <div class="sub-plan-logo">⭐</div>
-                        <div class="sub-plan-title">Best Value - 10 Days</div>
-                        <div class="sub-plan-price">₹3499</div>
-                        <div class="sub-plan-desc">Premium support<br>10 Days Access</div>
+                        <div class="sub-plan-title">दो जोड़ी सिंगल का चार्ज - 999<br>Close का चार्ज - 599</div>
+                        <div class="sub-plan-price">₹999</div>
+                        <div class="sub-plan-desc">Premium support<br>Special Segment</div>
                     </div>
-                    <button class="sel-btn" onclick="openPlanPayment('Best Value - 10 Days', '3499')">SELECT</button>
+                    <button class="sel-btn" onclick="openPlanPayment('दो जोड़ी सिंगल / Close चार्ज', '999')">SELECT</button>
                 </div>
 
                 <!-- Ultimate Plan -->
@@ -272,7 +272,7 @@
         <!-- Step 5.1: Plan Payment & QR Page -->
         <div id="step-plan-pay" style="display:none; text-align: center;">
             <div class="modal-header-box" id="planTitleDisplay">Plan Payment</div>
-            <div style="font-size: 24px; font-weight: 900; color: var(--vip-green); margin: 6px 0;" id="planPriceDisplay">₹0</div>
+            <div style="font-size: 24px; font-weight: 900; color: var(--vip-red); margin: 6px 0;" id="planPriceDisplay">₹0</div>
 
             <img src="paytm-png.jpeg" class="qr-img" alt="QR Code">
             
@@ -294,20 +294,20 @@
             <input type="text" id="planUtidInput" placeholder="12 Digit Transaction / UTR ID">
 
             <button class="btn-pay-main" style="margin-top: 8px;" onclick="submitPlanPayment()">PAYMENT DONE / भुगतान हो गया</button>
-            <p onclick="document.getElementById('step-plan-pay').style.display='none'; document.getElementById('step-subscription').style.display='block';" style="color:var(--vip-green); cursor:pointer; font-size:12px; margin-top:8px; text-align: center; font-weight: 700;">← वापस जाएं (Back)</p>
+            <p onclick="document.getElementById('step-plan-pay').style.display='none'; document.getElementById('step-subscription').style.display='block';" style="color:var(--vip-red); cursor:pointer; font-size:12px; margin-top:8px; text-align: center; font-weight: 700;">← वापस जाएं (Back)</p>
         </div>
 
         <!-- Step 5.2: Plan Timer Verification Page -->
         <div id="step-plan-timer" style="display:none; text-align: center;">
             <div class="modal-header-box">VERIFYING PAYMENT</div>
-            <div id="planTimerBox" style="font-size: 34px; color: var(--vip-green); font-weight: 900; margin: 12px 0;">01:00</div>
+            <div id="planTimerBox" style="font-size: 34px; color: var(--vip-red); font-weight: 900; margin: 12px 0;">01:00</div>
             <p style="font-size: 12px; color: #64748b; font-weight: 600;">कृपया प्रतीक्षा करें...</p>
         </div>
 
         <!-- Step 4: Success / Final Admin Notice -->
         <div id="step4" style="display:none; text-align: center;">
             <div class="modal-header-box">SUCCESS / सफल ✅</div>
-            <p style="font-size: 12px; font-weight: 800; color: var(--vip-green); margin: 6px 0;">भुगतान सफलतापूर्वक प्राप्त हुआ</p>
+            <p style="font-size: 12px; font-weight: 800; color: var(--vip-red); margin: 6px 0;">भुगतान सफलतापूर्वक प्राप्त हुआ</p>
             
             <div class="next-box" style="text-align: left; font-size: 11.5px;">
                 <b>आगे क्या होगा / What Happens Next:</b>
